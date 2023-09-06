@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 68de85264348ec44eb76a73865f41a0d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 133457
+  packageName: Base Man
+  packageVersion: 1.0
+  assetPath: Assets/Base_Man/Prefab/Rrefab.prefab
+  uploadId: 412324

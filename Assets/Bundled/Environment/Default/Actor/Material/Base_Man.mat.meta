@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9e3332cfdde34cc4f9c8142943b54f57
+AssetOrigin:
+  serializedVersion: 1
+  productId: 133457
+  packageName: Base Man
+  packageVersion: 1.0
+  assetPath: Assets/Base_Man/Material/Base_Man.mat
+  uploadId: 412324
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: '{"GUIDArray":[],"withUV":[false,false,false,false]}'
+  assetBundleName: 
+  assetBundleVariant: 
