@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEditor.SceneManagement;
-using HierarchyIcons;
 
 #if UNITY_EDITOR
+using HierarchyIcons;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 #endif
 
 [CreateAssetMenu(fileName = "NewAddon", menuName = "Carbon/New Addon")]
