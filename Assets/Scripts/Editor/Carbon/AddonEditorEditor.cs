@@ -21,10 +21,20 @@ public class AddonEditorEditor : Editor
 
 			GUILayout.Label("Tools", EditorStyles.boldLabel);
 
+			EditorGUILayout.BeginHorizontal(GUILayout.ExpandWidth(true));
+
 			if (GUILayout.Button("Export Addon"))
 			{
 				addon.Build();
 			}
+
+			if (GUILayout.Button("Open/Generate Scene"))
+			{
+				addon.PrepareScene();
+			}
+
+			EditorGUILayout.EndHorizontal();
+
 		}
 
 		// GUILayout.FlexibleSpace();

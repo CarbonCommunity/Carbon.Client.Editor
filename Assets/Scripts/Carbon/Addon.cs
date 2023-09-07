@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
+using HierarchyIcons;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -59,7 +62,7 @@ public class AddonEditor : ScriptableObject
 		}
 
 		var folder = Defines.GetBundleDirectory(forAddon: this);
-		var result = BuildPipeline.BuildAssetBundles(folder, bundles.ToArray(), BuildAssetBundleOptions.CollectDependencies, BuildTarget.StandaloneWindows64);
+		var result = BuildPipeline.BuildAssetBundles(folder, bundles.ToArray(), BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
 		var assets = new List<Carbon.Client.Assets.Asset>();
 
 		foreach (var asset in Assets)
@@ -81,6 +84,41 @@ public class AddonEditor : ScriptableObject
 			Version = Version
 		}, assets.ToArray());
 		addon.StoreToFile(path.Replace(".cca", string.Empty));
+	}
+
+	public void PrepareScene()
+	{
+		var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
+		scene.name = $"{Name} v{Version} by {Author}";
+		SceneManager.SetActiveScene(scene);
+
+		var firstEnabled = false;
+		var project = new GameObject("Project");
+		var projectInstance = project.AddComponent<Carbon.Project>();
+		projectInstance.Editor = this;
+		var icon = project.AddComponent<HierarchyIcon>();
+		icon.icon = Resources.Load<Texture2D>("addonicon2");
+		foreach (var asset in Assets)
+		{
+			var go = new GameObject(asset.Name);
+
+			if (!firstEnabled)
+			{
+				go.SetActive(true);
+				firstEnabled = true;
+			}
+			else
+			{
+				go.SetActive(false);
+			}
+
+			foreach (var prefab in asset.Prefabs)
+			{
+				var prefabInstance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+				prefabInstance.name = $"{prefab.name} (Preview)";
+				prefabInstance.transform.SetParent(go.transform, false);
+			}
+		}
 	}
 #endif
 }
