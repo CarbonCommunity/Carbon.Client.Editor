@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 13178.223, g: 12419.834, b: 12910.408, a: 1}
+  m_IndirectSpecularColor: {r: 13177.658, g: 12418.322, b: 12906.197, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -788,6 +788,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Default-DeleteMe
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404359399862627554, guid: 65a727385e151354286a1771358b7d51,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
