@@ -89,7 +89,7 @@ public class AddonEditor : ScriptableObject
 	public void PrepareScene()
 	{
 		var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
-		scene.name = $"{Name} v{Version} by {Author}";
+		scene.name = $"{Name} v{Version}";
 		SceneManager.SetActiveScene(scene);
 
 		var firstEnabled = false;
@@ -98,6 +98,7 @@ public class AddonEditor : ScriptableObject
 		projectInstance.Editor = this;
 		var icon = project.AddComponent<HierarchyIcon>();
 		icon.icon = Resources.Load<Texture2D>("addonicon2");
+
 		foreach (var asset in Assets)
 		{
 			var go = new GameObject(asset.Name);
@@ -115,10 +116,12 @@ public class AddonEditor : ScriptableObject
 			foreach (var prefab in asset.Prefabs)
 			{
 				var prefabInstance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
-				prefabInstance.name = $"{prefab.name} (Preview)";
+				prefabInstance.name = prefab.name;
 				prefabInstance.transform.SetParent(go.transform, false);
 			}
 		}
+
+		Selection.SetActiveObjectWithContext(project, this);
 	}
 #endif
 }

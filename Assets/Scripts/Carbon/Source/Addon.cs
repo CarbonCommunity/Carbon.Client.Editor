@@ -1,21 +1,22 @@
-﻿/*
+/*
  *
  * Copyright (c) 2022-2023 Carbon Community 
  * All rights reserved.
  *
  */
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System;
+using System.Security.Cryptography;
 using Newtonsoft.Json;
 using ProtoBuf;
+using System.Linq;
 
 namespace Carbon.Client.Assets
 {
 	[ProtoContract]
-	public class Addon : IStore<Addon, Asset>, IDisposable
+	public partial class Addon : IStore<Addon, Asset>, IDisposable
 	{
 		public const string EXTENSION = ".cca";
 
@@ -61,7 +62,6 @@ namespace Carbon.Client.Assets
 				Author = info.Author,
 				Description = info.Description,
 				Version = info.Version,
-				Checksum = info.Checksum,
 			};
 
 			foreach (var asset in assets)
@@ -70,6 +70,7 @@ namespace Carbon.Client.Assets
 			}
 
 			addon.MarkDirty();
+			addon.Checksum = addon.GetChecksum();
 
 			return addon;
 		}
@@ -140,6 +141,14 @@ namespace Carbon.Client.Assets
 				Buffer = null;
 			}
 		}
+		public string GetChecksum()
+		{
+			using var md5 = MD5.Create();
+			var bytes = md5.ComputeHash(Buffer);
+			var result = Convert.ToBase64String(bytes);
+			Array.Clear(bytes, 0, bytes.Length);
+			return result;
+		}
 
 		public class Manifest
 		{
@@ -155,7 +164,6 @@ namespace Carbon.Client.Assets
 			public string Author;
 			public string Description;
 			public string Version;
-			public string Checksum;
 		}
 	}
 }

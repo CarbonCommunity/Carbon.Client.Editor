@@ -9,11 +9,12 @@ using System;
 using System.IO;
 using Newtonsoft.Json;
 using ProtoBuf;
+using UnityEngine;
 
 namespace Carbon.Client.Assets
 {
-	[ProtoContract(InferTagFromName = true)]
-	public class Asset : IDisposable
+	[ProtoContract]
+	public partial class Asset
 	{
 		[ProtoMember(1)]
 		public string Name { get; set; }
@@ -29,6 +30,10 @@ namespace Carbon.Client.Assets
 				BufferLength = Data.Length,
 			};
 		}
+
+		public AssetBundle CachedBundle { get; set; }
+
+		public bool IsUnpacked => CachedBundle != null;
 
 		public static Asset CreateFrom(string name, byte[] data)
 		{
@@ -48,13 +53,25 @@ namespace Carbon.Client.Assets
 			return JsonConvert.SerializeObject(GetManifest(), Formatting.Indented);
 		}
 
-		public void Dispose()
+		public void ClearData()
 		{
 			if (Data != null)
 			{
 				Array.Clear(Data, 0, Data.Length);
 				Data = null;
 			}
+		}
+
+		public void Dispose()
+		{
+			if (!IsUnpacked)
+			{
+				return;
+			}
+
+			CachedBundle.Unload(true);
+
+			ClearData();
 		}
 
 		public class Manifest
