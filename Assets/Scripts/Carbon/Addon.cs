@@ -18,9 +18,9 @@ public class AddonEditor : ScriptableObject
 	public string Author;
 
 	[TextArea(4, 10)]
-	public string Description;
+	public string Description; 
 	public string Version;
-	public List<Asset> Assets = new();
+	public List<Asset> Assets = new List<Asset>();
 
 	internal readonly string _mainBundle = "Addon";
 

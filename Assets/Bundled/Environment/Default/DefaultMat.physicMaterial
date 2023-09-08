@@ -9,6 +9,6 @@ PhysicMaterial:
   m_Name: DefaultMat
   dynamicFriction: 0
   staticFriction: 0
-  bounciness: 0.9
+  bounciness: 0.975
   frictionCombine: 0
   bounceCombine: 3

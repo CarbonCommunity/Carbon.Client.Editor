@@ -8,23 +8,23 @@ QualitySettings:
   m_QualitySettings:
   - serializedVersion: 2
     name: High Fidelity
-    pixelLightCount: 0
+    pixelLightCount: 4
     shadows: 2
-    shadowResolution: 0
+    shadowResolution: 3
     shadowProjection: 1
-    shadowCascades: 1
-    shadowDistance: 15
+    shadowCascades: 4
+    shadowDistance: 500
     shadowNearPlaneOffset: 3
     shadowCascade2Split: 0.33333334
-    shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
+    shadowCascade4Split: {x: 0.04909929, y: 0.20270273, z: 0.4680182}
     shadowmaskMode: 1
     skinWeights: 255
     textureQuality: 0
     anisotropicTextures: 2
-    antiAliasing: 0
-    softParticles: 0
+    antiAliasing: 2
+    softParticles: 1
     softVegetation: 0
-    realtimeReflectionProbes: 0
+    realtimeReflectionProbes: 1
     billboardsFaceCameraPosition: 1
     vSyncCount: 1
     lodBias: 1
@@ -40,8 +40,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 11400000, guid: 36dd385e759c96147b6463dcd1149c11,
-      type: 2}
+    customRenderPipeline: {fileID: 0}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Balanced
@@ -114,8 +113,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 11400000, guid: 168a2336534e4e043b2a210b6f8d379a,
-      type: 2}
+    customRenderPipeline: {fileID: 0}
     excludedTargetPlatforms: []
   m_PerPlatformDefaultQuality:
     Android: 0

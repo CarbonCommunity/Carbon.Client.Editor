@@ -1,4 +1,4 @@
-/*
+﻿/*
  *
  * Copyright (c) 2022-2023 Carbon Community 
  * All rights reserved.
@@ -36,7 +36,7 @@ namespace Carbon.Client.Assets
 		public string Checksum { get; set; }
 
 		[ProtoMember(6)]
-		public Dictionary<string, Asset> Assets { get; set; } = new();
+		public Dictionary<string, Asset> Assets { get; set; } = new Dictionary<string, Asset>();
 
 		[ProtoMember(7)]
 		public long CreationTime { get; set; } = DateTime.Now.Ticks;
@@ -91,9 +91,11 @@ namespace Carbon.Client.Assets
 		}
 		public byte[] Store()
 		{
-			using var stream = new MemoryStream();
-			Serializer.Serialize(stream, this);
-			return stream.ToArray();
+			using (var stream = new MemoryStream())
+			{
+				Serializer.Serialize(stream, this);
+				return stream.ToArray();
+			}
 		}
 		public void StoreToFile(string path)
 		{
@@ -143,11 +145,13 @@ namespace Carbon.Client.Assets
 		}
 		public string GetChecksum()
 		{
-			using var md5 = MD5.Create();
-			var bytes = md5.ComputeHash(Buffer);
-			var result = Convert.ToBase64String(bytes);
-			Array.Clear(bytes, 0, bytes.Length);
-			return result;
+			using (var md5 = MD5.Create())
+			{
+				var bytes = md5.ComputeHash(Buffer);
+				var result = Convert.ToBase64String(bytes);
+				Array.Clear(bytes, 0, bytes.Length);
+				return result;
+			}
 		}
 
 		public class Manifest
