@@ -84,6 +84,9 @@ public class AddonEditor : ScriptableObject
 			Version = Version
 		}, assets.ToArray());
 		addon.StoreToFile(path.Replace(".cca", string.Empty));
+
+		assets.Clear();
+		assets = null;
 	}
 
 	public void PrepareScene()
