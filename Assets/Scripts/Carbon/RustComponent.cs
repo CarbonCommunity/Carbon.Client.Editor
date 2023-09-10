@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using ProtoBuf;
+using UnityEditor;
 using UnityEngine;
 
 namespace Carbon.Client
@@ -8,6 +9,8 @@ namespace Carbon.Client
 	[ProtoContract]
 	public class RustComponent : MonoBehaviour
 	{
+		// public LayerMask LayerMaskTest = new LayerMask { value = 131072 };
+
 		[ProtoMember(1)]
 		public bool IsServer;
 
@@ -20,6 +23,14 @@ namespace Carbon.Client
 		[ProtoMember(4)]
 		public Member[] Members;
 
+		[ProtoIgnore, Header("Debugging")]
+		public Color OutlineColor = Color.white;
+		public Color FillingColor = Color.white;
+
+		internal Collider _collider;
+		internal int _timeSinceRetry;
+
+
 		[Serializable, ProtoContract]
 		public class Member
 		{
@@ -29,5 +40,45 @@ namespace Carbon.Client
 			[ProtoMember(2)]
 			public string Value;
 		}
+
+		public void OnDrawGizmos()
+		{
+			if (_collider == null)
+			{
+				if ((Time.realtimeSinceStartup - _timeSinceRetry) > 5f)
+				{
+					_collider = GetComponent<Collider>();
+				}
+
+				return;
+			}
+
+			var matrix = Gizmos.matrix;
+			Gizmos.matrix = transform.localToWorldMatrix;
+
+			Handles.Label(transform.position, $"{TargetType}\n({CarbonUtils.GetRecursiveName(transform)})");
+
+			switch (_collider)
+			{
+				case SphereCollider sphere:
+					Gizmos.color = OutlineColor;
+					Gizmos.DrawWireSphere(sphere.center, sphere.radius);
+
+					Gizmos.color = FillingColor;
+					Gizmos.DrawSphere(sphere.center, sphere.radius);
+					break;
+
+				case BoxCollider box:
+					Gizmos.color = OutlineColor;
+					Gizmos.DrawWireCube(box.center, box.size);
+
+					Gizmos.color = FillingColor;
+					Gizmos.DrawCube(box.center, box.size);
+					break;
+			}
+
+			Gizmos.matrix = matrix;
+		}
+
 	}
 }
