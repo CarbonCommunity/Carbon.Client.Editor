@@ -13,30 +13,30 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Deployed
+  - Ragdoll
+  - Invisible
+  - AI
+  - Player Movement
+  - Vehicle Detailed
+  - Game Trace
+  - Vehicle World
+  - World
+  - Player (Server)
+  - Trigger
+  - Harvestable
+  - Physics Projectile
+  - Construction
+  - Construction Socket
+  - Terrain
+  - Transparent
+  - Clutter
+  - Debris
+  - Vehicle Large
+  - Prevent Movement
+  - Prevent Building
+  - Tree
+  - UNUSED
   m_SortingLayers:
   - name: Default
     uniqueID: 0

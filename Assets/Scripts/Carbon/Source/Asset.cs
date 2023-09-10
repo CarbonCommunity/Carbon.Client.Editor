@@ -22,6 +22,9 @@ namespace Carbon.Client.Assets
 		[ProtoMember(2)]
 		public byte[] Data { get; set; }
 
+		[ProtoMember(3)]
+		public byte[] Components { get; set; }
+
 		public Manifest GetManifest()
 		{
 			return new Manifest
