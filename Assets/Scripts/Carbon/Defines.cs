@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class Defines : MonoBehaviour
 {
+	public bool DisableAll;
+
 	[Header("Debugger")]
 	public ColorSwitch[] ColorSwitches;
 	public ColorSwitch InvalidSwitch;
@@ -40,7 +42,7 @@ public class Defines : MonoBehaviour
 
 		var result = ColorSwitches[index];
 
-		if (!result.Enabled)
+		if (!result.Enabled || DisableAll)
 		{
 			return BlankSwitch;
 		}
