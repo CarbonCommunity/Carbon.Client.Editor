@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Newtonsoft.Json;
 using ProtoBuf;
 using UnityEditor;
@@ -23,12 +24,11 @@ namespace Carbon.Client
 		[ProtoMember(4)]
 		public Member[] Members;
 
-		[ProtoIgnore, Header("Debugging")]
-		public Color OutlineColor = Color.white;
-		public Color FillingColor = Color.white;
+		[ProtoIgnore, Header("Debugger")]
+		public int ColorSwitch;
 
 		internal Collider _collider = null;
-		internal int _timeSinceRetry = 0;
+		internal float _timeSinceRetry = 0;
 
 
 		[Serializable, ProtoContract]
@@ -49,6 +49,7 @@ namespace Carbon.Client
 				if ((Time.realtimeSinceStartup - _timeSinceRetry) > 5f)
 				{
 					_collider = GetComponent<Collider>();
+					_timeSinceRetry = Time.realtimeSinceStartup;
 				}
 
 				return;
@@ -57,24 +58,49 @@ namespace Carbon.Client
 			var matrix = Gizmos.matrix;
 			Gizmos.matrix = transform.localToWorldMatrix;
 
-			Handles.Label(transform.position, $"{TargetType}\n({CarbonUtils.GetRecursiveName(transform)})");
-
 			switch (_collider)
 			{
 				case SphereCollider sphere:
-					Gizmos.color = OutlineColor;
-					Gizmos.DrawWireSphere(sphere.center, sphere.radius);
-
-					Gizmos.color = FillingColor;
+					Gizmos.color = Defines.Singleton.GetSwitch(ColorSwitch).Main;
 					Gizmos.DrawSphere(sphere.center, sphere.radius);
 					break;
 
 				case BoxCollider box:
-					Gizmos.color = OutlineColor;
-					Gizmos.DrawWireCube(box.center, box.size);
-
-					Gizmos.color = FillingColor;
+					Gizmos.color = Defines.Singleton.GetSwitch(ColorSwitch).Main;
 					Gizmos.DrawCube(box.center, box.size);
+					break;
+			}
+
+			Gizmos.matrix = matrix;
+		}
+		public void OnDrawGizmosSelected()
+		{
+			if (_collider == null)
+			{
+				if ((Time.realtimeSinceStartup - _timeSinceRetry) > 5f)
+				{
+					_collider = GetComponent<Collider>();
+					_timeSinceRetry = Time.realtimeSinceStartup;
+				}
+
+				return;
+			}
+
+			var matrix = Gizmos.matrix;
+			Gizmos.matrix = transform.localToWorldMatrix;
+
+			Handles.Label(transform.position, $"\n{TargetType}{(IsServer ? " [server]" : string.Empty)}{(IsServer ? " [client]" : string.Empty)}\n{string.Join("\n", Members.Select(x => $"  {x.Name}: {x.Value}"))}");
+
+			switch (_collider)
+			{
+				case SphereCollider sphere:
+					Gizmos.color = Defines.Singleton.GetSwitch(ColorSwitch).Outline;
+					Gizmos.DrawWireSphere(sphere.center, sphere.radius);
+					break;
+
+				case BoxCollider box:
+					Gizmos.color = Defines.Singleton.GetSwitch(ColorSwitch).Outline;
+					Gizmos.DrawWireCube(box.center, box.size);
 					break;
 			}
 
