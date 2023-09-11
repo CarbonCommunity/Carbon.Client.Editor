@@ -479,6 +479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff0867ecbd2119b44aa3a17595d0c6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DisableAll: 0
   ColorSwitches:
   - Tag: Ladders
     Enabled: 1
@@ -489,9 +490,13 @@ MonoBehaviour:
     Main: {r: 1, g: 0.36695006, b: 0, a: 0.50980395}
     Outline: {r: 0.3882353, g: 0.23150998, b: 0.10588235, a: 1}
   - Tag: Safe Zone
-    Enabled: 0
+    Enabled: 1
     Main: {r: 0, g: 1, b: 0.21829796, a: 0.50980395}
     Outline: {r: 0.11584955, g: 0.3882353, b: 0.10588235, a: 1}
+  - Tag: Spawnpoint (Player)
+    Enabled: 1
+    Main: {r: 1, g: 0.99721193, b: 0, a: 0.50980395}
+    Outline: {r: 0.3882353, g: 0.36587775, b: 0.10588235, a: 1}
   InvalidSwitch:
     Tag: 
     Enabled: 1
@@ -515,6 +520,49 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &937863972
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 937863974}
+  - component: {fileID: 937863973}
+  m_Layer: 0
+  m_Name: Rust
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &937863973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937863972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9b096131538b44289fa56784e3fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &937863974
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937863972}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1820337004
 GameObject:
@@ -650,7 +698,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 1000
+  far clip plane: 5000
   field of view: 60
   orthographic: 0
   orthographic size: 5
