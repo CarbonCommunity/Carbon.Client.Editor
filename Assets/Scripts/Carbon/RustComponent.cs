@@ -9,7 +9,7 @@ namespace Carbon.Client
 	[ProtoContract]
 	public class RustComponent : MonoBehaviour
 	{
-		// public LayerMask LayerMaskTest = new LayerMask { value = 131072 };
+		// public LayerMask LayerMaskTest = new LayerMask { value = 163840 };
 
 		[ProtoMember(1)]
 		public bool IsServer;
@@ -27,8 +27,8 @@ namespace Carbon.Client
 		public Color OutlineColor = Color.white;
 		public Color FillingColor = Color.white;
 
-		internal Collider _collider;
-		internal int _timeSinceRetry;
+		internal Collider _collider = null;
+		internal int _timeSinceRetry = 0;
 
 
 		[Serializable, ProtoContract]
@@ -41,6 +41,7 @@ namespace Carbon.Client
 			public string Value;
 		}
 
+#if UNITY_EDITOR
 		public void OnDrawGizmos()
 		{
 			if (_collider == null)
@@ -79,6 +80,6 @@ namespace Carbon.Client
 
 			Gizmos.matrix = matrix;
 		}
-
+#endif
 	}
 }
