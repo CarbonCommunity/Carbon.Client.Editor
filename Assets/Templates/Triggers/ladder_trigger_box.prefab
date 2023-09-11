@@ -40,7 +40,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7885137566604847483}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -63,5 +63,4 @@ MonoBehaviour:
   Members:
   - Name: Type
     Value: 0
-  OutlineColor: {r: 0.04538981, g: 0.119660236, b: 0.18867922, a: 1}
-  FillingColor: {r: 0.25, g: 0.6396806, b: 1, a: 0.50980395}
+  ColorSwitch: 0
