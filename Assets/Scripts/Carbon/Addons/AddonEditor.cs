@@ -130,7 +130,7 @@ public class AddonEditor : ScriptableObject
 
 				assets.Add(new Carbon.Client.Assets.Asset()
 				{
-					Name = bundleName,
+					Name = asset.Name,
 					Data = File.ReadAllBytes(Path.Combine(folder, $"{bundleName}.{bundleVariant}")),
 					AdditionalData = memory.ToArray()
 				});
