@@ -1,19 +1,16 @@
-﻿/*
+/*
  *
  * Copyright (c) 2022-2023 Carbon Community 
  * All rights reserved.
  *
  */
 
-using System;
-using System.IO;
 using Newtonsoft.Json;
 using ProtoBuf;
-using UnityEngine;
 
 namespace Carbon.Client.Assets
 {
-	[ProtoContract]
+	[ProtoContract(InferTagFromName = true)]
 	public partial class Asset
 	{
 		[ProtoMember(1)]
@@ -23,7 +20,7 @@ namespace Carbon.Client.Assets
 		public byte[] Data { get; set; }
 
 		[ProtoMember(3)]
-		public byte[] Components { get; set; }
+		public byte[] AdditionalData { get; set; }
 
 		public Manifest GetManifest()
 		{
@@ -34,7 +31,7 @@ namespace Carbon.Client.Assets
 			};
 		}
 
-		public AssetBundle CachedBundle { get; set; }
+		public UnityEngine.AssetBundle CachedBundle { get; set; }
 
 		public bool IsUnpacked => CachedBundle != null;
 
@@ -48,7 +45,7 @@ namespace Carbon.Client.Assets
 		}
 		public static Asset CreateFromFile(string path)
 		{
-			return CreateFrom(Path.GetFileNameWithoutExtension(path), File.ReadAllBytes(path));
+			return CreateFrom(System.IO.Path.GetFileNameWithoutExtension(path), System.IO.File.ReadAllBytes(path));
 		}
 
 		public override string ToString()
@@ -60,7 +57,7 @@ namespace Carbon.Client.Assets
 		{
 			if (Data != null)
 			{
-				Array.Clear(Data, 0, Data.Length);
+				System.Array.Clear(Data, 0, Data.Length);
 				Data = null;
 			}
 		}

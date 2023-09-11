@@ -19,8 +19,6 @@ namespace Carbon
 
 				File.WriteAllText(Path.Combine(Defines.Root, "Assets", "Scripts", "Carbon", "Source", "Asset.cs"),
 					client.DownloadString("https://raw.githubusercontent.com/CarbonCommunity/Carbon.Common/develop/src/Carbon/Client/Assets/Asset.cs"));
-
-				Debug.Log("We did it joe");
 			}
 		}
 #endif

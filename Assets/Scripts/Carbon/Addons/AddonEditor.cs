@@ -132,7 +132,7 @@ public class AddonEditor : ScriptableObject
 				{
 					Name = bundleName,
 					Data = File.ReadAllBytes(Path.Combine(folder, $"{bundleName}.{bundleVariant}")),
-					Components = memory.ToArray()
+					AdditionalData = memory.ToArray()
 				});
 			}
 		}
