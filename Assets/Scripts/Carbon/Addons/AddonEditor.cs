@@ -36,8 +36,6 @@ public class AddonEditor : ScriptableObject
 		public string Extension;
 		public GameObject[] Prefabs;
 
-		public GameObject[] TemporaryPrefabs;
-
 		public Dictionary<string, RustComponent> Components = new Dictionary<string, RustComponent>();
 
 		public void Preprocess()
@@ -74,12 +72,10 @@ public class AddonEditor : ScriptableObject
 			}
 
 			Debug.Log($"[{Name}] Found {Components.Count} components");
-
-			TemporaryPrefabs = Prefabs.Select(x => Instantiate(x)).ToArray();
 		}
 		public void ClearComponents()
 		{
-			foreach (var prefab in TemporaryPrefabs)
+			foreach (var prefab in Prefabs)
 			{
 				Recursive(prefab.transform);
 
@@ -104,6 +100,8 @@ public class AddonEditor : ScriptableObject
 		{
 			foreach (var prefab in Prefabs)
 			{
+				var prefabPath = GetRecursiveName(prefab.transform).ToLower();
+
 				Recursive(prefab.transform);
 
 				void Recursive(Transform transform)
@@ -117,46 +115,26 @@ public class AddonEditor : ScriptableObject
 #if UNITY_EDITOR
 						try
 						{
-							PrefabUtility.RevertRemovedComponent(gameObject, component, InteractionMode.AutomatedAction);
-						}
-						catch (Exception ex)
-						{
-							Debug.LogError($"1 {ex}");
-						}
-
-						try
-						{
 							PrefabUtility.RevertPrefabInstance(gameObject, InteractionMode.AutomatedAction);
 						}
 						catch (Exception ex)
 						{
 							Debug.LogError($"2 {ex}");
 						}
-
-						try
-						{
-							PrefabUtility.RevertObjectOverride(gameObject, InteractionMode.AutomatedAction);
-						}
-						catch (Exception ex)
-						{
-							Debug.LogError($"3 {ex}");
-						}
-#endif
-
-						var realComponent = gameObject.AddComponent<RustComponent>();
-						realComponent.IsServer = component.IsServer;
-						realComponent.IsClient = component.IsClient;
-						realComponent.TargetType = component.TargetType;
-						realComponent.Members = component.Members;
-						realComponent.ColorSwitch = component.ColorSwitch;
-						Components[path] = realComponent;
-
-#if UNITY_EDITOR
-						EditorUtility.SetDirty(gameObject);
 #endif
 
 						Debug.LogWarning($"Reverted component on '{path}'");
 					}
+
+#if UNITY_EDITOR
+					try
+					{
+						PrefabUtility.SaveAsPrefabAssetAndConnect(prefab, prefabPath, InteractionMode.AutomatedAction);
+					}
+					catch  { }
+
+					EditorUtility.SetDirty(prefab);
+#endif
 
 					foreach (var subTransform in transform)
 					{
