@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Newtonsoft.Json;
 using Carbon.Client;
 using ProtoBuf;
 
@@ -21,7 +20,7 @@ public class AddonEditor : ScriptableObject
 	public string Author;
 
 	[TextArea(4, 10)]
-	public string Description; 
+	public string Description;
 	public string Version;
 	public List<Asset> Assets = new List<Asset>();
 
@@ -37,9 +36,20 @@ public class AddonEditor : ScriptableObject
 		public string Extension;
 		public GameObject[] Prefabs;
 
+		public GameObject[] TemporaryPrefabs;
+
 		public Dictionary<string, RustComponent> Components = new Dictionary<string, RustComponent>();
 
-		public void Process()
+		public void Preprocess()
+		{
+			ClearComponents();
+		}
+		public void Postprocess()
+		{
+			ApplyComponents();
+		}
+
+		public void BuildCache()
 		{
 			Components.Clear();
 
@@ -51,12 +61,12 @@ public class AddonEditor : ScriptableObject
 				{
 					var component = transform.GetComponent<RustComponent>();
 
-					if(component != null)
+					if (component != null)
 					{
 						Components.Add(GetRecursiveName(transform).ToLower(), component);
 					}
 
-					foreach(var subTransform in transform)
+					foreach (var subTransform in transform)
 					{
 						Recursive((Transform)subTransform);
 					}
@@ -64,6 +74,96 @@ public class AddonEditor : ScriptableObject
 			}
 
 			Debug.Log($"[{Name}] Found {Components.Count} components");
+
+			TemporaryPrefabs = Prefabs.Select(x => Instantiate(x)).ToArray();
+		}
+		public void ClearComponents()
+		{
+			foreach (var prefab in TemporaryPrefabs)
+			{
+				Recursive(prefab.transform);
+
+				void Recursive(Transform transform)
+				{
+					var path = GetRecursiveName(transform).ToLower();
+
+					if (Components.TryGetValue(path, out var component))
+					{
+						Debug.LogWarning($"Cleared component on '{path}'");
+						DestroyImmediate(component, true);
+					}
+
+					foreach (var subTransform in transform)
+					{
+						Recursive((Transform)subTransform);
+					}
+				}
+			}
+		}
+		public void ApplyComponents()
+		{
+			foreach (var prefab in Prefabs)
+			{
+				Recursive(prefab.transform);
+
+				void Recursive(Transform transform)
+				{
+					var path = GetRecursiveName(transform).ToLower();
+
+					if (Components.TryGetValue(path, out var component))
+					{
+						var gameObject = transform.gameObject;
+
+#if UNITY_EDITOR
+						try
+						{
+							PrefabUtility.RevertRemovedComponent(gameObject, component, InteractionMode.AutomatedAction);
+						}
+						catch (Exception ex)
+						{
+							Debug.LogError($"1 {ex}");
+						}
+
+						try
+						{
+							PrefabUtility.RevertPrefabInstance(gameObject, InteractionMode.AutomatedAction);
+						}
+						catch (Exception ex)
+						{
+							Debug.LogError($"2 {ex}");
+						}
+
+						try
+						{
+							PrefabUtility.RevertObjectOverride(gameObject, InteractionMode.AutomatedAction);
+						}
+						catch (Exception ex)
+						{
+							Debug.LogError($"3 {ex}");
+						}
+#endif
+
+						var realComponent = gameObject.AddComponent<RustComponent>();
+						realComponent.IsServer = component.IsServer;
+						realComponent.IsClient = component.IsClient;
+						realComponent.TargetType = component.TargetType;
+						realComponent.Members = component.Members;
+						realComponent.ColorSwitch = component.ColorSwitch;
+						Components[path] = realComponent;
+
+#if UNITY_EDITOR
+						EditorUtility.SetDirty(gameObject);
+#endif
+
+						Debug.LogWarning($"Reverted component on '{path}'");
+					}
+
+					foreach (var subTransform in transform)
+					{
+						Recursive((Transform)subTransform);
+					}
+				}
+			}
 		}
 	}
 
@@ -100,13 +200,16 @@ public class AddonEditor : ScriptableObject
 
 		foreach (var asset in Assets)
 		{
+			asset.BuildCache();
+			asset.Preprocess();
+
 			var bundle = new AssetBundleBuild();
 			var bundleName = asset.Name;
 			var bundleVariant = string.IsNullOrEmpty(asset.Extension) ? _defaultVariant : asset.Extension;
 
 			bundle.assetBundleName = bundleName;
 			bundle.assetBundleVariant = bundleVariant;
-			bundle.assetNames = asset.Prefabs.Select(x => AssetDatabase.GetAssetPath(x)).ToArray();
+			bundle.assetNames = asset.Prefabs.Select(AssetDatabase.GetAssetPath).ToArray();
 
 			bundles.Add(bundle);
 		}
@@ -119,8 +222,6 @@ public class AddonEditor : ScriptableObject
 		{
 			var bundleName = asset.Name;
 			var bundleVariant = string.IsNullOrEmpty(asset.Extension) ? _defaultVariant : asset.Extension;
-
-			asset.Process();
 
 			using (var memory = new MemoryStream())
 			{
@@ -136,6 +237,8 @@ public class AddonEditor : ScriptableObject
 					AdditionalData = memory.ToArray()
 				});
 			}
+
+			asset.Postprocess();
 		}
 
 		var addon = Carbon.Client.Assets.Addon.Create(new Carbon.Client.Assets.Addon.AddonInfo
