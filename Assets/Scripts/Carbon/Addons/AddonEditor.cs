@@ -25,7 +25,8 @@ public class AddonEditor : ScriptableObject
 	public string Version;
 	public List<Asset> Assets = new List<Asset>();
 
-	internal readonly string _mainBundle = "Addon";
+	internal readonly string _mainBundle = "main";
+	internal readonly string _defaultVariant = "dat";
 
 	[Serializable]
 	public class Asset
@@ -100,8 +101,8 @@ public class AddonEditor : ScriptableObject
 		foreach (var asset in Assets)
 		{
 			var bundle = new AssetBundleBuild();
-			var bundleName = name;
-			var bundleVariant = string.IsNullOrEmpty(asset.Extension) ? "bundle" : asset.Extension;
+			var bundleName = asset.Name;
+			var bundleVariant = string.IsNullOrEmpty(asset.Extension) ? _defaultVariant : asset.Extension;
 
 			bundle.assetBundleName = bundleName;
 			bundle.assetBundleVariant = bundleVariant;
@@ -116,8 +117,8 @@ public class AddonEditor : ScriptableObject
 
 		foreach (var asset in Assets)
 		{
-			var bundleName = name;
-			var bundleVariant = string.IsNullOrEmpty(asset.Extension) ? "bundle" : asset.Extension;
+			var bundleName = asset.Name;
+			var bundleVariant = string.IsNullOrEmpty(asset.Extension) ? _defaultVariant : asset.Extension;
 
 			asset.Process();
 
