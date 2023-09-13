@@ -89,7 +89,7 @@ namespace Carbon.Client
 			var matrix = Gizmos.matrix;
 			Gizmos.matrix = transform.localToWorldMatrix;
 
-			Handles.Label(transform.position, $"\n{TargetType}{(IsServer ? " [server]" : string.Empty)}{(IsServer ? " [client]" : string.Empty)}\n{string.Join("\n", Members.Select(x => $"  {x.Name}: {x.Value}"))}");
+			Handles.Label(transform.position, $"\n{TargetType}{(IsServer ? " [server]" : string.Empty)}{(IsClient ? " [client]" : string.Empty)}");
 
 			switch (_collider)
 			{

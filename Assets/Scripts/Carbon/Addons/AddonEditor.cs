@@ -85,7 +85,6 @@ public class AddonEditor : ScriptableObject
 
 					if (Components.TryGetValue(path, out var component))
 					{
-						Debug.LogWarning($"Cleared component on '{path}'");
 						DestroyImmediate(component, true);
 					}
 
@@ -111,36 +110,24 @@ public class AddonEditor : ScriptableObject
 					if (Components.TryGetValue(path, out var component))
 					{
 						var gameObject = transform.gameObject;
-
-#if UNITY_EDITOR
-						try
-						{
-							PrefabUtility.RevertPrefabInstance(gameObject, InteractionMode.AutomatedAction);
-						}
-						catch (Exception ex)
-						{
-							Debug.LogError($"2 {ex}");
-						}
-#endif
-
-						Debug.LogWarning($"Reverted component on '{path}'");
+						var realComponent = gameObject.AddComponent<RustComponent>();
+						realComponent.IsServer = component.IsServer;
+						realComponent.IsClient = component.IsClient;
+						realComponent.TargetType = component.TargetType;
+						realComponent.Members = component.Members;
+						realComponent.ColorSwitch = component.ColorSwitch;
 					}
-
-#if UNITY_EDITOR
-					try
-					{
-						PrefabUtility.SaveAsPrefabAssetAndConnect(prefab, prefabPath, InteractionMode.AutomatedAction);
-					}
-					catch  { }
-
-					EditorUtility.SetDirty(prefab);
-#endif
 
 					foreach (var subTransform in transform)
 					{
 						Recursive((Transform)subTransform);
 					}
 				}
+
+#if UNITY_EDITOR
+				PrefabUtility.SavePrefabAsset(prefab);
+				EditorUtility.SetDirty(prefab);
+#endif
 			}
 		}
 	}
