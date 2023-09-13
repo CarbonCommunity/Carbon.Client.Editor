@@ -61,6 +61,11 @@ MonoBehaviour:
   IsClient: 1
   TargetType: TriggerLadder
   Members:
+  - Name: interestLayers
+    Value: 131072
   - Name: Type
     Value: 0
   ColorSwitch: 0
+  MaskLookup:
+    serializedVersion: 2
+    m_Bits: 131072

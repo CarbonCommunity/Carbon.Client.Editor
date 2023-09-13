@@ -5,8 +5,6 @@ using UnityEngine;
 [CustomEditor(typeof(AddonEditor), true)]
 public class AddonEditorEditor : Editor
 {
-	public List<string> ErrorList { get; } = new List<string>();
-
 	public override void OnInspectorGUI()
 	{
 		DrawDefaultInspector();

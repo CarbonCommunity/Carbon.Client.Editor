@@ -27,6 +27,9 @@ namespace Carbon.Client
 		[ProtoIgnore, Header("Debugger")]
 		public int ColorSwitch;
 
+		[Header("Tools")]
+		public LayerMask MaskLookup;
+
 		internal Collider _collider = null;
 		internal float _timeSinceRetry = 0;
 

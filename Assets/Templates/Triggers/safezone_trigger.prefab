@@ -60,5 +60,10 @@ MonoBehaviour:
   IsServer: 1
   IsClient: 1
   TargetType: TriggerSafeZone
-  Members: []
+  Members:
+  - Name: interestLayers
+    Value: 163840
   ColorSwitch: 2
+  MaskLookup:
+    serializedVersion: 2
+    m_Bits: 2147647488
