@@ -61,4 +61,7 @@ MonoBehaviour:
   IsClient: 0
   TargetType: player_spawnpoint
   Members: []
-  ColorSwitch: 3
+  ColorSwitch: 0
+  MaskLookup:
+    serializedVersion: 2
+    m_Bits: 0

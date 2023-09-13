@@ -481,22 +481,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisableAll: 0
   ColorSwitches:
-  - Tag: Ladders
-    Enabled: 1
-    Main: {r: 0, g: 0.5999999, b: 1, a: 0.50980395}
-    Outline: {r: 0.10399608, g: 0.2736739, b: 0.38679248, a: 1}
-  - Tag: Radiation
-    Enabled: 1
-    Main: {r: 1, g: 0.36695006, b: 0, a: 0.50980395}
-    Outline: {r: 0.3882353, g: 0.23150998, b: 0.10588235, a: 1}
-  - Tag: Safe Zone
-    Enabled: 1
-    Main: {r: 0, g: 1, b: 0.21829796, a: 0.50980395}
-    Outline: {r: 0.11584955, g: 0.3882353, b: 0.10588235, a: 1}
-  - Tag: Spawnpoint (Player)
+  - Tag: 0. Spawnpoint (Player)
     Enabled: 1
     Main: {r: 1, g: 0.99721193, b: 0, a: 0.50980395}
     Outline: {r: 0.3882353, g: 0.36587775, b: 0.10588235, a: 1}
+  - Tag: 1. Ladders
+    Enabled: 1
+    Main: {r: 0, g: 0.5999999, b: 1, a: 0.50980395}
+    Outline: {r: 0.10399608, g: 0.2736739, b: 0.38679248, a: 1}
+  - Tag: 2. Radiation
+    Enabled: 1
+    Main: {r: 1, g: 0.36695006, b: 0, a: 0.50980395}
+    Outline: {r: 0.3882353, g: 0.23150998, b: 0.10588235, a: 1}
+  - Tag: 3. Safe Zone
+    Enabled: 1
+    Main: {r: 0, g: 1, b: 0.21829796, a: 0.50980395}
+    Outline: {r: 0.11584955, g: 0.3882353, b: 0.10588235, a: 1}
+  - Tag: 4. Comfort
+    Enabled: 1
+    Main: {r: 0, g: 0.3798082, b: 1, a: 0.50980395}
+    Outline: {r: 0.10588235, g: 0.12806153, b: 0.3882353, a: 1}
+  - Tag: 5. Temperature
+    Enabled: 1
+    Main: {r: 1, g: 1, b: 1, a: 0.50980395}
+    Outline: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
   InvalidSwitch:
     Tag: 
     Enabled: 1

@@ -67,7 +67,7 @@ MonoBehaviour:
     Value: 0.5
   - Name: minComfortRange
     Value: 2.5
-  ColorSwitch: 3
+  ColorSwitch: 4
   MaskLookup:
     serializedVersion: 2
     m_Bits: 131072

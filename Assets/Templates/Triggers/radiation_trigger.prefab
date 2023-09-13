@@ -65,7 +65,7 @@ MonoBehaviour:
     Value: 131072
   - Name: radiationTier
     Value: 1
-  ColorSwitch: 1
+  ColorSwitch: 2
   MaskLookup:
     serializedVersion: 2
     m_Bits: 131072

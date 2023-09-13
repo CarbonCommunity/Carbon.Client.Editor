@@ -65,7 +65,7 @@ MonoBehaviour:
     Value: 131072
   - Name: Type
     Value: 0
-  ColorSwitch: 0
+  ColorSwitch: 1
   MaskLookup:
     serializedVersion: 2
     m_Bits: 0

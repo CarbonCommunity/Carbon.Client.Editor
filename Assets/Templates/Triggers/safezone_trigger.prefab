@@ -63,7 +63,7 @@ MonoBehaviour:
   Members:
   - Name: interestLayers
     Value: 163840
-  ColorSwitch: 2
+  ColorSwitch: 3
   MaskLookup:
     serializedVersion: 2
     m_Bits: 2147647488

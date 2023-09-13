@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using ProtoBuf;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Carbon.Client
 {
@@ -33,6 +34,8 @@ namespace Carbon.Client
 		internal Collider _collider = null;
 		internal float _timeSinceRetry = 0;
 
+		public Camera _sceneCamera => SceneView.currentDrawingSceneView.camera;
+
 
 		[Serializable, ProtoContract]
 		public class Member
@@ -61,6 +64,25 @@ namespace Carbon.Client
 			var matrix = Gizmos.matrix;
 			Gizmos.matrix = transform.localToWorldMatrix;
 
+			if (Vector3.Distance(_sceneCamera.transform.position, transform.position) <= 30)
+			{
+				var print = $"\n{TargetType}{(IsServer ? " [server]" : string.Empty)}{(IsClient ? " [client]" : string.Empty)}";
+				Handles.Label(transform.position, $"{print}");
+
+				switch (_collider)
+				{
+					case SphereCollider sphere:
+						Gizmos.color = Defines.Singleton.GetSwitch(ColorSwitch).Outline;
+						Gizmos.DrawWireSphere(sphere.center, sphere.radius);
+						break;
+
+					case BoxCollider box:
+						Gizmos.color = Defines.Singleton.GetSwitch(ColorSwitch).Outline;
+						Gizmos.DrawWireCube(box.center, box.size);
+						break;
+				}
+			}
+
 			switch (_collider)
 			{
 				case SphereCollider sphere:
@@ -76,39 +98,7 @@ namespace Carbon.Client
 
 			Gizmos.matrix = matrix;
 		}
-		public void OnDrawGizmosSelected()
-		{
-			if (_collider == null)
-			{
-				if ((Time.realtimeSinceStartup - _timeSinceRetry) > 5f)
-				{
-					_collider = GetComponent<Collider>();
-					_timeSinceRetry = Time.realtimeSinceStartup;
-				}
 
-				return;
-			}
-
-			var matrix = Gizmos.matrix;
-			Gizmos.matrix = transform.localToWorldMatrix;
-
-			Handles.Label(transform.position, $"\n{TargetType}{(IsServer ? " [server]" : string.Empty)}{(IsClient ? " [client]" : string.Empty)}");
-
-			switch (_collider)
-			{
-				case SphereCollider sphere:
-					Gizmos.color = Defines.Singleton.GetSwitch(ColorSwitch).Outline;
-					Gizmos.DrawWireSphere(sphere.center, sphere.radius);
-					break;
-
-				case BoxCollider box:
-					Gizmos.color = Defines.Singleton.GetSwitch(ColorSwitch).Outline;
-					Gizmos.DrawWireCube(box.center, box.size);
-					break;
-			}
-
-			Gizmos.matrix = matrix;
-		}
 #endif
 	}
 }

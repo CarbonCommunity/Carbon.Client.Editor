@@ -73,7 +73,7 @@ MonoBehaviour:
     Value: 8.5
   - Name: blockMaxHour
     Value: 18.5
-  ColorSwitch: 4
+  ColorSwitch: 5
   MaskLookup:
     serializedVersion: 2
     m_Bits: 163840
