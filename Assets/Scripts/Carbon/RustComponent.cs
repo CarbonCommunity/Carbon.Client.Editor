@@ -34,8 +34,6 @@ namespace Carbon.Client
 		internal Collider _collider = null;
 		internal float _timeSinceRetry = 0;
 
-		public Camera _sceneCamera => SceneView.currentDrawingSceneView.camera;
-
 
 		[Serializable, ProtoContract]
 		public class Member
@@ -48,6 +46,8 @@ namespace Carbon.Client
 		}
 
 #if UNITY_EDITOR
+		public Camera _sceneCamera => SceneView.currentDrawingSceneView.camera;
+
 		public void OnDrawGizmos()
 		{
 			if (_collider == null)
