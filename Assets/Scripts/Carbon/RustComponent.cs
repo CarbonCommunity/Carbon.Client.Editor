@@ -64,7 +64,7 @@ namespace Carbon.Client
 			var matrix = Gizmos.matrix;
 			Gizmos.matrix = transform.localToWorldMatrix;
 
-			if (Vector3.Distance(_sceneCamera.transform.position, transform.position) <= 30)
+			if (Vector3.Distance(_sceneCamera.transform.position, transform.position) <= Defines.Singleton.InfoDistance)
 			{
 				var print = $"\n{TargetType}{(IsServer ? " [server]" : string.Empty)}{(IsClient ? " [client]" : string.Empty)}";
 				Handles.Label(transform.position, $"{print}");

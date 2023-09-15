@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class Defines : MonoBehaviour
 {
+	public float InfoDistance;
 	public bool DisableAll;
 
 	[Header("Debugger")]
