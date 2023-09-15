@@ -58,17 +58,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2707f9c09b49ca0478a23a2ff2fbcaa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisableObjectOn:
-    Server: 0
-    Client: 0
-  DestroyObjectOn:
-    Server: 0
-    Client: 0
+  Server: 0
+  Client: 0
   Component:
     CreateOn:
       Server: 1
       Client: 1
-    Type: TriggerComfort
+    Type: TriggerLadder
     Members:
     - Name: interestLayers
       Value: 131072
