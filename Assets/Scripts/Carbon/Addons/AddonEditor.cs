@@ -111,10 +111,9 @@ public class AddonEditor : ScriptableObject
 					{
 						var gameObject = transform.gameObject;
 						var realComponent = gameObject.AddComponent<RustComponent>();
-						realComponent.IsServer = component.IsServer;
-						realComponent.IsClient = component.IsClient;
-						realComponent.TargetType = component.TargetType;
-						realComponent.Members = component.Members;
+						realComponent.Component = component.Component;
+						realComponent.DisableObjectOn = component.DisableObjectOn;
+						realComponent.DestroyObjectOn = component.DestroyObjectOn;
 						realComponent.ColorSwitch = component.ColorSwitch;
 					}
 

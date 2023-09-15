@@ -1,30 +1,11 @@
-﻿using System;
-using System.Linq;
-using Newtonsoft.Json;
-using ProtoBuf;
+﻿using ProtoBuf;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Carbon.Client
 {
-	[ProtoContract]
-	public class RustComponent : MonoBehaviour
+	public partial class RustComponent
 	{
-		// public LayerMask LayerMaskTest = new LayerMask { value = 163840 };
-
-		[ProtoMember(1)]
-		public bool IsServer;
-
-		[ProtoMember(2)]
-		public bool IsClient;
-
-		[ProtoMember(3)]
-		public string TargetType;
-
-		[ProtoMember(4)]
-		public Member[] Members;
-
 		[ProtoIgnore, Header("Debugger")]
 		public int ColorSwitch;
 
@@ -33,17 +14,6 @@ namespace Carbon.Client
 
 		internal Collider _collider = null;
 		internal float _timeSinceRetry = 0;
-
-
-		[Serializable, ProtoContract]
-		public class Member
-		{
-			[ProtoMember(1)]
-			public string Name;
-
-			[ProtoMember(2)]
-			public string Value;
-		}
 
 #if UNITY_EDITOR
 		public Camera _sceneCamera => SceneView.currentDrawingSceneView.camera;
@@ -66,7 +36,7 @@ namespace Carbon.Client
 
 			if (Vector3.Distance(_sceneCamera.transform.position, transform.position) <= Defines.Singleton.InfoDistance)
 			{
-				var print = $"\n{TargetType}{(IsServer ? " [server]" : string.Empty)}{(IsClient ? " [client]" : string.Empty)}";
+				var print = $"\n{Component.Type}{(Component.CreateOn.Server ? " [server]" : string.Empty)}{(Component.CreateOn.Client ? " [client]" : string.Empty)}";
 				Handles.Label(transform.position, $"{print}");
 
 				switch (_collider)

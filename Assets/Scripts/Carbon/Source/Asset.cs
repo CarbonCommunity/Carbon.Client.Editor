@@ -5,6 +5,12 @@
  *
  */
 
+/*
+ * 
+ *  DO NOT TOUCH UP THIS FILE
+ *  
+ */
+
 using Newtonsoft.Json;
 using ProtoBuf;
 
