@@ -58,11 +58,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2707f9c09b49ca0478a23a2ff2fbcaa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Server: 2
+  Server: 0
   Client: 0
   Component:
     CreateOn:
-      Server: 0
+      Server: 1
       Client: 1
     Type: WaterVisibilityTrigger
     Members:
