@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Carbon;
 using ProtoBuf;
 using UnityEngine;
 
@@ -11,21 +12,8 @@ public class Defines : MonoBehaviour
 	public bool DisableAll;
 
 	[Header("Debugger")]
-	public ColorSwitch[] ColorSwitches;
 	public ColorSwitch InvalidSwitch;
 	public ColorSwitch BlankSwitch;
-
-	[Serializable]
-	public class ColorSwitch
-	{
-		[Header("Properties")]
-		public string Tag;
-		public bool Enabled = true;
-
-		[Header("Colors")]
-		public Color Main = Color.white;
-		public Color Outline = Color.white;
-	}
 
 	public static Defines Singleton { get; private set; }
 
@@ -34,21 +22,19 @@ public class Defines : MonoBehaviour
 		Singleton = this;
 	}
 
-	public ColorSwitch GetSwitch(int index)
+	public ColorSwitch GetSwitch(ColorSwitch @switch)
 	{
-		if (index > ColorSwitches.Length - 1 || index < 0)
+		if(@switch == null)
 		{
 			return InvalidSwitch;
 		}
 
-		var result = ColorSwitches[index];
-
-		if (!result.Enabled || DisableAll)
+		if (!@switch.Enabled || DisableAll)
 		{
 			return BlankSwitch;
 		}
 
-		return result;
+		return @switch;
 	}
 
 	public static string Root => Path.GetFullPath(Path.Combine(Application.dataPath, ".."));

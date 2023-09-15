@@ -7,7 +7,7 @@ namespace Carbon.Client
 	public partial class RustComponent
 	{
 		[ProtoIgnore, Header("Debugger")]
-		public int ColorSwitch;
+		public ColorSwitch ColorSwitch;
 
 		[Header("Tools")]
 		public LayerMask MaskLookup;

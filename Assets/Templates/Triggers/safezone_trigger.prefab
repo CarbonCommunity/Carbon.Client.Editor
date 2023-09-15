@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -57,13 +58,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2707f9c09b49ca0478a23a2ff2fbcaa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsServer: 1
-  IsClient: 1
-  TargetType: TriggerSafeZone
-  Members:
-  - Name: interestLayers
-    Value: 163840
-  ColorSwitch: 3
+  Server: 0
+  Client: 2
+  Component:
+    CreateOn:
+      Server: 1
+      Client: 0
+    Type: TriggerSafeZone
+    Members:
+    - Name: interestLayers
+      Value: 163840
+    - Name: maxDepth
+      Value: 20
+    - Name: maxAltitude
+      Value: -1
+  ColorSwitch: {fileID: 11400000, guid: f269ab65c06dc6a4fa730730fee60ac0, type: 2}
   MaskLookup:
     serializedVersion: 2
-    m_Bits: 2147647488
+    m_Bits: 163840

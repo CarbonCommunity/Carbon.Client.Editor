@@ -43,7 +43,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 11
+  serializedVersion: 12
   m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
@@ -98,7 +98,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_LightingSettings: {fileID: 4890085278179872738, guid: e0bda628e377db345ac127709f12868c,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -118,6 +119,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
@@ -149,6 +152,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 157207114}
   m_RootOrder: 1
@@ -228,6 +232,7 @@ Light:
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 2.5
 --- !u!1 &157207112
@@ -307,6 +312,7 @@ Light:
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 2.5
 --- !u!4 &157207114
@@ -319,6 +325,7 @@ Transform:
   m_LocalRotation: {x: 0.5888408, y: 0.29488394, z: -0.24390583, w: 0.7119129}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 365853225}
   - {fileID: 24541191}
@@ -369,6 +376,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 157207114}
   m_RootOrder: 0
@@ -448,6 +456,7 @@ Light:
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 2.5
 --- !u!1 &606081489
@@ -479,42 +488,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff0867ecbd2119b44aa3a17595d0c6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InfoDistance: 75
   DisableAll: 0
-  ColorSwitches:
-  - Tag: 0. Spawnpoint (Player)
-    Enabled: 1
-    Main: {r: 1, g: 0.99721193, b: 0, a: 0.50980395}
-    Outline: {r: 0.3882353, g: 0.36587775, b: 0.10588235, a: 1}
-  - Tag: 1. Ladders
-    Enabled: 1
-    Main: {r: 0, g: 0.5999999, b: 1, a: 0.50980395}
-    Outline: {r: 0.10399608, g: 0.2736739, b: 0.38679248, a: 1}
-  - Tag: 2. Radiation
-    Enabled: 1
-    Main: {r: 1, g: 0.36695006, b: 0, a: 0.50980395}
-    Outline: {r: 0.3882353, g: 0.23150998, b: 0.10588235, a: 1}
-  - Tag: 3. Safe Zone
-    Enabled: 1
-    Main: {r: 0, g: 1, b: 0.21829796, a: 0.50980395}
-    Outline: {r: 0.11584955, g: 0.3882353, b: 0.10588235, a: 1}
-  - Tag: 4. Comfort
-    Enabled: 1
-    Main: {r: 0, g: 0.3798082, b: 1, a: 0.50980395}
-    Outline: {r: 0.10588235, g: 0.12806153, b: 0.3882353, a: 1}
-  - Tag: 5. Temperature
-    Enabled: 1
-    Main: {r: 1, g: 1, b: 1, a: 0.50980395}
-    Outline: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
-  InvalidSwitch:
-    Tag: 
-    Enabled: 1
-    Main: {r: 1, g: 0, b: 0, a: 0.78431374}
-    Outline: {r: 1, g: 1, b: 1, a: 0}
-  BlankSwitch:
-    Tag: 
-    Enabled: 1
-    Main: {r: 1, g: 1, b: 1, a: 0}
-    Outline: {r: 1, g: 1, b: 1, a: 0}
+  InvalidSwitch: {fileID: 11400000, guid: e3de82c27364a8b419630adee69038fd, type: 2}
+  BlankSwitch: {fileID: 11400000, guid: f56133812ba62654f826d353d680db5e, type: 2}
 --- !u!4 &606081491
 Transform:
   m_ObjectHideFlags: 0
@@ -525,6 +502,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.069018, y: -0.5005053, z: -2.6562529}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -568,6 +546,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -600,6 +579,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1823688467}
   m_RootOrder: 0
@@ -735,6 +715,7 @@ Transform:
   m_LocalRotation: {x: 0.19996412, y: 0.3736123, z: -0.08282785, w: 0.90198}
   m_LocalPosition: {x: -6, y: 5, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1820337005}
   m_Father: {fileID: 0}
@@ -859,6 +840,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2

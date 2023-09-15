@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -57,23 +58,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2707f9c09b49ca0478a23a2ff2fbcaa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsServer: 1
-  IsClient: 0
-  TargetType: TriggerTemperature
-  Members:
-  - Name: interestLayers
-    Value: 163840
-  - Name: Temperature
-    Value: 50
-  - Name: sunlightBlocker
-    Value: false
-  - Name: sunlightBlockAmount
-    Value: 0
-  - Name: blockMinHour
-    Value: 8.5
-  - Name: blockMaxHour
-    Value: 18.5
-  ColorSwitch: 5
+  Server: 0
+  Client: 2
+  Component:
+    CreateOn:
+      Server: 1
+      Client: 0
+    Type: TriggerTemperature
+    Members:
+    - Name: interestLayers
+      Value: 131072
+    - Name: Temperature
+      Value: 50
+    - Name: sunlightBlocker
+      Value: false
+    - Name: sunlightBlockAmount
+      Value: 0
+  ColorSwitch: {fileID: 11400000, guid: f0a882d9b4ee93643bccd92370e1090a, type: 2}
   MaskLookup:
     serializedVersion: 2
-    m_Bits: 163840
+    m_Bits: 131072

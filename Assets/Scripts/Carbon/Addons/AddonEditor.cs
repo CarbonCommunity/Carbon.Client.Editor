@@ -36,7 +36,7 @@ public class AddonEditor : ScriptableObject
 		public string Extension;
 		public GameObject[] Prefabs;
 
-		public Dictionary<string, RustComponent> Components = new Dictionary<string, RustComponent>();
+		public Dictionary<string, List<RustComponent>> Components = new Dictionary<string, List<RustComponent>>();
 
 		public void Preprocess()
 		{
@@ -61,7 +61,14 @@ public class AddonEditor : ScriptableObject
 
 					if (component != null)
 					{
-						Components.Add(GetRecursiveName(transform).ToLower(), component);
+						var path = GetRecursiveName(transform).ToLower();
+
+						if (!Components.TryGetValue(path, out var components))
+						{
+							Components.Add(path, components = new List<RustComponent>());
+						}
+
+						components.Add(component);
 					}
 
 					foreach (var subTransform in transform)
@@ -83,9 +90,12 @@ public class AddonEditor : ScriptableObject
 				{
 					var path = GetRecursiveName(transform).ToLower();
 
-					if (Components.TryGetValue(path, out var component))
+					if (Components.TryGetValue(path, out var components))
 					{
-						DestroyImmediate(component, true);
+						foreach(var component in components)
+						{
+							DestroyImmediate(component, true);
+						}
 					}
 
 					foreach (var subTransform in transform)
@@ -99,6 +109,10 @@ public class AddonEditor : ScriptableObject
 		{
 			foreach (var prefab in Prefabs)
 			{
+#if UNITY_EDITOR
+				PrefabUtility.UnpackAllInstancesOfPrefab(prefab, PrefabUnpackMode.Completely, InteractionMode.UserAction);
+#endif
+
 				var prefabPath = GetRecursiveName(prefab.transform).ToLower();
 
 				Recursive(prefab.transform);
@@ -107,14 +121,18 @@ public class AddonEditor : ScriptableObject
 				{
 					var path = GetRecursiveName(transform).ToLower();
 
-					if (Components.TryGetValue(path, out var component))
+					if (Components.TryGetValue(path, out var components))
 					{
 						var gameObject = transform.gameObject;
-						var realComponent = gameObject.AddComponent<RustComponent>();
-						realComponent.Component = component.Component;
-						realComponent.DisableObjectOn = component.DisableObjectOn;
-						realComponent.DestroyObjectOn = component.DestroyObjectOn;
-						realComponent.ColorSwitch = component.ColorSwitch;
+
+						foreach (var component in components)
+						{
+							var realComponent = gameObject.AddComponent<RustComponent>();
+							realComponent.Component = component.Component;
+							realComponent.Server = component.Server;
+							realComponent.Client = component.Client;
+							realComponent.ColorSwitch = component.ColorSwitch;
+						}
 					}
 
 					foreach (var subTransform in transform)

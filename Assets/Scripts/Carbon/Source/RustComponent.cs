@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ProtoBuf;
 using UnityEngine;
 
@@ -8,13 +8,20 @@ namespace Carbon.Client
 	public partial class RustComponent : MonoBehaviour
 	{
 		[ProtoMember(1)]
-		public Controls DisableObjectOn = new Controls();
+		public PostProcessMode Server = PostProcessMode.Active;
 
 		[ProtoMember(2)]
-		public Controls DestroyObjectOn = new Controls();
+		public PostProcessMode Client = PostProcessMode.Active;
 
 		[ProtoMember(3)]
 		public ComponentInfo Component = new ComponentInfo();
+
+		public enum PostProcessMode
+		{
+			Active,
+			Disabled,
+			Destroyed
+		}
 
 		[Serializable, ProtoContract]
 		public class Member
@@ -27,7 +34,7 @@ namespace Carbon.Client
 		}
 
 		[Serializable, ProtoContract]
-		public class Controls
+		public class Platform
 		{
 			[ProtoMember(1)]
 			public bool Server;
@@ -40,12 +47,12 @@ namespace Carbon.Client
 		public class ComponentInfo
 		{
 			[ProtoMember(1)]
-			public Controls CreateOn = new Controls();
-
-			[ProtoMember(1)]
-			public string Type;
+			public Platform CreateOn = new Platform();
 
 			[ProtoMember(2)]
+			public string Type;
+
+			[ProtoMember(3)]
 			public Member[] Members;
 		}
 	}

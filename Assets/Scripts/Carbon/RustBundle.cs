@@ -10,6 +10,6 @@ namespace Carbon.Client
 	public class RustBundle
 	{
 		[ProtoMember(1)]
-		public Dictionary<string, RustComponent> Components = new Dictionary<string, RustComponent>();
+		public Dictionary<string, List<RustComponent>> Components = new Dictionary<string, List<RustComponent>>();
 	}
 }

@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -57,11 +58,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2707f9c09b49ca0478a23a2ff2fbcaa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsServer: 0
-  IsClient: 0
-  TargetType: player_spawnpoint
-  Members: []
-  ColorSwitch: 0
+  Server: 0
+  Client: 2
+  Component:
+    CreateOn:
+      Server: 0
+      Client: 0
+    Type: Spawnpoint (Player)
+    Members: []
+  ColorSwitch: {fileID: 11400000, guid: 2bc108130fe1b9d43b7b4dfb7b2400eb, type: 2}
   MaskLookup:
     serializedVersion: 2
     m_Bits: 0
