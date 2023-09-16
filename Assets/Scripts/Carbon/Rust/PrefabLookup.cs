@@ -7,6 +7,7 @@ using System;
 using UnityEditor;
 using System.IO;
 using UnityEditor.SceneManagement;
+using Carbon.Client;
 
 public class PrefabLookup : System.IDisposable
 {
@@ -23,37 +24,35 @@ public class PrefabLookup : System.IDisposable
 
 	public PrefabLookup ( string bundlename )
 	{
-		Debug.Log ( $"Loading Rust root bundle: {bundlename}" );
-
 		backend = new AssetBundleBackend ( bundlename );
 
-        Debug.Log ( $" Found {backend.bundles.Count:n0} bundles: {string.Join(", ", backend.bundles.Select(x => x.Key))}" );
-        Debug.Log ( $" Found {backend.bundles.Sum(x => x.Value.GetAllAssetNames().Length):n0} assets..." );
+		const string filter = ".prefab";
 
-		foreach(var bundle in backend.bundles)
+		foreach (var bundle in backend.bundles)
 		{
-			foreach(var asset in bundle.Value.GetAllAssetNames())
-			{
-				if (!asset.EndsWith(".prefab"))
-				{
-					continue;
-				}
+			var content = bundle.Value.GetAllAssetNames().Where(x => x.EndsWith(filter));
+			var count = 1;
+			var totalCount = content.Count();
 
+			foreach (var asset in content)
+			{
+#if UNITY_EDITOR
+				EditorUtility.DisplayProgressBar("Rust Content", $"Caching assets... {count:n0} / {totalCount:n0}", count.Percentage(totalCount, 1));
+#endif
 				if (!prefabs.ContainsKey(asset)) prefabs.Add(asset, null);
+				count++;
 			}
 		}
 
-		Debug.Log($"Prewarming complete {prefabs.Count}.");
+		EditorUtility.ClearProgressBar();
 
 		RustAssetProcessor.OnAssetsLoaded?.Invoke(prefabs);
-	}
+	} 
 
 	public void Dispose ()
 	{
 		backend?.Dispose ();
 		backend = null;
-
-		Debug.Log ( $"Disposed Rust's asset bundles. Clean-up complete." );
 	}
 	public uint GetRustUID ( string name )
 	{

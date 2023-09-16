@@ -43,14 +43,17 @@ public class AssetBundleBackend : FileSystemBackend, System.IDisposable
 
 	private void LoadBundle(string bundleName)
 	{
-		if (bundles.ContainsKey(bundleName)) return;
+		if (bundles.ContainsKey(bundleName) || bundleName.Contains("private"))
+		{
+			return;
+		}
 
 		try
 		{
 			var fileLocation = assetPath + bundleName;
 			var asset = AssetBundle.LoadFromFile(fileLocation);
 
-			if (asset == null)
+			if (asset == null) 
 			{
 				LoadError("Couldn't load AssetBundle - " + fileLocation);
 				return;
@@ -58,9 +61,9 @@ public class AssetBundleBackend : FileSystemBackend, System.IDisposable
 
 			bundles.Add(bundleName, asset);
 		}
-		catch (System.Exception ex)
+		catch
 		{
-			Debug.LogWarning($"Couldn't load '{bundleName}' ({ex.Message})\n{ex.StackTrace}");
+			// Debug.LogWarning($"Couldn't load '{bundleName}' ({ex.Message})\n{ex.StackTrace}");
 		}
 	}
 
@@ -70,18 +73,11 @@ public class AssetBundleBackend : FileSystemBackend, System.IDisposable
 
 		foreach (var bundle in bundles)
 		{
-			// if (bundle.Key.StartsWith("content", System.StringComparison.InvariantCultureIgnoreCase))
-			// 	continue;
-
 			foreach (var filename in bundle.Value.GetAllAssetNames())
 			{
 				files.Add(filename, bundle.Value);
 			}
 		}
-
-		File.WriteAllText("prefabs.txt", string.Join("\n", files.Select(x => x.Key)));
-
-		Debug.Log($"{bundles.Count} {files.Count}");
 	}
 
 	public void Dispose()

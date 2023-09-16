@@ -68,7 +68,6 @@ namespace Carbon.Client
 
 			Gizmos.matrix = matrix;
 		}
-
 #endif
 	}
 }

@@ -77,7 +77,7 @@ public abstract class FileSystemBackend
 
 	protected void LoadError(string err)
 	{
-		Debug.LogError(err);
+		// Debug.LogError(err);
 		loadingError = err;
 		isError = true;
 	} 

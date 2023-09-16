@@ -8,31 +8,27 @@ using UnityEngine;
 
 namespace Carbon
 {
+	[ExecuteInEditMode]
 	public class RustAssetProcessor : MonoBehaviour
 	{
+		public string RustClientDirectory;
+
+		[HideInInspector]
+		public bool AutoLoad;
+
+		public bool IsLoaded => PrefabLookup != null && PrefabLookup.backend != null && PrefabLookup.backend.bundles.Count > 0;
+
 		public static Dictionary<string, GameObject> Prefabs;
 		public static Action<Dictionary<string, GameObject>> OnAssetsLoaded;
 		public static PrefabLookup PrefabLookup;
 
-		[RuntimeInitializeOnLoadMethod]
-		static void RunOnStart()
-		{
-			Debug.Log("Disposing brain matter");
-			PrefabLookup.Dispose();
-		}
-
-		public void Awake()
-		{
-			Load();
-		}
-
 		[ContextMenu("Load")]
 		public void Load()
 		{
-			var folder = $@"D:\Software\Steam\steamapps\common\Rust\Bundles";
-			var bundles = Path.Combine(folder, "Bundles");
+#if UNITY_EDITOR
+			EditorUtility.DisplayProgressBar("Rust Content", "Processing rust content", 0);
 
-			PrefabLookup = new PrefabLookup(bundles);
+			var bundles = Path.Combine(RustClientDirectory, "Bundles", "Bundles");
 
 			OnAssetsLoaded += prefabs =>
 			{
@@ -40,18 +36,22 @@ namespace Carbon
 
 				Debug.Log($"Done! Got {prefabs.Count} prefabs.");
 
-#if UNITY_EDITOR
 				var count = 1;
 				foreach(var prefab in Prefabs)
 				{
-					var assetName = Path.GetFileName(prefab.Key);
-
-					if(!assetName.EndsWith(".prefab"))
+					if (!prefab.Key.EndsWith(".prefab"))
 					{
 						continue;
 					}
 
+					var assetName = prefab.Key.Replace("assets", string.Empty);
 					var path = $"assets/bundled/rust/{assetName}";
+					var directory= Path.GetDirectoryName(path);
+
+					if (!Directory.Exists(directory))
+					{
+						Directory.CreateDirectory(directory);
+					}
 
 					if (!File.Exists(path))
 					{
@@ -67,7 +67,7 @@ GameObject:
   m_Component:
   - component: {{fileID: 7282809360880194197}}
   - component: {{fileID: 7436625876820886793}}
-  m_Layer: {prefab.Value.layer}
+  m_Layer: 0
   m_Name: {prefab.Key}
   m_TagString: Untagged
   m_Icon: {{fileID: 0}}
@@ -120,12 +120,22 @@ MonoBehaviour:
 				EditorUtility.ClearProgressBar();
 #endif
 			};
+
+			PrefabLookup = new PrefabLookup(bundles);
 		}
 
 		[ContextMenu("Unload")]
 		public void Unload()
 		{
 			PrefabLookup.Dispose();
+		}
+
+		public void FixedUpdate()
+		{
+			if (!IsLoaded && AutoLoad)
+			{
+				Load();
+			}
 		}
 	}
 }

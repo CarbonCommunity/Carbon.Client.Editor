@@ -37,5 +37,68 @@ namespace Carbon.Client
 			 
 			return BitConverter.ToUInt32(new MD5CryptoServiceProvider().ComputeHash(Encoding.UTF8.GetBytes(str)), 0);
 		}
+
+		public struct GUIColorChange : IDisposable
+		{
+			public Color Color;
+			public Color Original;
+			public bool IsBackground;
+
+			public static GUIColorChange New(Color color, bool background = true)
+			{
+				var change = new GUIColorChange
+				{
+					Color = color,
+					IsBackground = background,
+					Original = background ? GUI.backgroundColor : GUI.color
+				};
+
+				if (background)
+				{
+					GUI.backgroundColor = color;
+				}
+				else
+				{
+					GUI.color = color;
+				}
+
+				return change;
+			}
+
+			public void Dispose()
+			{
+				if (IsBackground)
+				{
+					GUI.backgroundColor = Original;
+				}
+				else
+				{
+					GUI.color = Original;
+				}
+			}
+		}
+		public struct GUIEnableChange : IDisposable
+		{
+			public bool Value;
+			public bool Original;
+
+			public static GUIEnableChange New(bool value)
+			{
+				var change = new GUIEnableChange
+				{
+					Value = value,
+					Original = GUI.enabled
+				};
+
+				GUI.enabled = value;
+
+				return change;
+			}
+
+			public void Dispose()
+			{
+				GUI.enabled = Original;
+			}
+		}
 	}
 }
