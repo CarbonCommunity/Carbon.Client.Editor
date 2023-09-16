@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR
+
+using System.Collections;
 using UnityEditor;
 
 public class EditorCoroutine
@@ -40,3 +42,5 @@ public class EditorCoroutine
 		}
 	}
 }
+
+#endif

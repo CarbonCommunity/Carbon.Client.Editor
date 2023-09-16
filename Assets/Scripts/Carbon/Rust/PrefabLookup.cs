@@ -18,6 +18,7 @@ public class PrefabLookup : System.IDisposable
 	{
 		Dispose();
 	}
+#if UNITY_EDITOR
 
 	public IEnumerator Build(int progressParentId, string bundlename)
 	{
@@ -54,6 +55,7 @@ public class PrefabLookup : System.IDisposable
 
 		RustAssetProcessor.OnAssetsLoaded?.Invoke(prefabs);
 	}
+#endif
 
 	public void Dispose ()
 	{

@@ -49,12 +49,9 @@ public class RustAsset : MonoBehaviour
 
 		if (HasChanged(out var pos, out var rot, out var scale) && _instance != null)
 		{
-			// _instance.transform.SetPositionAndRotation(pos, rot);
-			// _instance.transform.localScale = scale;
+			_instance.transform.SetPositionAndRotation(pos, rot);
+			_instance.transform.localScale = scale;
 		}
-
-		_instance.transform.SetPositionAndRotation(Vector3.Lerp(_instance.transform.position, pos, Time.time * 0.2f), Quaternion.Slerp(_instance.transform.rotation, rot, Time.time * 0.2f));
-		_instance.transform.localScale = Vector3.Lerp(_instance.transform.localScale, scale, Time.time * 0.2f);
 	}
 
 	public void Preview()

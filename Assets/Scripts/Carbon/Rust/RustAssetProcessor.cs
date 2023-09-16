@@ -30,6 +30,7 @@ namespace Carbon
 
 		internal float _currentTick;
 
+#if UNITY_EDITOR
 		public static Transform SelectedPreview
 		{
 			get
@@ -56,12 +57,14 @@ namespace Carbon
 				return go;
 			}
 		}
+#endif
 
 		public RustAssetProcessor()
 		{
 			Instance = this;
 		}
 
+#if UNITY_EDITOR
 		public IEnumerator Load()
 		{
 			if (IsLoading)
@@ -179,12 +182,14 @@ MonoBehaviour:
 			PrefabLookup = new PrefabLookup();
 			EditorCoroutine.Start(PrefabLookup.Build(id, bundles));
 		}
+#endif
 		public void Unload()
 		{
 			IsLoading = false;
 			PrefabLookup?.Dispose();
 		}
 
+#if UNITY_EDITOR
 		public void SelectionSyncTick()
 		{
 			if (!SelectionSync || Selection.activeObject is RustAsset)
@@ -254,5 +259,7 @@ MonoBehaviour:
 			SelectionSyncTick();
 			AssetTick();
 		}
+
+#endif
 	}
 }

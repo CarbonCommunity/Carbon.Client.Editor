@@ -247,7 +247,8 @@ public class AddonEditor : ScriptableObject
 			{
 				Serializer.Serialize(memory, new RustBundle
 				{
-					Components = asset.Components
+					Components = asset.Components,
+					RustPrefabs = asset.RustPrefabs.Select(x => x.Value).ToList()
 				});
 
 				assets.Add(new Carbon.Client.Assets.Asset()
