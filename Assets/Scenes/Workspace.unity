@@ -781,6 +781,7 @@ GameObject:
   - component: {fileID: 1931376706}
   - component: {fileID: 1931376705}
   - component: {fileID: 1931376704}
+  - component: {fileID: 1931376707}
   m_Layer: 4
   m_Name: Water
   m_TagString: Untagged
@@ -853,6 +854,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &1931376707
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931376702}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2013410473
 GameObject:
   m_ObjectHideFlags: 1
@@ -929,4 +944,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RustClientDirectory: D:/Software/Steam/steamapps/common/Rust
-  AutoLoad: 0
+  AutoLoad: 1

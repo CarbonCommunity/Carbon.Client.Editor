@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Carbon.Client;
 using ProtoBuf;
+using Carbon.Client.Packets;
+using System.ComponentModel;
 
 #if UNITY_EDITOR
 using HierarchyIcons;
@@ -37,19 +39,21 @@ public class AddonEditor : ScriptableObject
 		public GameObject[] Prefabs;
 
 		public Dictionary<string, List<RustComponent>> Components = new Dictionary<string, List<RustComponent>>();
+		public Dictionary<string, RustPrefab> RustPrefabs = new Dictionary<string, RustPrefab>();
 
 		public void Preprocess()
 		{
-			ClearComponents();
+			Clear();
 		}
 		public void Postprocess()
 		{
-			ApplyComponents();
+			Restore();
 		}
 
 		public void BuildCache()
 		{
 			Components.Clear();
+			RustPrefabs.Clear();
 
 			foreach (var prefab in Prefabs)
 			{
@@ -57,18 +61,36 @@ public class AddonEditor : ScriptableObject
 
 				void Recursive(Transform transform)
 				{
+					var path = GetRecursiveName(transform).ToLower();
+
 					var component = transform.GetComponent<RustComponent>();
-
-					if (component != null)
 					{
-						var path = GetRecursiveName(transform).ToLower();
-
-						if (!Components.TryGetValue(path, out var components))
+						if (component != null)
 						{
-							Components.Add(path, components = new List<RustComponent>());
-						}
+							if (!Components.TryGetValue(path, out var components))
+							{
+								Components.Add(path, components = new List<RustComponent>());
+							}
 
-						components.Add(component);
+							components.Add(component);
+						}
+					}
+
+					var rustAsset = transform.GetComponent<RustAsset>();
+					{
+						if (rustAsset != null)
+						{
+							if (!RustPrefabs.ContainsKey(path))
+							{
+								RustPrefabs.Add(path, new RustPrefab
+								{
+									Path = rustAsset.Path,
+									Position = BaseVector.ToProtoVector(rustAsset.transform.position),
+									Rotation = BaseVector.ToProtoVector(rustAsset.transform.rotation),
+									Scale = BaseVector.ToProtoVector(rustAsset.transform.localScale)
+								});
+							}
+						}
 					}
 
 					foreach (var subTransform in transform)
@@ -80,7 +102,7 @@ public class AddonEditor : ScriptableObject
 
 			Debug.Log($"[{Name}] Found {Components.Count} components");
 		}
-		public void ClearComponents()
+		public void Clear()
 		{
 			foreach (var prefab in Prefabs)
 			{
@@ -98,6 +120,11 @@ public class AddonEditor : ScriptableObject
 						}
 					}
 
+					if (RustPrefabs.TryGetValue(path, out var prefab))
+					{
+						DestroyImmediate(prefab, true);
+					}
+
 					foreach (var subTransform in transform)
 					{
 						Recursive((Transform)subTransform);
@@ -105,7 +132,7 @@ public class AddonEditor : ScriptableObject
 				}
 			}
 		}
-		public void ApplyComponents()
+		public void Restore()
 		{
 			foreach (var prefab in Prefabs)
 			{
@@ -133,6 +160,13 @@ public class AddonEditor : ScriptableObject
 							realComponent.Client = component.Client;
 							realComponent.ColorSwitch = component.ColorSwitch;
 						}
+					}
+
+					if (RustPrefabs.TryGetValue(path, out var prefab))
+					{
+						var gameObject = transform.gameObject;
+						var realComponent = gameObject.AddComponent<RustAsset>();
+						realComponent.Path = prefab.Path;
 					}
 
 					foreach (var subTransform in transform)
@@ -169,6 +203,8 @@ public class AddonEditor : ScriptableObject
 #if UNITY_EDITOR
 	public void Build()
 	{
+		Defines.OnPreAddonBuild();
+
 		var path = EditorUtility.SaveFilePanel("Export Carbon Addon", Defines.Root, $"{this.name}_{Version}", "cca");
 		var name = Name.Replace(" ", "_").ToLower();
 
@@ -234,6 +270,8 @@ public class AddonEditor : ScriptableObject
 
 		assets.Clear();
 		assets = null;
+
+		Defines.OnPostAddonBuild();
 	}
 
 	public void PrepareScene()

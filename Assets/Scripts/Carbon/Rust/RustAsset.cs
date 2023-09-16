@@ -1,10 +1,13 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Carbon;
 using UnityEngine;
 
 [ExecuteInEditMode]
 public class RustAsset : MonoBehaviour
 {
+	public static List<RustAsset> assets = new();
+
 	public string Path;
 
 	internal GameObject _instance;
@@ -12,6 +15,8 @@ public class RustAsset : MonoBehaviour
 
 	public void Awake()
 	{
+		EnsureInstance();
+
 		ProcessPreview();
 
 		RustAssetProcessor.OnAssetsLoaded += prefabs =>
@@ -19,9 +24,12 @@ public class RustAsset : MonoBehaviour
 			ProcessPreview();
 		};
 	}
+
 	public void ProcessPreview()
 	{
-		if (_instance != null || RustAssetProcessor.Prefabs == null || RustAssetProcessor.PrefabLookup == null)
+		EnsureInstance();
+
+		if (Defines.IsBuildingAddons || _instance != null || RustAssetProcessor.Prefabs == null || RustAssetProcessor.PrefabLookup == null)
 		{ 
 			return;
 		}
@@ -36,7 +44,6 @@ public class RustAsset : MonoBehaviour
 			_instance.SetActive(true);
 		}
 	}
-
 	public void Cleanup()
 	{
 		if (_instance == null)
@@ -46,6 +53,14 @@ public class RustAsset : MonoBehaviour
 
 		Destroy(_instance);
 		_instance = null;
+	}
+
+	public void EnsureInstance()
+	{
+		if (!assets.Contains(this))
+		{
+			assets.Add(this);
+		}
 	}
 
 	public void OnGUI()

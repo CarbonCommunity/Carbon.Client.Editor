@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using Carbon;
 using Carbon.Client;
 using UnityEditor;
 using UnityEngine;
-using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 [CustomEditor(typeof(RustAssetProcessor))]
 public class RustAssetProcessorEditor : Editor

@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class Defines : MonoBehaviour
 {
+	public static bool IsBuildingAddons;
+
 	public float InfoDistance;
 	public bool DisableAll;
 
@@ -39,6 +41,22 @@ public class Defines : MonoBehaviour
 
 	public static string Root => Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
 
+	public static void OnPreAddonBuild()
+	{
+		IsBuildingAddons = true;
+
+		Debug.Log($"[OnPreAddonBuild] Found {RustAsset.assets.Count:n0} Rust assets");
+
+		foreach(var asset in RustAsset.assets)
+		{
+			asset.Cleanup();
+		}
+	}
+	public static void OnPostAddonBuild()
+	{
+		IsBuildingAddons = false;
+	}
+
 	public static string GetBundleDirectory()
 	{
 		var folder = Path.GetFullPath(Path.Combine(Root, "Addons"));
@@ -50,7 +68,6 @@ public class Defines : MonoBehaviour
 
 		return folder;
 	}
-
 	public static string GetBundleDirectory(AddonEditor forAddon)
 	{
 		var folder = Path.Combine(GetBundleDirectory(), $"{forAddon.name}_{forAddon.Version}");
