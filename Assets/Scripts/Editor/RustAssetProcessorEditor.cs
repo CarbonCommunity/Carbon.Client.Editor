@@ -101,16 +101,32 @@ public class RustAssetProcessorEditor : Editor
 					{
 						using (CarbonUtils.GUIEnableChange.New(false))
 						{
-							EditorGUILayout.TextField($"Bundles", lookup.backend.bundles.Count.ToString("n0"));
+							EditorGUILayout.TextField($"Bundles", lookup.backend?.bundles?.Count.ToString("n0"));
 
-							foreach(var bundle in lookup.backend.bundles)
+							if (lookup != null && lookup.backend != null && lookup.backend.bundles != null)
 							{
-								EditorGUILayout.TextField($" ", bundle.Key);
+								foreach (var bundle in lookup.backend.bundles)
+								{
+									EditorGUILayout.TextField($" ", bundle.Key);
+								}
 							}
 
-							EditorGUILayout.TextField($"Prefabs", lookup.prefabs.Count.ToString("n0"));
+							EditorGUILayout.TextField($"Prefabs", lookup.prefabs?.Count.ToString("n0"));
 						}
 					}
+
+					if (processor.AutoLoad)
+					{
+						using (CarbonUtils.GUIColorChange.New(Color.green))
+						{
+							processor.AutoLoad = EditorGUILayout.Toggle("Auto-Load", processor.AutoLoad);
+						}
+					}
+					else
+					{
+						processor.AutoLoad = EditorGUILayout.Toggle("Auto-Load", processor.AutoLoad);
+					}
+					EditorGUILayout.HelpBox("If the project is recompiling scripts, the bundle cache gets removed from memory.\nThis will automatically re-load bundles.", MessageType.Info);
 				}
 				GUILayout.EndVertical();
 			}
@@ -141,12 +157,12 @@ public class RustAssetProcessorEditor : Editor
 					{
 						using (CarbonUtils.GUIColorChange.New(Color.green))
 						{
-							processor.AutoLoad = GUILayout.Toggle(processor.AutoLoad, "Auto-Load");
+							processor.AutoLoad = EditorGUILayout.Toggle("Auto-Load", processor.AutoLoad);
 						}
 					}
 					else
 					{
-						processor.AutoLoad = GUILayout.Toggle(processor.AutoLoad, "Auto-Load");
+						processor.AutoLoad = EditorGUILayout.Toggle("Auto-Load", processor.AutoLoad);
 					}
 					EditorGUILayout.HelpBox("If the project is recompiling scripts, the bundle cache gets removed from memory.\nThis will automatically re-load bundles.", MessageType.Info);
 

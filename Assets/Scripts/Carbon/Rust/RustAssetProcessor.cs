@@ -34,8 +34,6 @@ namespace Carbon
 			{
 				Prefabs = prefabs;
 
-				Debug.Log($"Done! Got {prefabs.Count} prefabs.");
-
 				var count = 1;
 				foreach(var prefab in Prefabs)
 				{
@@ -130,7 +128,7 @@ MonoBehaviour:
 			PrefabLookup.Dispose();
 		}
 
-		public void FixedUpdate()
+		public void Update()
 		{
 			if (!IsLoaded && AutoLoad)
 			{
