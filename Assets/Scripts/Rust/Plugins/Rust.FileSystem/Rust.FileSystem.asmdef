@@ -1,0 +1,16 @@
+{
+    "name": "Rust.FileSystem",
+    "rootNamespace": "",
+    "references": [
+        "Facepunch.System"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

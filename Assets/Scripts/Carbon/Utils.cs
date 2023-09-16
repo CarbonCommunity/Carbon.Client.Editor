@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Security.Cryptography;
+using System.Text;
+using UnityEngine;
 
 namespace Carbon.Client
 {
-	public class CarbonUtils
+	public static class CarbonUtils
 	{
 		public static string GetRecursiveName(Transform transform, string strEndName = "")
 		{
@@ -19,6 +22,20 @@ namespace Carbon.Client
 			}
 
 			return text;
+		}
+
+		public static float Percentage(this int value, int total, float percent = 100)
+		{
+			return (float)Math.Round((double)percent * value) / total;
+		}
+		public static uint ManifestHash(this string str)
+		{
+			if (string.IsNullOrEmpty(str))
+			{
+				return 0u;
+			}
+			 
+			return BitConverter.ToUInt32(new MD5CryptoServiceProvider().ComputeHash(Encoding.UTF8.GetBytes(str)), 0);
 		}
 	}
 }
