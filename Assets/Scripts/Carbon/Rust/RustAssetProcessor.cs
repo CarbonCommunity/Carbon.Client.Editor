@@ -1,50 +1,103 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using Carbon.Client;
 using UnityEditor;
 using UnityEngine;
 
 namespace Carbon
 {
-	[ExecuteInEditMode]
+	[ExecuteAlways]
 	public class RustAssetProcessor : MonoBehaviour
 	{
-		public string RustClientDirectory;
+		public static RustAssetProcessor Instance { get; private set; }
 
-		[HideInInspector]
+		public string RustClientDirectory;
 		public bool AutoLoad;
+		public bool CreateVisuals;
+		public bool SelectionSync;
+		public float TickRate;
 
 		public bool IsLoaded => PrefabLookup != null && PrefabLookup.backend != null && PrefabLookup.backend.bundles.Count > 0;
 
+		public static bool IsLoading = false;
 		public static Dictionary<string, GameObject> Prefabs;
 		public static Action<Dictionary<string, GameObject>> OnAssetsLoaded;
 		public static PrefabLookup PrefabLookup;
 
-		[ContextMenu("Load")]
-		public void Load()
-		{
-#if UNITY_EDITOR
-			EditorUtility.DisplayProgressBar("Rust Content", "Processing rust content", 0);
+		internal float _currentTick;
 
+		public static Transform SelectedPreview
+		{
+			get
+			{
+				var select = Selection.activeGameObject;
+
+				if (select == null)
+				{
+					return null;
+				}
+
+				var go = select.transform;
+
+				while (go != null && go.parent != null)
+				{
+					if (go.parent == Defines.Singleton?.PreviewHub)
+					{
+						return go;
+					}
+
+					go = go.parent;
+				}
+
+				return go;
+			}
+		}
+
+		public RustAssetProcessor()
+		{
+			Instance = this;
+		}
+
+		public IEnumerator Load()
+		{
+			if (IsLoading)
+			{
+				yield break;
+			}
+
+			IsLoading = true;
+
+			if (string.IsNullOrEmpty(RustClientDirectory))
+			{
+				yield break;
+			}
+
+			var id = Progress.Start("Rust Client Content", $"Rust location: {RustClientDirectory}", Progress.Options.Managed);
 			var bundles = Path.Combine(RustClientDirectory, "Bundles", "Bundles");
 
 			OnAssetsLoaded += prefabs =>
 			{
 				Prefabs = prefabs;
 
-				var count = 1;
-				foreach(var prefab in Prefabs)
+				var id2 = Progress.Start("Prefab Cache", string.Empty, Progress.Options.Managed, parentId: id);
+
+				var count = 0;
+				foreach (var prefab in Prefabs)
 				{
 					if (!prefab.Key.EndsWith(".prefab"))
 					{
 						continue;
 					}
 
+					count++;
+
 					var assetName = prefab.Key.Replace("assets", string.Empty);
 					var path = $"assets/bundled/rust/{assetName}";
-					var directory= Path.GetDirectoryName(path);
+					var directory = Path.GetDirectoryName(path);
 
 					if (!Directory.Exists(directory))
 					{
@@ -110,30 +163,96 @@ MonoBehaviour:
 					//asset.Path = prefab.Key;
 
 					// PrefabUtility.SaveAsPrefabAsset(saveablePrefab, $"assets/bundled/rust/{assetName}");
-
-					EditorUtility.DisplayProgressBar("Processing prefabs", $"Current {count} / {Prefabs.Count}: {prefab.Key}", count.Percentage(Prefabs.Count, 1f));
-					count++;
+					Progress.SetDescription(id2, $"Processing game content {count} / {Prefabs.Count}");
+					Progress.Report(id2, count.Percentage(Prefabs.Count, 1f));
 				}
 
-				EditorUtility.ClearProgressBar();
-#endif
+				RustAsset.Scan(true);
+				RustAsset.PreviewAll();
+
+				Progress.Finish(id2);
+				Progress.Finish(id);
+
+				IsLoading = false;
 			};
 
-			PrefabLookup = new PrefabLookup(bundles);
+			PrefabLookup = new PrefabLookup();
+			EditorCoroutine.Start(PrefabLookup.Build(id, bundles));
 		}
-
-		[ContextMenu("Unload")]
 		public void Unload()
 		{
-			PrefabLookup.Dispose();
+			IsLoading = false;
+			PrefabLookup?.Dispose();
+		}
+
+		public void SelectionSyncTick()
+		{
+			if (!SelectionSync || Selection.activeObject is RustAsset)
+			{
+				return;
+			}
+
+			var select = SelectedPreview;
+
+			if (select == null)
+			{
+				return;
+			}
+
+			foreach (var asset in RustAsset.assets)
+			{
+				if (asset._instance.transform == select)
+				{
+					Selection.activeGameObject = asset.gameObject;
+					Selection.activeObject = asset;
+					break;
+				}
+			}
+		}
+		public void AssetTick()
+		{
+			var objects = Selection.gameObjects;
+
+			if (objects.Length > 0)
+			{
+				foreach (var gameObject in objects)
+				{
+					if (!gameObject.scene.IsValid())
+					{
+						UnityEngine.Debug.Log($"Yeet");
+						continue;
+					}
+
+					gameObject.GetComponent<RustAsset>()?.Tick();
+				}
+			}
+			else
+			{
+				if (Selection.activeObject is RustAsset asset)
+				{
+					asset.Tick();
+				}
+			}
 		}
 
 		public void Update()
 		{
-			if (!IsLoaded && AutoLoad)
+			var timeSince = Time.time - _currentTick;
+
+			if (timeSince <= TickRate)
 			{
-				Load();
+				return;
 			}
+
+			_currentTick = Time.time;
+
+			if (!IsLoaded && !IsLoading && AutoLoad)
+			{
+				EditorCoroutine.Start(Load());
+			}
+
+			SelectionSyncTick();
+			AssetTick();
 		}
 	}
 }

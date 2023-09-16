@@ -1,13 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
 using Carbon;
-using System;
 using UnityEditor;
-using System.IO;
-using UnityEditor.SceneManagement;
 using Carbon.Client;
+using System.Collections;
 
 public class PrefabLookup : System.IDisposable
 {
@@ -22,11 +19,12 @@ public class PrefabLookup : System.IDisposable
 		Dispose();
 	}
 
-	public PrefabLookup ( string bundlename )
+	public IEnumerator Build(int progressParentId, string bundlename)
 	{
-		backend = new AssetBundleBackend ( bundlename );
-
+		backend = new AssetBundleBackend(bundlename);
 		const string filter = ".prefab";
+
+		var bundleProgress = Progress.Start($"Bundle Load", string.Empty, parentId: progressParentId);
 
 		foreach (var bundle in backend.bundles)
 		{
@@ -34,20 +32,28 @@ public class PrefabLookup : System.IDisposable
 			var count = 1;
 			var totalCount = content.Count();
 
+			Progress.SetDescription(bundleProgress, bundle.Key);
+
 			foreach (var asset in content)
 			{
-#if UNITY_EDITOR
-				EditorUtility.DisplayProgressBar("Rust Content", $"Caching assets... {count:n0} / {totalCount:n0}", count.Percentage(totalCount, 1));
-#endif
 				if (!prefabs.ContainsKey(asset)) prefabs.Add(asset, null);
 				count++;
+
+				Progress.Report(bundleProgress, count.Percentage(totalCount, 1f));
+
+				if (count % 100 == 0)
+				{
+					yield return null;
+				} 
 			}
+
+			yield return null;
 		}
 
-		EditorUtility.ClearProgressBar();
+		Progress.Finish(bundleProgress);
 
 		RustAssetProcessor.OnAssetsLoaded?.Invoke(prefabs);
-	} 
+	}
 
 	public void Dispose ()
 	{

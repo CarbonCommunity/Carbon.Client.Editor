@@ -2,12 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Carbon;
 using ProtoBuf;
 using UnityEngine;
 
 public class Defines : MonoBehaviour
 {
+	private static Defines _instance;
+	public static Defines Singleton => _instance ?? (_instance = FindObjectOfType<Defines>());
+
 	public static bool IsBuildingAddons;
 
 	public float InfoDistance;
@@ -17,12 +21,7 @@ public class Defines : MonoBehaviour
 	public ColorSwitch InvalidSwitch;
 	public ColorSwitch BlankSwitch;
 
-	public static Defines Singleton { get; private set; }
-
-	public Defines()
-	{
-		Singleton = this;
-	}
+	public Transform PreviewHub;
 
 	public ColorSwitch GetSwitch(ColorSwitch @switch)
 	{
@@ -45,9 +44,10 @@ public class Defines : MonoBehaviour
 	{
 		IsBuildingAddons = true;
 
-		Debug.Log($"[OnPreAddonBuild] Found {RustAsset.assets.Count:n0} Rust assets");
+		var assets = RustAsset.assets;
+		Debug.Log($"[OnPreAddonBuild] Found {assets.Count():n0} Rust assets");
 
-		foreach(var asset in RustAsset.assets)
+		foreach(var asset in assets)
 		{
 			asset.Cleanup();
 		}

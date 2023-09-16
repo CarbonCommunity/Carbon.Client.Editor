@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Carbon;
 using Carbon.Client;
 using UnityEditor;
@@ -44,6 +45,32 @@ public class RustAssetProcessorEditor : Editor
 
 		GUILayout.BeginHorizontal();
 		{
+			processor.CreateVisuals = EditorGUILayout.Toggle("Create Visuals", processor.CreateVisuals);
+
+			using (CarbonUtils.GUIColorChange.New(Color.cyan, false))
+			{
+				if (GUILayout.Button("Refresh", GUILayout.Width(75)))
+				{
+					RustAsset.Scan(true);
+					RustAsset.PreviewAll();
+				}
+			}
+
+			using (CarbonUtils.GUIColorChange.New(Color.yellow, true))
+			{
+				if (GUILayout.Button("Tick", GUILayout.Width(40)))
+				{
+					foreach (var asset in RustAsset.assets)
+					{
+						asset.Tick();
+					}
+				}
+			}
+		}
+		GUILayout.EndHorizontal();
+
+		GUILayout.BeginHorizontal();
+		{
 			processor.RustClientDirectory = EditorGUILayout.TextField("Rust Client Directory", processor.RustClientDirectory);
 
 			using (CarbonUtils.GUIColorChange.New(Color.cyan, false))
@@ -71,6 +98,9 @@ public class RustAssetProcessorEditor : Editor
 			}
 		}
 		GUILayout.EndHorizontal();
+
+		processor.SelectionSync = EditorGUILayout.Toggle("Selection Sync", processor.SelectionSync);
+		processor.TickRate = EditorGUILayout.Slider("Tick Rate", processor.TickRate, 0.01f, 1f);
 
 		EditorGUILayout.Space();
 		EditorGUILayout.Separator();
@@ -146,7 +176,7 @@ public class RustAssetProcessorEditor : Editor
 					{
 						if (GUILayout.Button("Load"))
 						{
-							processor.Load();
+							EditorCoroutine.Start(processor.Load());
 						}
 					}
 

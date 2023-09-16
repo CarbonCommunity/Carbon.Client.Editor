@@ -44,6 +44,8 @@ public class AddonEditor : ScriptableObject
 		public void Preprocess()
 		{
 			Clear();
+
+			RustAsset.Scan(true);
 		}
 		public void Postprocess()
 		{
