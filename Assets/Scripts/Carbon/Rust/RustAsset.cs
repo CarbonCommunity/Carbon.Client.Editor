@@ -29,7 +29,7 @@ public class RustAsset : MonoBehaviour
 	{
 		EnsureInstance();
 
-		if (Defines.IsBuildingAddons || _instance != null || RustAssetProcessor.Prefabs == null || RustAssetProcessor.PrefabLookup == null)
+		if (Defines.IsBuildingAddons || _instance != null || string.IsNullOrEmpty(Path) || RustAssetProcessor.Prefabs == null || RustAssetProcessor.PrefabLookup == null)
 		{ 
 			return;
 		}
