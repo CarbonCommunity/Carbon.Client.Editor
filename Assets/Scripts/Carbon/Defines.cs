@@ -22,7 +22,7 @@ public class Defines : MonoBehaviour
 
 	public Transform GetPreviewHub()
 	{
-		if (_previewHub == null)
+		if (_previewHub == null && gameObject != null && gameObject.scene != null)
 		{
 			_previewHub = new GameObject("Preview Hub").transform;
 
@@ -55,7 +55,12 @@ public class Defines : MonoBehaviour
 
 	public static void OnReload() 
 	{
-		DestroyImmediate(Singleton._previewHub.gameObject);
+		try
+		{
+			DestroyImmediate(Singleton._previewHub.gameObject);
+		}
+		catch { }
+
 		Singleton._previewHub = null;
 	}
 	public static void OnPreAddonBuild()

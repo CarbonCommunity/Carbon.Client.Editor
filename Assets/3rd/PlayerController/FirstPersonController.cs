@@ -30,14 +30,10 @@ public class FirstPersonController : MonoBehaviour
 
     // Crosshair
     public bool lockCursor = true;
-    public bool crosshair = true;
-    public Sprite crosshairImage;
-    public Color crosshairColor = Color.white;
 
     // Internal Variables
     private float yaw = 0.0f;
     private float pitch = 0.0f;
-    private Image crosshairObject;
 
     #region Camera Zoom Variables
 
@@ -82,7 +78,6 @@ public class FirstPersonController : MonoBehaviour
     public float sprintBarHeightPercent = .015f;
 
     // Internal Variables
-    private CanvasGroup sprintBarCG;
     private bool isSprinting = false;
     private float sprintRemaining;
     private float sprintBarWidth;
@@ -135,8 +130,6 @@ public class FirstPersonController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        crosshairObject = GetComponentInChildren<Image>();
-
         // Set internal variables
         playerCamera.fieldOfView = fov;
         originalScale = transform.localScale;
@@ -155,47 +148,6 @@ public class FirstPersonController : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
-
-        if(crosshair)
-        {
-            crosshairObject.sprite = crosshairImage;
-            crosshairObject.color = crosshairColor;
-        }
-        else
-        {
-            crosshairObject.gameObject.SetActive(false);
-        }
-
-        #region Sprint Bar
-
-        sprintBarCG = GetComponentInChildren<CanvasGroup>();
-
-        if(useSprintBar)
-        {
-            sprintBarBG.gameObject.SetActive(true);
-            sprintBar.gameObject.SetActive(true);
-
-            float screenWidth = Screen.width;
-            float screenHeight = Screen.height;
-
-            sprintBarWidth = screenWidth * sprintBarWidthPercent;
-            sprintBarHeight = screenHeight * sprintBarHeightPercent;
-
-            sprintBarBG.rectTransform.sizeDelta = new Vector3(sprintBarWidth, sprintBarHeight, 0f);
-            sprintBar.rectTransform.sizeDelta = new Vector3(sprintBarWidth - 2, sprintBarHeight - 2, 0f);
-
-            if(hideBarWhenFull)
-            {
-                sprintBarCG.alpha = 0;
-            }
-        }
-        else
-        {
-            sprintBarBG.gameObject.SetActive(false);
-            sprintBar.gameObject.SetActive(false);
-        }
-
-        #endregion
     }
 
     float camRotation;
@@ -385,7 +337,7 @@ public class FirstPersonController : MonoBehaviour
             }
 
             // All movement calculations shile sprint is active
-            if (enableSprint && Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown)
+            if (enableSprint && Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown && isGrounded)
             {
                 targetVelocity = transform.TransformDirection(targetVelocity) * sprintSpeed;
 
@@ -406,11 +358,6 @@ public class FirstPersonController : MonoBehaviour
                     {
                         Crouch();
                     }
-
-                    if (hideBarWhenFull && !unlimitedSprint)
-                    {
-                        sprintBarCG.alpha += 5 * Time.deltaTime;
-                    }
                 }
 
                 rb.AddForce(velocityChange, ForceMode.VelocityChange);
@@ -419,11 +366,6 @@ public class FirstPersonController : MonoBehaviour
             else
             {
                 isSprinting = false;
-
-                if (hideBarWhenFull && sprintRemaining == sprintDuration)
-                {
-                    sprintBarCG.alpha -= 3 * Time.deltaTime;
-                }
 
                 targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
 
@@ -571,23 +513,6 @@ public class FirstPersonController : MonoBehaviour
         GUI.enabled = true;
 
         fpc.lockCursor = EditorGUILayout.ToggleLeft(new GUIContent("Lock and Hide Cursor", "Turns off the cursor visibility and locks it to the middle of the screen."), fpc.lockCursor);
-
-        fpc.crosshair = EditorGUILayout.ToggleLeft(new GUIContent("Auto Crosshair", "Determines if the basic crosshair will be turned on, and sets is to the center of the screen."), fpc.crosshair);
-
-        // Only displays crosshair options if crosshair is enabled
-        if(fpc.crosshair) 
-        { 
-            EditorGUI.indentLevel++; 
-            EditorGUILayout.BeginHorizontal(); 
-            EditorGUILayout.PrefixLabel(new GUIContent("Crosshair Image", "Sprite to use as the crosshair.")); 
-            fpc.crosshairImage = (Sprite)EditorGUILayout.ObjectField(fpc.crosshairImage, typeof(Sprite), false);
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
-            fpc.crosshairColor = EditorGUILayout.ColorField(new GUIContent("Crosshair Color", "Determines the color of the crosshair."), fpc.crosshairColor);
-            EditorGUILayout.EndHorizontal();
-            EditorGUI.indentLevel--; 
-        }
 
         EditorGUILayout.Space();
 

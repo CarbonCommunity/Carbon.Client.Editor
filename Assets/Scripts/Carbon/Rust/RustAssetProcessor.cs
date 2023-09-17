@@ -193,7 +193,7 @@ MonoBehaviour:
 #if UNITY_EDITOR
 			EditorCoroutine.Start(PrefabLookup.Build(id, bundles));
 #else
-			StartCoroutine(PrefabLookup.Build(id, bundles))
+			StartCoroutine(PrefabLookup.Build(0, bundles));
 #endif
 		}
 		public static IEnumerator Preview()
