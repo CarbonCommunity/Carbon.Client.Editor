@@ -18,14 +18,15 @@ public class PrefabLookup : System.IDisposable
 	{
 		Dispose();
 	}
-#if UNITY_EDITOR
 
 	public IEnumerator Build(int progressParentId, string bundlename)
 	{
 		backend = new AssetBundleBackend(bundlename);
 		const string filter = ".prefab";
 
+#if UNITY_EDITOR
 		var bundleProgress = Progress.Start($"Bundle Load", string.Empty, parentId: progressParentId);
+#endif
 
 		foreach (var bundle in backend.bundles)
 		{
@@ -33,14 +34,18 @@ public class PrefabLookup : System.IDisposable
 			var count = 1;
 			var totalCount = content.Count();
 
+#if UNITY_EDITOR
 			Progress.SetDescription(bundleProgress, bundle.Key);
+#endif
 
 			foreach (var asset in content)
 			{
 				if (!prefabs.ContainsKey(asset)) prefabs.Add(asset, null);
 				count++;
 
+#if UNITY_EDITOR
 				Progress.Report(bundleProgress, count.Percentage(totalCount, 1f));
+#endif
 
 				if (count % 100 == 0)
 				{
@@ -51,11 +56,12 @@ public class PrefabLookup : System.IDisposable
 			yield return null;
 		}
 
+#if UNITY_EDITOR
 		Progress.Finish(bundleProgress);
+#endif
 
 		RustAssetProcessor.OnAssetsLoaded?.Invoke(prefabs);
 	}
-#endif
 
 	public void Dispose ()
 	{

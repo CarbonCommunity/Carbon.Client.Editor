@@ -11,12 +11,20 @@ public class RustAsset : MonoBehaviour
 
 	public string Path;
 
+	[Header("Auto-assigned")]
+	public Vector3 Position;
+	public Quaternion Rotation;
+	public Vector3 Scale;
+
 	internal GameObject _instance;
 	internal float _timeSinceRetry;
 
-	internal Vector3 _pos;
-	internal Quaternion _rot;
-	internal Vector3 _scale;
+	public void Cache()
+	{
+		Position = transform.position;
+		Rotation = transform.rotation;
+		Scale = transform.localScale;
+	}
 
 	public bool HasChanged(out Vector3 pos, out Quaternion rot, out Vector3 scale)
 	{
@@ -24,15 +32,20 @@ public class RustAsset : MonoBehaviour
 		rot = transform.rotation;
 		scale = transform.localScale;
 
-		if (_pos != pos || _rot != rot || _scale != scale)
+		if (Position != pos || Rotation != rot || Scale != scale)
 		{
-			_pos = pos;
-			_rot = rot;
-			_scale = scale;
+			Position = pos;
+			Rotation = rot;
+			Scale = scale;
 			return true;
 		}
 
 		return false;
+	}
+
+	public void OnEnable()
+	{
+		Fetch();
 	}
 	public void OnDestroy()
 	{

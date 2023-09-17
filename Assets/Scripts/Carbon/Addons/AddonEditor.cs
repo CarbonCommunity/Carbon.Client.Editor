@@ -39,10 +39,12 @@ public class AddonEditor : ScriptableObject
 		public GameObject[] Prefabs;
 
 		public Dictionary<string, List<RustComponent>> Components = new Dictionary<string, List<RustComponent>>();
-		public Dictionary<Transform, RustPrefab> RustPrefabs = new Dictionary<Transform, RustPrefab> ();
+		public Dictionary<Transform, RustAsset> RustPrefabs = new Dictionary<Transform, RustAsset> ();
 
+#if UNITY_EDITOR
 		public void Preprocess()
 		{
+			BackUp();
 			Clear();
 
 			RustAsset.Scan(true);
@@ -50,6 +52,7 @@ public class AddonEditor : ScriptableObject
 		public void Postprocess()
 		{
 			Restore();
+			BackUpCleanup();
 		}
 
 		public void BuildCache()
@@ -63,12 +66,14 @@ public class AddonEditor : ScriptableObject
 
 				void Recursive(Transform transform)
 				{
-					var path = GetRecursiveName(transform).ToLower();
-
 					var component = transform.GetComponent<RustComponent>();
 					{
 						if (component != null)
 						{
+							transform.name = $"{transform.name}_{Guid.NewGuid():N}";
+
+							var path = GetRecursiveName(transform).ToLower();
+
 							if (!Components.TryGetValue(path, out var components))
 							{
 								Components.Add(path, components = new List<RustComponent>());
@@ -84,13 +89,7 @@ public class AddonEditor : ScriptableObject
 						{
 							if (!RustPrefabs.ContainsKey(transform))
 							{
-								RustPrefabs.Add(transform, new RustPrefab
-								{
-									Path = rustAsset.Path,
-									Position = BaseVector.ToProtoVector(rustAsset.transform.position),
-									Rotation = BaseVector.ToProtoVector(rustAsset.transform.rotation),
-									Scale = BaseVector.ToProtoVector(rustAsset.transform.localScale)
-								});
+								RustPrefabs.Add(transform, rustAsset);
 							}
 						}
 					}
@@ -104,95 +103,77 @@ public class AddonEditor : ScriptableObject
 
 			Debug.Log($"[{Name}] Found {Components.Count} components");
 		}
+		public void BackUp()
+		{
+			foreach(var prefab in Prefabs)
+			{
+				var path = AssetDatabase.GetAssetPath(prefab);
+				File.WriteAllText($"{path}.bkp", File.ReadAllText(path));
+			}
+		}
+		public void BackUpCleanup()
+		{
+			foreach (var prefab in Prefabs)
+			{
+				var path = AssetDatabase.GetAssetPath(prefab);
+				File.Delete($"{path}.bkp");
+			}
+		}
 		public void Clear()
 		{
+			Debug.Log($"Destroying {RustPrefabs.Count} RustPrefabs");
+
 			foreach (var prefab in Prefabs)
 			{
 				Recursive(prefab.transform);
 
 				void Recursive(Transform transform)
 				{
+					if (transform == null)
+					{
+						return;
+					}
+
 					var path = GetRecursiveName(transform).ToLower();
+
+					foreach (var subTransform in transform)
+					{
+						Recursive((Transform)subTransform);
+					}
 
 					if (Components.TryGetValue(path, out var components))
 					{
-						foreach(var component in components)
+						foreach (var component in components)
 						{
 							DestroyImmediate(component, true);
 						}
 					}
-
-					if (RustPrefabs.TryGetValue(transform, out var prefab))
-					{
-						try
-						{
-							DestroyImmediate(prefab, true);
-						}
-						catch { }
-
-						try
-						{
-							Destroy(prefab);
-						}
-						catch { }
-					}
-
-					foreach (var subTransform in transform)
-					{
-						Recursive((Transform)subTransform);
-					}
 				}
+			}
+
+			foreach (var rustPrefab in RustPrefabs)
+			{
+				try
+				{
+					rustPrefab.Value.Cache();
+					DestroyImmediate(rustPrefab.Value.gameObject, true);
+				}
+				catch { }
 			}
 		}
 		public void Restore()
 		{
-			foreach (var prefab in Prefabs)
+			foreach(var prefab in Prefabs)
 			{
-#if UNITY_EDITOR
-				PrefabUtility.UnpackAllInstancesOfPrefab(prefab, PrefabUnpackMode.Completely, InteractionMode.UserAction);
-#endif
+				var path = AssetDatabase.GetAssetPath(prefab);
+				var name = Path.GetFileNameWithoutExtension(path);
+				var directory = Path.GetDirectoryName(path);
 
-				var prefabPath = GetRecursiveName(prefab.transform).ToLower();
-
-				Recursive(prefab.transform);
-
-				void Recursive(Transform transform)
-				{
-					var path = GetRecursiveName(transform).ToLower();
-
-					if (Components.TryGetValue(path, out var components))
-					{
-						var gameObject = transform.gameObject;
-
-						foreach (var component in components)
-						{
-							var realComponent = gameObject.AddComponent<RustComponent>();
-							realComponent.Component = component.Component;
-							realComponent.Server = component.Server;
-							realComponent.Client = component.Client;
-							realComponent.ColorSwitch = component.ColorSwitch;
-						}
-					}
-
-					if (RustPrefabs.TryGetValue(transform, out var prefab))
-					{
-						var gameObject = transform.gameObject;
-						var realComponent = gameObject.AddComponent<RustAsset>();
-						realComponent.Path = prefab.Path;
-					}
-
-					foreach (var subTransform in transform)
-					{
-						Recursive((Transform)subTransform);
-					}
-				}
-
-#if UNITY_EDITOR
-				PrefabUtility.SavePrefabAsset(prefab);
-				EditorUtility.SetDirty(prefab);
-#endif
+				File.Copy(path, Path.Combine(directory, $"{name}_processed.prefab"), true);
+				File.Copy($"{path}.bkp", path, true);
 			}
 		}
+#endif
 	}
 
 	public static string GetRecursiveName(Transform transform, string strEndName = "")
@@ -258,7 +239,13 @@ public class AddonEditor : ScriptableObject
 				Serializer.Serialize(memory, new RustBundle
 				{
 					Components = asset.Components,
-					RustPrefabs = asset.RustPrefabs.Select(x => x.Value).ToList()
+					RustPrefabs = asset.RustPrefabs.Select(x => new RustPrefab
+					{
+						Path = x.Value.Path,
+						Position = BaseVector.ToProtoVector(x.Value.Position),
+						Rotation = BaseVector.ToProtoVector(x.Value.Rotation),
+						Scale = BaseVector.ToProtoVector(x.Value.Scale)
+					}).ToList()
 				});
 
 				assets.Add(new Carbon.Client.Assets.Asset()

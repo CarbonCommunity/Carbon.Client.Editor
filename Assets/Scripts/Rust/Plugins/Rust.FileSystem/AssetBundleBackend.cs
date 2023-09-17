@@ -17,28 +17,35 @@ public class AssetBundleBackend : FileSystemBackend, System.IDisposable
 		isError = false;
 		assetPath = System.IO.Path.GetDirectoryName(assetRoot) + System.IO.Path.DirectorySeparatorChar;
 
-		rootBundle = AssetBundle.LoadFromFile(assetRoot);
-		if (rootBundle == null)
+		try
 		{
-			LoadError("Couldn't load root AssetBundle - " + assetRoot);
-			return;
-		}
+			rootBundle = AssetBundle.LoadFromFile(assetRoot);
+			if (rootBundle == null)
+			{
+				LoadError("Couldn't load root AssetBundle - " + assetRoot);
+				return;
+			}
 
-		var manifestList = rootBundle.LoadAllAssets<AssetBundleManifest>();
-		if (manifestList.Length != 1)
+			var manifestList = rootBundle.LoadAllAssets<AssetBundleManifest>();
+			if (manifestList.Length != 1)
+			{
+				LoadError("Couldn't find AssetBundleManifest - " + manifestList.Length);
+				return;
+			}
+
+			manifest = manifestList[0];
+
+			foreach (var ab in manifest.GetAllAssetBundles())
+			{
+				LoadBundle(ab);
+			}
+
+			BuildFileIndex();
+		}
+		catch
 		{
-			LoadError("Couldn't find AssetBundleManifest - " + manifestList.Length);
-			return;
+			isError = true;
 		}
-
-		manifest = manifestList[0];
-
-		foreach (var ab in manifest.GetAllAssetBundles())
-		{
-			LoadBundle(ab);
-		}
-
-		BuildFileIndex();
 	}
 
 	private void LoadBundle(string bundleName)
@@ -86,8 +93,12 @@ public class AssetBundleBackend : FileSystemBackend, System.IDisposable
 
 		foreach (var bundle in bundles)
 		{
-			bundle.Value.Unload(true);
-			Object.DestroyImmediate(bundle.Value);
+			bundle.Value?.Unload(true);
+
+			if (bundle.Value != null)
+			{
+				Object.DestroyImmediate(bundle.Value);
+			}
 		}
 		bundles.Clear();
 

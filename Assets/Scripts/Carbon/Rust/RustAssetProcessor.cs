@@ -66,7 +66,6 @@ namespace Carbon
 			Instance = this;
 		}
 
-#if UNITY_EDITOR
 		internal static bool _startedPreview;
 
 		public IEnumerator Load()
@@ -83,14 +82,18 @@ namespace Carbon
 				yield break;
 			}
 
+#if UNITY_EDITOR
 			var id = Progress.Start("Rust Client Content", $"Rust location: {RustClientDirectory}", Progress.Options.Managed);
+#endif
 			var bundles = Path.Combine(RustClientDirectory, "Bundles", "Bundles");
 
 			OnAssetsLoaded += prefabs =>
 			{
 				Prefabs = prefabs;
 
+#if UNITY_EDITOR
 				var id2 = Progress.Start("Prefab Cache", string.Empty, Progress.Options.Managed, parentId: id);
+#endif
 
 				var count = 0;
 				foreach (var prefab in Prefabs)
@@ -170,20 +173,28 @@ MonoBehaviour:
 					//asset.Path = prefab.Key;
 
 					// PrefabUtility.SaveAsPrefabAsset(saveablePrefab, $"assets/bundled/rust/{assetName}");
+#if UNITY_EDITOR
 					Progress.SetDescription(id2, $"Processing game content {count} / {Prefabs.Count}");
 					Progress.Report(id2, count.Percentage(Prefabs.Count, 1f));
+#endif
 				}
 
 				RustAsset.Scan(true);
 
+#if UNITY_EDITOR
 				Progress.Finish(id2);
 				Progress.Finish(id);
+#endif
 
 				IsLoading = false;
 			};
 
 			PrefabLookup = new PrefabLookup();
+#if UNITY_EDITOR
 			EditorCoroutine.Start(PrefabLookup.Build(id, bundles));
+#else
+			StartCoroutine(PrefabLookup.Build(id, bundles))
+#endif
 		}
 		public static IEnumerator Preview()
 		{
@@ -210,11 +221,23 @@ MonoBehaviour:
 				yield return null;
 			}
 		}
-#endif
 		public void Unload()
 		{
 			IsLoading = false;
 			PrefabLookup?.Dispose();
+		}
+
+		public void Awake()
+		{
+			if (!Application.isPlaying)
+			{
+				return;
+			}
+
+			if (AutoLoad)
+			{
+				Load();
+			}
 		}
 
 #if UNITY_EDITOR
@@ -251,8 +274,11 @@ MonoBehaviour:
 				catch { }
 			}
 		}
+#endif
 		public void AssetTick()
 		{
+#if UNITY_EDITOR
+
 			var objects = Selection.gameObjects;
 
 			if (objects.Length > 0)
@@ -264,7 +290,21 @@ MonoBehaviour:
 						continue;
 					}
 
-					gameObject.GetComponent<RustAsset>()?.Tick();
+					var asset = gameObject.GetComponent<RustAsset>();
+
+					if(asset != null)
+					{
+						asset.Tick();
+					}
+					else
+					{
+						var assets = gameObject.GetComponentsInChildren<RustAsset>();
+
+						foreach(var asset2 in assets)
+						{
+							asset2.Tick();
+						}
+					}
 				}
 			}
 			else
@@ -274,6 +314,12 @@ MonoBehaviour:
 					asset.Tick();
 				}
 			}
+#else
+			foreach(var asset in RustAsset.assets)
+			{
+				asset.Tick();
+			}
+#endif
 		}
 
 		public void Update()
@@ -287,14 +333,15 @@ MonoBehaviour:
 
 			_currentTick = Time.time;
 
+#if UNITY_EDITOR
 			if (!IsLoaded && !IsLoading && AutoLoad)
 			{
 				EditorCoroutine.Start(Load());
 			}
 
 			SelectionSyncTick();
+#endif
 			AssetTick();
 		}
-#endif
 	}
 }
