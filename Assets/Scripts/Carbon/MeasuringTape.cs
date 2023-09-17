@@ -35,23 +35,23 @@ namespace Carbon
 			Gizmos.color = LineColor;
 			using (CarbonUtils.GUIColorChange.New(TextColor, false))
 			{
-				Handles.Label(transform.position, $"  {distance:0.0}m", EditorStyles.boldLabel);
+				Handles.Label(transform.position, $"  {0:0.0}m", EditorStyles.boldLabel);
 
 				for (float i = 0; i < distance / Increments; i += Increments)
 				{
 					var direction = Point.transform.position - transform.position;
 					var newPosition = transform.position + (direction * i);
 
-					if (newPosition.y < Point.transform.position.y)
+					if (newPosition.y > Point.transform.position.y)
 					{
 						break;
 					}
 
 					var newDistance = Vector3.Distance(transform.position, newPosition);
-					if (i != 0) Handles.Label(newPosition, $"  {distance - newDistance:0.0}m");
+					if (i != 0) Handles.Label(newPosition, $"  {newDistance:0.0}m");
 				}
 
-				Handles.Label(Point.transform.position, $"  {0:0.0}m", EditorStyles.boldLabel);
+				// Handles.Label(Point.transform.position, $"  {distance:0.0}m", EditorStyles.boldLabel);
 				Gizmos.DrawLine(transform.position, Point.transform.position);
 			}
 

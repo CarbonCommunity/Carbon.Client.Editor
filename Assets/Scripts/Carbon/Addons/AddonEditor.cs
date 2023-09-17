@@ -39,7 +39,7 @@ public class AddonEditor : ScriptableObject
 		public GameObject[] Prefabs;
 
 		public Dictionary<string, List<RustComponent>> Components = new Dictionary<string, List<RustComponent>>();
-		public Dictionary<string, RustPrefab> RustPrefabs = new Dictionary<string, RustPrefab>();
+		public Dictionary<Transform, RustPrefab> RustPrefabs = new Dictionary<Transform, RustPrefab> ();
 
 		public void Preprocess()
 		{
@@ -82,9 +82,9 @@ public class AddonEditor : ScriptableObject
 					{
 						if (rustAsset != null)
 						{
-							if (!RustPrefabs.ContainsKey(path))
+							if (!RustPrefabs.ContainsKey(transform))
 							{
-								RustPrefabs.Add(path, new RustPrefab
+								RustPrefabs.Add(transform, new RustPrefab
 								{
 									Path = rustAsset.Path,
 									Position = BaseVector.ToProtoVector(rustAsset.transform.position),
@@ -122,7 +122,7 @@ public class AddonEditor : ScriptableObject
 						}
 					}
 
-					if (RustPrefabs.TryGetValue(path, out var prefab))
+					if (RustPrefabs.TryGetValue(transform, out var prefab))
 					{
 						try
 						{
@@ -174,7 +174,7 @@ public class AddonEditor : ScriptableObject
 						}
 					}
 
-					if (RustPrefabs.TryGetValue(path, out var prefab))
+					if (RustPrefabs.TryGetValue(transform, out var prefab))
 					{
 						var gameObject = transform.gameObject;
 						var realComponent = gameObject.AddComponent<RustAsset>();

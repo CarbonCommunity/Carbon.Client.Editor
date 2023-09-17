@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Carbon;
-using ProtoBuf;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Defines : MonoBehaviour
 {
@@ -22,6 +19,17 @@ public class Defines : MonoBehaviour
 	public ColorSwitch BlankSwitch;
 
 	public Transform PreviewHub;
+
+	public Transform GetPreviewHub()
+	{
+		if (PreviewHub == null)
+		{
+			PreviewHub = new GameObject("Preview Hub").transform;
+			SceneManager.MoveGameObjectToScene(PreviewHub.gameObject, gameObject.scene);
+		}
+
+		return PreviewHub;
+	}
 
 	public ColorSwitch GetSwitch(ColorSwitch @switch)
 	{
@@ -40,6 +48,11 @@ public class Defines : MonoBehaviour
 
 	public static string Root => Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
 
+	public static void OnReload() 
+	{
+		DestroyImmediate(Singleton.PreviewHub.gameObject);
+		Singleton.PreviewHub = null;
+	}
 	public static void OnPreAddonBuild()
 	{
 		IsBuildingAddons = true;

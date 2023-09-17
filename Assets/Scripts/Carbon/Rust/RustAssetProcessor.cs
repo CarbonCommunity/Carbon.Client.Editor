@@ -19,7 +19,8 @@ namespace Carbon
 		public bool AutoLoad;
 		public bool CreateVisuals;
 		public bool SelectionSync;
-		public float TickRate;
+		public float UpdateTickRate = 0.2f;
+		public float PreviewTickRate = 0.5f;
 
 		public bool IsLoaded => PrefabLookup != null && PrefabLookup.backend != null && PrefabLookup.backend.bundles.Count > 0;
 
@@ -28,6 +29,7 @@ namespace Carbon
 		public static Action<Dictionary<string, GameObject>> OnAssetsLoaded;
 		public static PrefabLookup PrefabLookup;
 
+		internal WaitForSeconds _previewWait = new(0.5f);
 		internal float _currentTick;
 
 #if UNITY_EDITOR
@@ -46,7 +48,7 @@ namespace Carbon
 
 				while (go != null && go.parent != null)
 				{
-					if (go.parent == Defines.Singleton?.PreviewHub)
+					if (go.parent == Defines.Singleton?.GetPreviewHub())
 					{
 						return go;
 					}
@@ -65,6 +67,8 @@ namespace Carbon
 		}
 
 #if UNITY_EDITOR
+		internal static bool _startedPreview;
+
 		public IEnumerator Load()
 		{
 			if (IsLoading)
@@ -171,7 +175,6 @@ MonoBehaviour:
 				}
 
 				RustAsset.Scan(true);
-				RustAsset.PreviewAll();
 
 				Progress.Finish(id2);
 				Progress.Finish(id);
@@ -181,6 +184,31 @@ MonoBehaviour:
 
 			PrefabLookup = new PrefabLookup();
 			EditorCoroutine.Start(PrefabLookup.Build(id, bundles));
+		}
+		public static IEnumerator Preview()
+		{
+			if (_startedPreview)
+			{
+				yield break;
+			}
+
+			_startedPreview = true;
+
+			yield return null;
+
+			while (true)
+			{
+				yield return Instance._previewWait;
+
+				foreach(var asset in RustAsset.assets)
+				{
+					asset.Preview();
+					yield return Instance._previewWait;
+					yield return null;
+				}
+
+				yield return null;
+			}
 		}
 #endif
 		public void Unload()
@@ -211,12 +239,16 @@ MonoBehaviour:
 					asset.Preview();
 				}
 
-				if (asset._instance.transform == select)
+				try
 				{
-					Selection.activeGameObject = asset.gameObject;
-					Selection.activeObject = asset;
-					break;
+					if (asset._instance.transform == select)
+					{
+						Selection.activeGameObject = asset.gameObject;
+						Selection.activeObject = asset;
+						break;
+					}
 				}
+				catch { }
 			}
 		}
 		public void AssetTick()
@@ -229,7 +261,6 @@ MonoBehaviour:
 				{
 					if (!gameObject.scene.IsValid())
 					{
-						UnityEngine.Debug.Log($"Yeet");
 						continue;
 					}
 
@@ -249,7 +280,7 @@ MonoBehaviour:
 		{
 			var timeSince = Time.time - _currentTick;
 
-			if (timeSince <= TickRate)
+			if (timeSince <= UpdateTickRate)
 			{
 				return;
 			}
@@ -264,7 +295,6 @@ MonoBehaviour:
 			SelectionSyncTick();
 			AssetTick();
 		}
-
 #endif
 	}
 }

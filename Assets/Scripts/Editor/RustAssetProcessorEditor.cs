@@ -52,7 +52,6 @@ public class RustAssetProcessorEditor : Editor
 				if (GUILayout.Button("Refresh", GUILayout.Width(75)))
 				{
 					RustAsset.Scan(true);
-					RustAsset.PreviewAll();
 				}
 			}
 
@@ -100,7 +99,8 @@ public class RustAssetProcessorEditor : Editor
 		GUILayout.EndHorizontal();
 
 		processor.SelectionSync = EditorGUILayout.Toggle("Selection Sync", processor.SelectionSync);
-		processor.TickRate = EditorGUILayout.Slider("Tick Rate", processor.TickRate, 0.01f, 1f);
+		processor.UpdateTickRate = EditorGUILayout.Slider("Update Tick Rate", processor.UpdateTickRate, 0.01f, 1f);
+		processor.PreviewTickRate = EditorGUILayout.Slider("Preview Tick Rate", processor.PreviewTickRate, 0.01f, 1f);
 
 		EditorGUILayout.Space();
 		EditorGUILayout.Separator();

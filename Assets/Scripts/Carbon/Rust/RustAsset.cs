@@ -34,6 +34,15 @@ public class RustAsset : MonoBehaviour
 
 		return false;
 	}
+	public void OnDestroy()
+	{
+		Cleanup();
+
+		if (assets.Contains(this))
+		{
+			assets.Remove(this);
+		}
+	}
 
 	public void Awake()
 	{
@@ -56,31 +65,35 @@ public class RustAsset : MonoBehaviour
 
 	public void Preview()
 	{
-		Fetch();
-
-		if (Defines.IsBuildingAddons || RustAssetProcessor.Prefabs == null || RustAssetProcessor.PrefabLookup == null)
-		{ 
-			return;
-		}
-
-		if(RustAssetProcessor.Instance != null && !RustAssetProcessor.Instance.CreateVisuals)
+		try
 		{
-			return;
+			Fetch();
+
+			if (Defines.IsBuildingAddons || RustAssetProcessor.Prefabs == null || RustAssetProcessor.PrefabLookup == null)
+			{
+				return;
+			}
+
+			if (RustAssetProcessor.Instance != null && !RustAssetProcessor.Instance.CreateVisuals)
+			{
+				return;
+			}
+
+			Cleanup();
+
+			var prefab = RustAssetProcessor.PrefabLookup.backend.LoadPrefab(Path);
+
+			if (prefab != null)
+			{
+				_instance = Instantiate(prefab);
+				_instance.transform.SetParent(Defines.Singleton.GetPreviewHub());
+				_instance.transform.SetLocalPositionAndRotation(transform.position, transform.rotation);
+				_instance.transform.localScale = transform.localScale;
+				_instance.SetActive(true);
+				_instance.tag = "EditorOnly";
+			}
 		}
-
-		Cleanup(); 
-
-		var prefab = RustAssetProcessor.PrefabLookup.backend.LoadPrefab(Path);
-
-		if (prefab != null)
-		{
-			_instance = Instantiate(prefab);
-			_instance.transform.SetParent(Defines.Singleton.PreviewHub);
-			_instance.transform.SetLocalPositionAndRotation(transform.position, transform.rotation);
-			_instance.transform.localScale = transform.localScale;
-			_instance.SetActive(true);
-			_instance.tag = "EditorOnly";
-		}
+		catch { }
 	}
 	public void Cleanup()
 	{

@@ -13,6 +13,8 @@ public class ScriptPostprocessor : AssetPostprocessor
 		{
 			RustAsset.Scan(true);
 			RustAssetProcessor.PrefabLookup?.Dispose();
+			EditorCoroutine.Start(RustAssetProcessor.Preview());
+			Defines.OnReload();
 		}
 	}
 }
