@@ -84,16 +84,20 @@ public class RustAsset : MonoBehaviour
 	}
 	public void Cleanup()
 	{
-		if(_instance != null)
+		try
 		{
-			DestroyImmediate(_instance);
-			_instance = null;
-		}
+			if (_instance != null)
+			{
+				DestroyImmediate(_instance);
+				_instance = null;
+			}
 
-		foreach (Transform child in transform)
-		{
-			DestroyImmediate(child.gameObject);
+			foreach (Transform child in transform)
+			{
+				DestroyImmediate(child.gameObject);
+			}
 		}
+		catch { }
 	} 
 	public void Fetch()
 	{

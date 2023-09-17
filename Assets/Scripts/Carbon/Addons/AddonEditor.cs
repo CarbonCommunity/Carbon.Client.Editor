@@ -124,7 +124,17 @@ public class AddonEditor : ScriptableObject
 
 					if (RustPrefabs.TryGetValue(path, out var prefab))
 					{
-						DestroyImmediate(prefab, true);
+						try
+						{
+							DestroyImmediate(prefab, true);
+						}
+						catch { }
+
+						try
+						{
+							Destroy(prefab);
+						}
+						catch { }
 					}
 
 					foreach (var subTransform in transform)

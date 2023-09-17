@@ -206,6 +206,11 @@ MonoBehaviour:
 
 			foreach (var asset in RustAsset.assets)
 			{
+				if (asset._instance == null)
+				{
+					asset.Preview();
+				}
+
 				if (asset._instance.transform == select)
 				{
 					Selection.activeGameObject = asset.gameObject;
