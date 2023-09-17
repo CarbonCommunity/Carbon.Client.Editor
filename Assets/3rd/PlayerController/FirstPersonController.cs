@@ -16,7 +16,10 @@ using UnityEngine.UI;
 
 public class FirstPersonController : MonoBehaviour
 {
-    private Rigidbody rb;
+	internal static FirstPersonController _instance;
+	public static FirstPersonController Instance => _instance ?? (_instance = FindObjectOfType<FirstPersonController>());
+
+	private Rigidbody rb;
 
     #region Camera Movement Variables
 

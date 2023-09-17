@@ -37,6 +37,11 @@ namespace Carbon
 		{
 			get
 			{
+				if (Defines.Singleton == null)
+				{
+					return null;
+				}
+
 				var select = Selection.activeGameObject;
 
 				if (select == null)
@@ -48,7 +53,7 @@ namespace Carbon
 
 				while (go != null && go.parent != null)
 				{
-					if (go.parent == Defines.Singleton?.GetPreviewHub())
+					if (go.parent == Defines.Singleton?.GetPreviewContainer())
 					{
 						return go;
 					}

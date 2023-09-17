@@ -278,10 +278,10 @@ public class AddonEditor : ScriptableObject
 	{
 		var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
 		scene.name = $"{Name} v{Version}";
-		SceneManager.SetActiveScene(scene);
 
 		var firstEnabled = false;
 		var project = new GameObject("Project");
+		SceneManager.MoveGameObjectToScene(project, scene);
 		var projectInstance = project.AddComponent<Carbon.Project>();
 		projectInstance.Editor = this;
 		var icon = project.AddComponent<HierarchyIcon>();
@@ -290,6 +290,7 @@ public class AddonEditor : ScriptableObject
 		foreach (var asset in Assets)
 		{
 			var go = new GameObject(asset.Name);
+			SceneManager.MoveGameObjectToScene(go, scene);
 
 			if (!firstEnabled)
 			{
@@ -310,6 +311,7 @@ public class AddonEditor : ScriptableObject
 		}
 
 		Selection.SetActiveObjectWithContext(project, this);
+		SceneManager.SetActiveScene(Defines.Singleton.gameObject.scene);
 	}
 #endif
 }

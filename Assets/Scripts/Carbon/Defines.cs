@@ -18,22 +18,22 @@ public class Defines : MonoBehaviour
 	public ColorSwitch InvalidSwitch;
 	public ColorSwitch BlankSwitch;
 
-	internal Transform _previewHub;
+	internal Transform _previewContainer;
 
-	public Transform GetPreviewHub()
+	public Transform GetPreviewContainer()
 	{
-		if (_previewHub == null && gameObject != null && gameObject.scene != null)
+		if (_previewContainer == null && gameObject != null && gameObject.scene.IsValid())
 		{
-			_previewHub = new GameObject("Preview Hub").transform;
+			_previewContainer = new GameObject("Preview Container").transform;
 
 			try
 			{
-				SceneManager.MoveGameObjectToScene(_previewHub.gameObject, gameObject.scene);
+				SceneManager.MoveGameObjectToScene(_previewContainer.gameObject, gameObject.scene);
 			}
 			catch { }
 		}
 
-		return _previewHub;
+		return _previewContainer;
 	}
 
 	public ColorSwitch GetSwitch(ColorSwitch @switch)
@@ -57,11 +57,11 @@ public class Defines : MonoBehaviour
 	{
 		try
 		{
-			DestroyImmediate(Singleton._previewHub.gameObject);
+			DestroyImmediate(Singleton._previewContainer.gameObject);
 		}
 		catch { }
 
-		Singleton._previewHub = null;
+		Singleton._previewContainer = null;
 	}
 	public static void OnPreAddonBuild()
 	{

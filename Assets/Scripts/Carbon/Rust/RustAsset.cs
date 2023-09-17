@@ -99,7 +99,7 @@ public class RustAsset : MonoBehaviour
 			if (prefab != null)
 			{
 				_instance = Instantiate(prefab);
-				_instance.transform.SetParent(Defines.Singleton.GetPreviewHub());
+				_instance.transform.SetParent(Defines.Singleton.GetPreviewContainer());
 				_instance.transform.SetLocalPositionAndRotation(transform.position, transform.rotation);
 				_instance.transform.localScale = transform.localScale;
 				_instance.SetActive(true);

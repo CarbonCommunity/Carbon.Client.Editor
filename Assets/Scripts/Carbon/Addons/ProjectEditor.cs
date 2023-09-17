@@ -6,6 +6,13 @@ namespace Carbon
 {
 	public class Project : MonoBehaviour
 	{
+		public static Project Current { get; private set; }
+
+		public Project()
+		{
+			Current = this;
+		}
+
 		public AddonEditor Editor;
 
 #if UNITY_EDITOR

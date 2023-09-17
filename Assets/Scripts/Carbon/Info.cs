@@ -1,0 +1,97 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Schema;
+using Carbon.Client;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.Diagnostics;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
+
+namespace Carbon
+{
+	[ExecuteAlways]
+    public class Info : MonoBehaviour
+    {
+		public Text ProjectText;
+		public Text VideoText;
+		public Text AudioText;
+
+		public void Update()
+		{
+			try
+			{
+				HandleProject();
+			}
+			catch
+			{
+				ProjectText.text = "[Fail]";
+			}
+			try
+			{
+				HandleVideo();
+			}
+			catch
+			{
+				VideoText.text = "[Fail]";
+			}
+			try
+			{
+				HandleAudio();
+			}
+			catch
+			{
+				AudioText.text = "[Fail]";
+			}
+		}
+
+		internal void HandleProject()
+		{
+			var selectionInfo = "N/A";
+			var selectionScene = string.Empty;
+
+			if (Selection.activeGameObject != null)
+			{
+				selectionInfo = CarbonUtils.GetRecursiveName(Selection.activeGameObject.transform);
+
+				var scene = Selection.activeGameObject.gameObject.scene.name;
+				selectionScene = string.IsNullOrEmpty(scene) ? string.Empty : $"[{Selection.activeGameObject.gameObject.scene.name}]";
+			}
+
+			var editor = Project.Current?.Editor;
+			var prefabs = editor?.Assets?.Sum(x => x.Prefabs.Length);
+			var rustPrefabs = editor?.Assets?.Sum(x => x.RustPrefabs.Count);
+
+			var playerCamera = FirstPersonController.Instance?.playerCamera;
+
+			ProjectText.text = $"\n{editor?.Name} [{editor?.name}]" +
+				$"\n{editor?.Assets?.Count:n0} [{prefabs:n0} prbs./{RustAsset.assets.Count:n0} rust prbs.]" +
+				$"\n{selectionInfo} {selectionScene}" +
+				$"\n{playerCamera?.transform.position.x:0.00}, {playerCamera?.transform.position.y:0.00}, {playerCamera?.transform.position.z:0.00}";
+		}
+		internal void HandleVideo()
+		{
+			var quality = string.Empty;
+
+			switch (QualitySettings.masterTextureLimit)
+			{
+				case 0: quality = "Full Res."; break;
+				case 1: quality = "Half Res"; break;
+				case 2: quality = "Quarter Res"; break;
+				case 3: quality = "Eighth Res"; break;
+			}
+
+			VideoText.text = $"\n{SystemInfo.graphicsDeviceName} [{QualitySettings.names[QualitySettings.GetQualityLevel()]}]" +
+				$"\n{quality} [{QualitySettings.masterTextureLimit}/{(QualitySettings.softParticles ? "soft part." : "hard part.")}/{(QualitySettings.softVegetation ? "soft vege." : "hard vege.")}]" +
+				$"\n{QualitySettings.shadowDistance} dist. [{QualitySettings.shadows}/{QualitySettings.shadowCascades} casc.]" +
+				$"\n{QualitySettings.vSyncCount}";
+		}
+		internal void HandleAudio()
+		{
+			AudioText.text = $"\n{AudioListener.volume:0.0} [{(AudioListener.pause ? "PAUSED" : "PLAYING")}]" +
+				$"\n{AudioSettings.speakerMode}";
+		}
+	}
+}
