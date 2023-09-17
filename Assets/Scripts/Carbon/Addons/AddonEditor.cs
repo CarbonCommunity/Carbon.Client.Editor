@@ -166,10 +166,6 @@ public class AddonEditor : ScriptableObject
 			foreach(var prefab in Prefabs)
 			{
 				var path = AssetDatabase.GetAssetPath(prefab);
-				var name = Path.GetFileNameWithoutExtension(path);
-				var directory = Path.GetDirectoryName(path);
-
-				File.Copy(path, Path.Combine(directory, $"{name}_processed.prefab"), true);
 				File.Copy($"{path}.bkp", path, true);
 			}
 		}

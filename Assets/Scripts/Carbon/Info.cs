@@ -66,8 +66,8 @@ namespace Carbon
 
 			var playerCamera = FirstPersonController.Instance?.playerCamera;
 
-			ProjectText.text = $"\n{editor?.Name} [{editor?.name}]" +
-				$"\n{editor?.Assets?.Count:n0} [{prefabs:n0} prbs./{RustAsset.assets.Count:n0} rust prbs.]" +
+			ProjectText.text = $"\n{(editor == null ? "N/A" : $"{editor?.Name} [{editor?.name}]")}" +
+				$"\n{(editor == null ? "N/A" : $"{editor?.Assets?.Count:n0} [{prefabs:n0} prbs./{RustAsset.assets.Count:n0} rust prbs.]")}" +
 				$"\n{selectionInfo} {selectionScene}" +
 				$"\n{playerCamera?.transform.position.x:0.00}, {playerCamera?.transform.position.y:0.00}, {playerCamera?.transform.position.z:0.00}";
 		}
