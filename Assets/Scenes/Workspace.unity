@@ -1434,11 +1434,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2128534167980880674, guid: 89343e55e8ace394494079292033a40c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89343e55e8ace394494079292033a40c, type: 3}
 --- !u!1 &601065824
@@ -2381,6 +2376,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1708869746}
   m_CullTransparentMesh: 1
+--- !u!1001 &1818624304
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1357936024062542697, guid: 65a727385e151354286a1771358b7d51,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357936024062542697, guid: 65a727385e151354286a1771358b7d51,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357936024062542697, guid: 65a727385e151354286a1771358b7d51,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357936024062542697, guid: 65a727385e151354286a1771358b7d51,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357936024062542697, guid: 65a727385e151354286a1771358b7d51,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357936024062542697, guid: 65a727385e151354286a1771358b7d51,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357936024062542697, guid: 65a727385e151354286a1771358b7d51,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357936024062542697, guid: 65a727385e151354286a1771358b7d51,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357936024062542697, guid: 65a727385e151354286a1771358b7d51,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357936024062542697, guid: 65a727385e151354286a1771358b7d51,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1357936024062542697, guid: 65a727385e151354286a1771358b7d51,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404359399862627554, guid: 65a727385e151354286a1771358b7d51,
+        type: 3}
+      propertyPath: m_Name
+      value: Default-DeleteMe
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 65a727385e151354286a1771358b7d51, type: 3}
 --- !u!1 &1931376702
 GameObject:
   m_ObjectHideFlags: 0
@@ -2773,8 +2837,15 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\nGrand Theft Auto - Vice City [gtavicecity]\n2 [3 prbs./0 rust prbs.]\nN/A
-    \n-4.00, 1.65, -4.00"
+  m_Text: '
+
+    N/A
+
+    N/A
+
+    Player [Workspace]
+
+    -4.00, 1.65, -4.00'
 --- !u!222 &2129182667
 CanvasRenderer:
   m_ObjectHideFlags: 0
