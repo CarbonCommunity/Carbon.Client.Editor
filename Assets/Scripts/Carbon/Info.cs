@@ -52,6 +52,7 @@ namespace Carbon
 			var selectionInfo = "N/A";
 			var selectionScene = string.Empty;
 
+#if UNITY_EDITOR
 			if (Selection.activeGameObject != null)
 			{
 				selectionInfo = CarbonUtils.GetRecursiveName(Selection.activeGameObject.transform);
@@ -59,6 +60,7 @@ namespace Carbon
 				var scene = Selection.activeGameObject.gameObject.scene.name;
 				selectionScene = string.IsNullOrEmpty(scene) ? string.Empty : $"[{Selection.activeGameObject.gameObject.scene.name}]";
 			}
+#endif
 
 			var editor = Project.Current?.Editor;
 			var prefabs = editor?.Assets?.Sum(x => x.Prefabs.Length);

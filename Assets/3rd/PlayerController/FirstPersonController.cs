@@ -8,9 +8,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 #if UNITY_EDITOR
-    using UnityEditor;
+using UnityEditor;
     using System.Net;
 #endif
 
@@ -24,9 +25,11 @@ public class FirstPersonController : MonoBehaviour
     #region Camera Movement Variables
 
     public Camera playerCamera;
+	public Transform playerEyes;
 
-    public float fov = 60f;
-    public bool invertCamera = false;
+	public float fov = 60f;
+	public float groundDetection = 0.75f;
+	public bool invertCamera = false;
     public bool cameraCanMove = true;
     public float mouseSensitivity = 2f;
     public float maxLookAngle = 50f;
@@ -79,6 +82,9 @@ public class FirstPersonController : MonoBehaviour
     public Image sprintBar;
     public float sprintBarWidthPercent = .3f;
     public float sprintBarHeightPercent = .015f;
+
+	public Action OnLaunch;
+	public Action OnLand;
 
     // Internal Variables
     private bool isSprinting = false;
@@ -178,7 +184,7 @@ public class FirstPersonController : MonoBehaviour
             pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
 
             transform.localEulerAngles = new Vector3(0, yaw, 0);
-            playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+			playerEyes.transform.localEulerAngles = new Vector3(pitch, 0, 0);
         }
 
         #region Camera Zoom
@@ -309,21 +315,21 @@ public class FirstPersonController : MonoBehaviour
             }
         }
 
-        #endregion
+		#endregion
 
-        CheckGround();
+		CheckGround();
 
-        if(enableHeadBob)
+		if (enableHeadBob)
         {
             HeadBob();
         }
     }
 
     void FixedUpdate()
-    {
-        #region Movement
+	{
+		#region Movement
 
-        if (playerCanMove)
+		if (playerCanMove)
         {
             // Calculate how fast we should be moving
             Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -386,26 +392,47 @@ public class FirstPersonController : MonoBehaviour
         #endregion
     }
 
-    // Sets isGrounded based on a raycast sent straigth down from the player object
-    private void CheckGround()
+	public float _timeSinceJump;
+	public float _timeSinceLand;
+
+	// Sets isGrounded based on a raycast sent straigth down from the player object
+	private void CheckGround()
     {
         Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f), transform.position.z);
         Vector3 direction = transform.TransformDirection(Vector3.down);
-        float distance = .75f;
 
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, groundDetection))
         {
-            Debug.DrawRay(origin, direction * distance, Color.red);
-            isGrounded = true;
-        }
-        else
+			Debug.DrawRay(origin, direction * groundDetection, Color.red);
+
+			if (!isGrounded && (Time.realtimeSinceStartup - _timeSinceJump) > 0.1f)
+			{
+				OnLand?.Invoke();
+			}
+
+			isGrounded = true;
+			_timeSinceJump = Time.realtimeSinceStartup;
+		}
+		else
         {
+			if (isGrounded)
+			{
+				OnLaunch?.Invoke();
+				_timeSinceLand = Time.realtimeSinceStartup;
+			}
+
             isGrounded = false;
-        }
-    }
+		}
+	}
 
     private void Jump()
     {
+		if((Time.realtimeSinceStartup - _timeSinceLand) <= 1.1f &&
+			(Time.realtimeSinceStartup - _timeSinceJump) < 1.5f)
+		{
+			return;
+		}
+
         // Adds force to the player rigidbody to jump
         if (isGrounded)
         {
@@ -505,11 +532,13 @@ public class FirstPersonController : MonoBehaviour
         GUILayout.Label("Camera Setup", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold, fontSize = 13 }, GUILayout.ExpandWidth(true));
         EditorGUILayout.Space();
 
-        fpc.playerCamera = (Camera)EditorGUILayout.ObjectField(new GUIContent("Camera", "Camera attached to the controller."), fpc.playerCamera, typeof(Camera), true);
-        fpc.fov = EditorGUILayout.Slider(new GUIContent("Field of View", "The camera’s view angle. Changes the player camera directly."), fpc.fov, fpc.zoomFOV, 179f);
+		fpc.playerCamera = (Camera)EditorGUILayout.ObjectField(new GUIContent("Camera", "Camera attached to the controller."), fpc.playerCamera, typeof(Camera), true);
+		fpc.playerEyes = (Transform)EditorGUILayout.ObjectField(new GUIContent("Eyes", "Eyes of the player."), fpc.playerEyes, typeof(Transform), true);
+		fpc.fov = EditorGUILayout.Slider(new GUIContent("Field of View", "The camera’s view angle. Changes the player camera directly."), fpc.fov, fpc.zoomFOV, 179f);
         fpc.cameraCanMove = EditorGUILayout.ToggleLeft(new GUIContent("Enable Camera Rotation", "Determines if the camera is allowed to move."), fpc.cameraCanMove);
+		fpc.groundDetection = EditorGUILayout.FloatField(new GUIContent("Ground Detection", "Detection height from the ground."), fpc.groundDetection);
 
-        GUI.enabled = fpc.cameraCanMove;
+		GUI.enabled = fpc.cameraCanMove;
         fpc.invertCamera = EditorGUILayout.ToggleLeft(new GUIContent("Invert Camera Rotation", "Inverts the up and down movement of the camera."), fpc.invertCamera);
         fpc.mouseSensitivity = EditorGUILayout.Slider(new GUIContent("Look Sensitivity", "Determines how sensitive the mouse movement is."), fpc.mouseSensitivity, .1f, 10f);
         fpc.maxLookAngle = EditorGUILayout.Slider(new GUIContent("Max Look Angle", "Determines the max and min angle the player camera is able to look."), fpc.maxLookAngle, 40, 90);

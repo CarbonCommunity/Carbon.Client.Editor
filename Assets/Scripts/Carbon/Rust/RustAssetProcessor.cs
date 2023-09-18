@@ -185,6 +185,7 @@ MonoBehaviour:
 				}
 
 				RustAsset.Scan(true);
+				RustAsset.PreviewAll();
 
 #if UNITY_EDITOR
 				Progress.Finish(id2);
@@ -241,7 +242,7 @@ MonoBehaviour:
 
 			if (AutoLoad)
 			{
-				Load();
+				// StartCoroutine(Load());
 			}
 		}
 

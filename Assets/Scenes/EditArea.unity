@@ -125,23 +125,13 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &824735801099339488
+--- !u!1001 &1818624304
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 288590700678801551, guid: 65a727385e151354286a1771358b7d51,
-        type: 3}
-      propertyPath: m_Layer
-      value: 31
-      objectReference: {fileID: 0}
-    - target: {fileID: 500940769644191406, guid: 65a727385e151354286a1771358b7d51,
-        type: 3}
-      propertyPath: m_Layer
-      value: 31
-      objectReference: {fileID: 0}
     - target: {fileID: 1357936024062542697, guid: 65a727385e151354286a1771358b7d51,
         type: 3}
       propertyPath: m_RootOrder
@@ -155,7 +145,7 @@ PrefabInstance:
     - target: {fileID: 1357936024062542697, guid: 65a727385e151354286a1771358b7d51,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.65
+      value: 0.54
       objectReference: {fileID: 0}
     - target: {fileID: 1357936024062542697, guid: 65a727385e151354286a1771358b7d51,
         type: 3}
@@ -201,41 +191,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Default-DeleteMe
-      objectReference: {fileID: 0}
-    - target: {fileID: 2318794745802250357, guid: 65a727385e151354286a1771358b7d51,
-        type: 3}
-      propertyPath: m_Layer
-      value: 31
-      objectReference: {fileID: 0}
-    - target: {fileID: 2591186310718432029, guid: 65a727385e151354286a1771358b7d51,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482106284136035649, guid: 65a727385e151354286a1771358b7d51,
-        type: 3}
-      propertyPath: m_Layer
-      value: 31
-      objectReference: {fileID: 0}
-    - target: {fileID: 4264077219205420267, guid: 65a727385e151354286a1771358b7d51,
-        type: 3}
-      propertyPath: m_Layer
-      value: 31
-      objectReference: {fileID: 0}
-    - target: {fileID: 4651249150182604451, guid: 65a727385e151354286a1771358b7d51,
-        type: 3}
-      propertyPath: m_Layer
-      value: 31
-      objectReference: {fileID: 0}
-    - target: {fileID: 4824109757708229238, guid: 65a727385e151354286a1771358b7d51,
-        type: 3}
-      propertyPath: m_Layer
-      value: 31
-      objectReference: {fileID: 0}
-    - target: {fileID: 5208460125361628824, guid: 65a727385e151354286a1771358b7d51,
-        type: 3}
-      propertyPath: m_Layer
-      value: 31
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65a727385e151354286a1771358b7d51, type: 3}
