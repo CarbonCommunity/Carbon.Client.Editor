@@ -12,6 +12,8 @@ namespace Carbon.Client
 		[Header("Tools")]
 		public LayerMask MaskLookup;
 
+		public Vector3 Debug;
+
 		internal Collider _collider = null;
 		internal float _timeSinceRetry = 0;
 
@@ -50,6 +52,11 @@ namespace Carbon.Client
 						Gizmos.color = Defines.Singleton.GetSwitch(ColorSwitch).Outline;
 						Gizmos.DrawWireCube(box.center, box.size);
 						break;
+
+					case CapsuleCollider capsule:
+						Gizmos.color = Defines.Singleton.GetSwitch(ColorSwitch).Outline;
+						Gizmos.DrawWireCube(capsule.center, new Vector3(capsule.radius * 2, capsule.height, capsule.radius * 2));
+						break;
 				}
 			}
 
@@ -63,6 +70,11 @@ namespace Carbon.Client
 				case BoxCollider box:
 					Gizmos.color = Defines.Singleton.GetSwitch(ColorSwitch).Main;
 					Gizmos.DrawCube(box.center, box.size);
+					break;
+
+				case CapsuleCollider capsule:
+					Gizmos.color = Defines.Singleton.GetSwitch(ColorSwitch).Main;
+					Gizmos.DrawCube(capsule.center, Debug = new Vector3(capsule.radius * 2, capsule.height, capsule.radius * 2));
 					break;
 			}
 

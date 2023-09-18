@@ -3039,7 +3039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 522dea1c11e43384f8ee0262e03544e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Increments: 0.09
+  Increments: 0.2
   AngleScale: 0.5
   TextColor: {r: 1, g: 1, b: 1, a: 1}
   LineColor: {r: 1, g: 1, b: 1, a: 1}

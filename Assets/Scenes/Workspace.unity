@@ -1437,7 +1437,7 @@ PrefabInstance:
     - target: {fileID: 2128534167980880674, guid: 89343e55e8ace394494079292033a40c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89343e55e8ace394494079292033a40c, type: 3}
@@ -1563,7 +1563,7 @@ MonoBehaviour:
   DisableAll: 0
   InvalidSwitch: {fileID: 11400000, guid: e3de82c27364a8b419630adee69038fd, type: 2}
   BlankSwitch: {fileID: 11400000, guid: f56133812ba62654f826d353d680db5e, type: 2}
-  PreviewContainer: {fileID: 0}
+  PreviewContainer: {fileID: 1146050722}
 --- !u!4 &606081491
 Transform:
   m_ObjectHideFlags: 0
@@ -1775,6 +1775,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996259319}
   m_CullTransparentMesh: 1
+--- !u!1 &1146050721
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1146050722}
+  m_Layer: 0
+  m_Name: Preview Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1146050722
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146050721}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1161911287
 GameObject:
   m_ObjectHideFlags: 0
@@ -2624,7 +2655,7 @@ MonoBehaviour:
   AutoLoad: 0
   CreateVisuals: 1
   SelectionSync: 1
-  UpdateTickRate: 0.1
+  UpdateTickRate: 0.01
   PreviewTickRate: 0.25
 --- !u!1 &2083952638
 GameObject:
@@ -2773,7 +2804,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\nN/A\nN/A\nN/A \n-4.00, 1.65, -4.00"
+  m_Text: "\nGrand Theft Auto - Vice City [gtavicecity]\n2 [3 prbs./21 rust prbs.]\ngta_trigger/outer
+    \n258.87, 5.68, -284.47"
 --- !u!222 &2129182667
 CanvasRenderer:
   m_ObjectHideFlags: 0

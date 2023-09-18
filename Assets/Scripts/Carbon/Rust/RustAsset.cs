@@ -95,11 +95,12 @@ public class RustAsset : MonoBehaviour
 			Cleanup();
 
 			var prefab = RustAssetProcessor.PrefabLookup.backend.LoadPrefab(Path);
+			var previewContainer = Defines.Singleton.GetPreviewContainer();
 
-			if (prefab != null)
+			if (prefab != null && previewContainer != null)
 			{
 				_instance = Instantiate(prefab);
-				_instance.transform.SetParent(Defines.Singleton.GetPreviewContainer());
+				_instance.transform.SetParent(previewContainer);
 				_instance.transform.SetLocalPositionAndRotation(transform.position, transform.rotation);
 				_instance.transform.localScale = transform.localScale;
 				_instance.SetActive(true);

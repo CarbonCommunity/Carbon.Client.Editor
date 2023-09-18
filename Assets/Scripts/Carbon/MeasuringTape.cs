@@ -9,6 +9,8 @@ namespace Carbon
 {
     public class MeasuringTape : MonoBehaviour
 	{
+		public const float RENDER_DISTANCE = 50f;
+
 		[Range(0.01f, 1.5f)]
 		public float Increments = 0.25f;
 
@@ -26,7 +28,7 @@ namespace Carbon
 
 		public void OnDrawGizmos()
 		{
-			if (Point == null && Increments != 0)
+			if ((Point == null && Increments != 0) || Vector3.Distance(transform.position, _sceneCamera.transform.position) >= RENDER_DISTANCE)
 			{
 				return;
 			}
