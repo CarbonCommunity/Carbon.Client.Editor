@@ -333,7 +333,7 @@ MonoBehaviour:
   sprintBarHeightPercent: 0.02
   enableJump: 1
   jumpKey: 32
-  jumpPower: 7.5
+  jumpPower: 5.5
   enableCrouch: 1
   holdToCrouch: 1
   crouchKey: 306
@@ -520,7 +520,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2147352375
   StepHeight: 0.15
-  StepSmooth: {x: 0, y: 4, z: 0}
+  StepSmooth: {x: 0, y: 0.1, z: 0}
   GravityForce: {x: 0, y: -0.2, z: 0}
   RayUpper: {fileID: 1240176751303866183}
   RayLower: {fileID: 107904713800076635}
