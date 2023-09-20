@@ -9,6 +9,7 @@ namespace Carbon
     public class HeadBob : MonoBehaviour
     {
 		public FirstPersonController Player;
+		public PlayerStep Steps;
 		public float Speed;
 
 		public Animation LaunchAnim;
@@ -20,6 +21,7 @@ namespace Carbon
 		internal bool _isLanding;
 		internal float _time;
 		internal float _timeout;
+		internal float _velocity;
 
 		public void Start()
 		{
@@ -42,16 +44,28 @@ namespace Carbon
 			}
 
 			_time += Time.deltaTime * Speed;
-			_current.Apply(Target, _time);
+			_current.Apply(Target, _time, _velocity.Scale(1f, 5f, 1f, 0f).Clamp(0.9f, 1.5f));
 		}
 
 		public void PlayLaunch()
 		{
-			_time = 0;
+			if (Steps.IsClimbingSteps)
+			{
+				return;
+			}
+
+					_velocity = Steps.Rigidbody.velocity.magnitude;
+	_time = 0;
 			_current = LaunchAnim;
 		}
 		public void PlayLand()
 		{
+			if (Steps.IsClimbingSteps)
+			{
+				return;
+			}
+
+			_velocity = Steps.Rigidbody.velocity.magnitude;
 			_time = 0;
 			_current = LandAnim;
 		}
@@ -63,10 +77,10 @@ namespace Carbon
 			public AnimationCurve Rotation;
 
 			public float Time => Position.keys.Sum(x => x.time);
-			public void Apply(Transform transform, float time)
+			public void Apply(Transform transform, float time, float multiply = 1f)
 			{
-				transform.localPosition = new Vector3(0f, Position.Evaluate(time), 0f);
-				transform.localRotation = Quaternion.Euler(new Vector3(Rotation.Evaluate(time), 0f, 0f));
+				transform.localPosition = new Vector3(0f, Position.Evaluate(time) * multiply, 0f);
+				transform.localRotation = Quaternion.Euler(new Vector3(Rotation.Evaluate(time) * multiply, 0f, 0f));
 			}
 		}
 	}
