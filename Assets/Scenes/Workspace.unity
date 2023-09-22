@@ -2847,7 +2847,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '[Fail]'
+  m_Text: "\nN/A\nN/A\nN/A \n-4.00, 1.65, -4.00"
 --- !u!222 &2129182667
 CanvasRenderer:
   m_ObjectHideFlags: 0
