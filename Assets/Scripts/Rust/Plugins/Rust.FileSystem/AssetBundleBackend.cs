@@ -12,69 +12,69 @@ public class AssetBundleBackend : FileSystemBackend, System.IDisposable
 	public Dictionary<string, AssetBundle> files = new Dictionary<string, AssetBundle>(System.StringComparer.OrdinalIgnoreCase);
 	public string assetPath;
 
-	public AssetBundleBackend(string assetRoot)
+	public IEnumerator Load(string assetRoot)
 	{
 		isError = false;
 		assetPath = System.IO.Path.GetDirectoryName(assetRoot) + System.IO.Path.DirectorySeparatorChar;
 
-		try
+		var request = AssetBundle.LoadFromFileAsync(assetRoot);
+		while (!request.isDone)
 		{
-			rootBundle = AssetBundle.LoadFromFile(assetRoot);
-			if (rootBundle == null)
-			{
-				LoadError("Couldn't load root AssetBundle - " + assetRoot);
-				return;
-			}
-
-			var manifestList = rootBundle.LoadAllAssets<AssetBundleManifest>();
-			if (manifestList.Length != 1)
-			{
-				LoadError("Couldn't find AssetBundleManifest - " + manifestList.Length);
-				return;
-			}
-
-			manifest = manifestList[0];
-
-			foreach (var ab in manifest.GetAllAssetBundles())
-			{
-				LoadBundle(ab);
-			}
-
-			BuildFileIndex();
+			yield return null;
 		}
-		catch
+
+		rootBundle = request.assetBundle;
+
+		if (rootBundle == null)
 		{
-			isError = true;
+			LoadError("Couldn't load root AssetBundle - " + assetRoot);
+			yield break;
 		}
+
+		var manifestList = rootBundle.LoadAllAssets<AssetBundleManifest>();
+		if (manifestList.Length != 1)
+		{
+			LoadError("Couldn't find AssetBundleManifest - " + manifestList.Length);
+			yield break;
+		}
+
+		manifest = manifestList[0];
+
+		foreach (var ab in manifest.GetAllAssetBundles())
+		{
+			Debug.Log($"{ab}");
+			yield return LoadBundle(ab);
+			yield return null;
+		}
+
+		BuildFileIndex();
 	}
 
-	private void LoadBundle(string bundleName)
+	public IEnumerator LoadBundle(string bundleName)
 	{
 		if (bundles.ContainsKey(bundleName) || bundleName.Contains("private"))
 		{
-			return;
+			yield break;
 		}
 
-		try
+		var fileLocation = assetPath + bundleName;
+		var asset = AssetBundle.LoadFromFileAsync(fileLocation);
+
+		while (!asset.isDone)
 		{
-			var fileLocation = assetPath + bundleName;
-			var asset = AssetBundle.LoadFromFile(fileLocation);
-
-			if (asset == null) 
-			{
-				LoadError("Couldn't load AssetBundle - " + fileLocation);
-				return;
-			}
-
-			bundles.Add(bundleName, asset);
+			yield return null;
 		}
-		catch
+
+		if (asset == null)
 		{
-			// Debug.LogWarning($"Couldn't load '{bundleName}' ({ex.Message})\n{ex.StackTrace}");
+			LoadError("Couldn't load AssetBundle - " + fileLocation);
+			yield break;
 		}
+
+		bundles.Add(bundleName, asset.assetBundle);
 	}
 
-	private void BuildFileIndex()
+	public void BuildFileIndex()
 	{
 		files.Clear();
 

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Carbon;
+using Carbon.Client;
+using UnityEditor.PackageManager;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -20,9 +22,62 @@ public class PrefabLookup : System.IDisposable
 		Dispose();
 	}
 
+	public IEnumerator Load(AssetBundleBackend backend, string assetRoot)
+	{
+		backend.isError = false;
+		backend.assetPath = System.IO.Path.GetDirectoryName(assetRoot) + System.IO.Path.DirectorySeparatorChar;
+
+		var request = AssetBundle.LoadFromFileAsync(assetRoot);
+		while (!request.isDone)
+		{
+			yield return null;
+		}
+
+		backend.rootBundle = request.assetBundle;
+
+		if (backend.rootBundle == null)
+		{
+			backend.LoadError("Couldn't load root AssetBundle - " + assetRoot);
+			yield break;
+		}
+
+		var manifestList = backend.rootBundle.LoadAllAssets<AssetBundleManifest>();
+		if (manifestList.Length != 1)
+		{
+			backend.LoadError("Couldn't find AssetBundleManifest - " + manifestList.Length);
+			yield break;
+		}
+
+		backend.manifest = manifestList[0];
+
+		foreach (var ab in backend.manifest.GetAllAssetBundles())
+		{
+			var coroutine = EditorCoroutine.Start(backend.LoadBundle(ab));
+
+			while (!coroutine.IsDone)
+			{
+				yield return null;
+			}
+		}
+
+		backend.BuildFileIndex();
+	}
+
 	public IEnumerator Build(int progressParentId, string bundlename)
 	{
-		backend = new AssetBundleBackend(bundlename);
+		backend = new AssetBundleBackend();
+
+#if UNITY_EDITOR
+		var coroutine = EditorCoroutine.Start(Load(backend, bundlename));
+
+		while (!coroutine.IsDone)
+		{
+			yield return null;
+		}
+#else
+		yield return Load(backend, bundlename);
+#endif
+
 		const string filter = ".prefab";
 
 #if UNITY_EDITOR

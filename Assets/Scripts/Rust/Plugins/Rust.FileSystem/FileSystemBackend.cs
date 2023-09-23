@@ -75,7 +75,7 @@ public abstract class FileSystemBackend
 		return val;
 	}
 
-	protected void LoadError(string err)
+	public void LoadError(string err)
 	{
 		// Debug.LogError(err);
 		loadingError = err;

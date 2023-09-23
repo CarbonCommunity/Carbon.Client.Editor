@@ -5,6 +5,8 @@ using UnityEditor;
 
 public class EditorCoroutine
 {
+	public bool IsDone;
+
 	public static EditorCoroutine Start(IEnumerator _routine)
 	{
 		var coroutine = new EditorCoroutine(_routine);
@@ -21,10 +23,12 @@ public class EditorCoroutine
 
 	public void Execute()
 	{
+		IsDone = false;
 		EditorApplication.update += update;
 	}
 	public void Abort()
 	{
+		IsDone = true;
 		EditorApplication.update -= update;
 	}
 

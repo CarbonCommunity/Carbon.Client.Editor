@@ -228,6 +228,8 @@ MonoBehaviour:
 		}
 		public void Unload()
 		{
+			RustAsset.Scan(true);
+
 			IsLoading = false;
 			PrefabLookup?.Dispose();
 		}
