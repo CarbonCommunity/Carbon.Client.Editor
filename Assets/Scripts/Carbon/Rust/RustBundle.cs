@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using Carbon.Client.Assets;
-using Newtonsoft.Json;
 using ProtoBuf;
 
 namespace Carbon.Client

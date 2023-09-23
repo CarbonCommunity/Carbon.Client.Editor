@@ -4,15 +4,11 @@
 //
 // "Enable/Disable Headbob, Changed look rotations - should result in reduced camera jitters" || version 1.0.1
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
-    using System.Net;
 #endif
 
 public class FirstPersonController : MonoBehaviour
@@ -33,9 +29,6 @@ public class FirstPersonController : MonoBehaviour
     public bool cameraCanMove = true;
     public float mouseSensitivity = 2f;
     public float maxLookAngle = 50f;
-
-    // Crosshair
-    public bool lockCursor = true;
 
     // Internal Variables
     private float yaw = 0.0f;
@@ -74,14 +67,6 @@ public class FirstPersonController : MonoBehaviour
     public float sprintCooldown = .5f;
     public float sprintFOV = 80f;
     public float sprintFOVStepTime = 10f;
-
-    // Sprint Bar
-    public bool useSprintBar = true;
-    public bool hideBarWhenFull = true;
-    public Image sprintBarBG;
-    public Image sprintBar;
-    public float sprintBarWidthPercent = .3f;
-    public float sprintBarHeightPercent = .015f;
 
 	public Action OnLaunch;
 	public Action OnLand;
@@ -148,14 +133,6 @@ public class FirstPersonController : MonoBehaviour
         {
             sprintRemaining = sprintDuration;
             sprintCooldownReset = sprintCooldown;
-        }
-    }
-
-    void Start()
-    {
-        if(lockCursor)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
@@ -273,13 +250,6 @@ public class FirstPersonController : MonoBehaviour
             {
                 sprintCooldown = sprintCooldownReset;
             }
-
-            // Handles sprintBar 
-            if(useSprintBar && !unlimitedSprint)
-            {
-                float sprintRemainingPercent = sprintRemaining / sprintDuration;
-                sprintBar.transform.localScale = new Vector3(sprintRemainingPercent, 1f, 1f);
-            }
         }
 
         #endregion
@@ -331,8 +301,11 @@ public class FirstPersonController : MonoBehaviour
 
 		if (playerCanMove)
         {
-            // Calculate how fast we should be moving
-            Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+			// Calculate how fast we should be moving
+			var vertical = Input.GetAxis("Vertical");
+			var horizontal = Input.GetAxis("Horizontal");
+			var isWalkingWeird = vertical < 0 || horizontal != 0;
+			var targetVelocity = new Vector3(horizontal * (isWalkingWeird ? 0.5f : 1f), 0, vertical * (!isGrounded || isWalkingWeird ? 0.75f : 1f));
 
             // Checks if player is walking and isGrounded
             // Will allow head bob
@@ -346,7 +319,7 @@ public class FirstPersonController : MonoBehaviour
             }
 
             // All movement calculations shile sprint is active
-            if (enableSprint && Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown && isGrounded)
+            if (enableSprint && Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown && isGrounded && !isWalkingWeird)
             {
                 targetVelocity = transform.TransformDirection(targetVelocity) * sprintSpeed;
 
@@ -427,7 +400,7 @@ public class FirstPersonController : MonoBehaviour
 
     private void Jump()
     {
-		if((Time.realtimeSinceStartup - _timeSinceLand) <= 1.1f &&
+		if((Time.realtimeSinceStartup - _timeSinceLand) <= 0.5f &&
 			(Time.realtimeSinceStartup - _timeSinceJump) < 1.5f)
 		{
 			return;
@@ -544,8 +517,6 @@ public class FirstPersonController : MonoBehaviour
         fpc.maxLookAngle = EditorGUILayout.Slider(new GUIContent("Max Look Angle", "Determines the max and min angle the player camera is able to look."), fpc.maxLookAngle, 40, 90);
         GUI.enabled = true;
 
-        fpc.lockCursor = EditorGUILayout.ToggleLeft(new GUIContent("Lock and Hide Cursor", "Turns off the cursor visibility and locks it to the middle of the screen."), fpc.lockCursor);
-
         EditorGUILayout.Space();
 
         #region Camera Zoom Setup
@@ -598,37 +569,6 @@ public class FirstPersonController : MonoBehaviour
         fpc.sprintFOV = EditorGUILayout.Slider(new GUIContent("Sprint FOV", "Determines the field of view the camera changes to while sprinting."), fpc.sprintFOV, fpc.fov, 179f);
         fpc.sprintFOVStepTime = EditorGUILayout.Slider(new GUIContent("Step Time", "Determines how fast the FOV transitions while sprinting."), fpc.sprintFOVStepTime, .1f, 20f);
 
-        fpc.useSprintBar = EditorGUILayout.ToggleLeft(new GUIContent("Use Sprint Bar", "Determines if the default sprint bar will appear on screen."), fpc.useSprintBar);
-
-        // Only displays sprint bar options if sprint bar is enabled
-        if(fpc.useSprintBar)
-        {
-            EditorGUI.indentLevel++;
-
-            EditorGUILayout.BeginHorizontal();
-            fpc.hideBarWhenFull = EditorGUILayout.ToggleLeft(new GUIContent("Hide Full Bar", "Hides the sprint bar when sprint duration is full, and fades the bar in when sprinting. Disabling this will leave the bar on screen at all times when the sprint bar is enabled."), fpc.hideBarWhenFull);
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PrefixLabel(new GUIContent("Bar BG", "Object to be used as sprint bar background."));
-            fpc.sprintBarBG = (Image)EditorGUILayout.ObjectField(fpc.sprintBarBG, typeof(Image), true);
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PrefixLabel(new GUIContent("Bar", "Object to be used as sprint bar foreground."));
-            fpc.sprintBar = (Image)EditorGUILayout.ObjectField(fpc.sprintBar, typeof(Image), true);
-            EditorGUILayout.EndHorizontal();
-
-
-            EditorGUILayout.BeginHorizontal();
-            fpc.sprintBarWidthPercent = EditorGUILayout.Slider(new GUIContent("Bar Width", "Determines the width of the sprint bar."), fpc.sprintBarWidthPercent, .1f, .5f);
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
-            fpc.sprintBarHeightPercent = EditorGUILayout.Slider(new GUIContent("Bar Height", "Determines the height of the sprint bar."), fpc.sprintBarHeightPercent, .001f, .025f);
-            EditorGUILayout.EndHorizontal();
-            EditorGUI.indentLevel--;
-        }
         GUI.enabled = true;
 
         EditorGUILayout.Space();

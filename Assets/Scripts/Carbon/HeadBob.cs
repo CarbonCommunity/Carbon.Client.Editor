@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace Carbon
 {
-    public class HeadBob : MonoBehaviour
-    {
+	public class HeadBob : MonoBehaviour
+	{
 		public FirstPersonController Player;
 		public PlayerStep Steps;
 		public float Speed;
@@ -30,7 +28,7 @@ namespace Carbon
 		}
 		public void Update()
 		{
-			if(_current == null)
+			if (_current == null)
 			{
 				return;
 			}
@@ -54,8 +52,8 @@ namespace Carbon
 				return;
 			}
 
-					_velocity = Steps.Rigidbody.velocity.magnitude;
-	_time = 0;
+			_velocity = Steps.Rigidbody.velocity.magnitude;
+			_time = 0;
 			_current = LaunchAnim;
 		}
 		public void PlayLand()

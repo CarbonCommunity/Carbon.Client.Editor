@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 324172874319816149}
   - component: {fileID: 8560144993614778632}
   m_Layer: 18
-  m_Name: watervisibility_trigger_box
+  m_Name: waterculling_volume_box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,15 +64,13 @@ MonoBehaviour:
     CreateOn:
       Server: 1
       Client: 1
-    Type: WaterVisibilityTrigger
+    Type: WaterCullingVolume
     Members:
-    - Name: togglePhysics
-      Value: true
-    - Name: toggleVisuals
-      Value: true
+    - Name: isDynamic
+      Value: false
   Entity:
     Flags: 0
-  ColorSwitch: {fileID: 11400000, guid: c65575db908ccea49b84553758df6c2a, type: 2}
+  ColorSwitch: {fileID: 11400000, guid: 25c23151208b50f4fb1eb0f3a0b928b9, type: 2}
   MaskLookup:
     serializedVersion: 2
     m_Bits: 131072

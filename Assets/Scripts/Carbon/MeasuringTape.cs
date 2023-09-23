@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Carbon.Client;
+﻿#if UNITY_EDITOR
 using UnityEditor;
+#endif
+
+using Carbon.Client;
 using UnityEngine;
-using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 namespace Carbon
 {
-    public class MeasuringTape : MonoBehaviour
+	public class MeasuringTape : MonoBehaviour
 	{
 		public const float RENDER_DISTANCE = 50f;
 
@@ -21,7 +21,6 @@ namespace Carbon
 
 		[Header("References")]
 		public GameObject Point;
-
 
 #if UNITY_EDITOR
 		public Camera _sceneCamera => SceneView.currentDrawingSceneView.camera;

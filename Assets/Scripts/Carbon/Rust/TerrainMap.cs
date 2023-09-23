@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using System.Linq;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 public class TerrainMap<T> where T : struct

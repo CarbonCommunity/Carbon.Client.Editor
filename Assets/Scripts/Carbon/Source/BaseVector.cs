@@ -24,12 +24,12 @@ namespace Carbon.Client.Packets
 
 		public Vector3 ToVector3()
 		{
-			return new Vector3(this.X, this.Y, this.Z);
+			return new Vector3(X, Y, Z);
 		}
 
 		public Quaternion ToQuaternion()
 		{
-			return Quaternion.Euler(this.X, this.Y, this.Z);
+			return Quaternion.Euler(X, Y, Z);
 		}
 
 		public static BaseVector ToProtoVector(Vector3 vector)

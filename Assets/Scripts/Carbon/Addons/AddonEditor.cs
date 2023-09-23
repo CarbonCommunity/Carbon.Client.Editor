@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 using Carbon.Client;
 using ProtoBuf;
 using Carbon.Client.Packets;
-using System.ComponentModel;
 
 #if UNITY_EDITOR
 using HierarchyIcons;

@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
 namespace Carbon

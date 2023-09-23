@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Carbon
 {
-    public class PlayerStep : MonoBehaviour
+	public class PlayerStep : MonoBehaviour
     {
 		public bool IsClimbingSteps => (Time.realtimeSinceStartup - _timeSinceStepsClimbed) <= 0.4f;
 
 		public LayerMask Mask;
 
 		public float StepHeight = 0.3f;
-		public Vector3 StepSmooth = new Vector3(0, 0.1f, 0f);
-		public Vector3 GravityForce = new Vector3(0, -0.2f, 0f);
+		public Vector3 StepSmooth = new(0, 0.1f, 0f);
+		public Vector3 GravityForce = new(0, -0.2f, 0f);
 
 		public Transform RayUpper;
 		public Transform RayLower;

@@ -93,7 +93,11 @@ public class AssetBundleBackend : FileSystemBackend, System.IDisposable
 
 		foreach (var bundle in bundles)
 		{
-			bundle.Value?.Unload(true);
+			try
+			{
+				bundle.Value?.Unload(true);
+			}
+			catch { }
 
 			if (bundle.Value != null)
 			{

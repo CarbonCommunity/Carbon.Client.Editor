@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Carbon;
+#if UNITY_EDITOR
 using UnityEditor;
-using Carbon.Client;
+#endif
 using System.Collections;
 
 public class PrefabLookup : System.IDisposable

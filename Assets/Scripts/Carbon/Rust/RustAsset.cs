@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Carbon;
-using UnityEditor;
+using Carbon.Client;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [ExecuteAlways]
 public class RustAsset : MonoBehaviour
@@ -10,11 +10,11 @@ public class RustAsset : MonoBehaviour
 	public static List<RustAsset> assets = new ();
 
 	public string Path;
+	public RustPrefab.EntityData Entity = new();
 
-	[Header("Auto-assigned")]
-	public Vector3 Position;
-	public Quaternion Rotation;
-	public Vector3 Scale;
+	[NonSerialized] public Vector3 Position;
+	[NonSerialized] public Quaternion Rotation;
+	[NonSerialized] public Vector3 Scale;
 
 	internal GameObject _instance;
 	internal float _timeSinceRetry;
