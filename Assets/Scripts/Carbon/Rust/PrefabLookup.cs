@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Carbon;
-using Carbon.Client;
-using UnityEditor.PackageManager;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -52,12 +50,16 @@ public class PrefabLookup : System.IDisposable
 
 		foreach (var ab in backend.manifest.GetAllAssetBundles())
 		{
+#if UNITY_EDITOR
 			var coroutine = EditorCoroutine.Start(backend.LoadBundle(ab));
 
 			while (!coroutine.IsDone)
 			{
 				yield return null;
 			}
+#else
+			yield return backend.LoadBundle(ab);
+#endif
 		}
 
 		backend.BuildFileIndex();

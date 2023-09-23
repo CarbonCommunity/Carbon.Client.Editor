@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using Carbon.Client;
 using ProtoBuf;
 using Carbon.Client.Packets;
+using Carbon;
 
 #if UNITY_EDITOR
 using HierarchyIcons;
@@ -25,8 +26,13 @@ public class AddonEditor : ScriptableObject
 	public string Version;
 	public List<Asset> Assets = new List<Asset>();
 
+	[Header("Testing")]
+	public RConTesting Rcon = new();
+
 	internal readonly string _mainBundle = "main";
 	internal readonly string _defaultVariant = "dat";
+
+	public string BuildPath => Path.Combine(Defines.Root, "Addons", $"{this.name}_{Version}.cca");
 
 	[Serializable]
 	public class Asset
@@ -38,7 +44,7 @@ public class AddonEditor : ScriptableObject
 		public GameObject[] Prefabs;
 
 		public Dictionary<string, List<RustComponent>> Components = new Dictionary<string, List<RustComponent>>();
-		public Dictionary<Transform, RustAsset> RustPrefabs = new Dictionary<Transform, RustAsset> ();
+		public Dictionary<Transform, RustAsset> RustPrefabs = new Dictionary<Transform, RustAsset>();
 
 #if UNITY_EDITOR
 		public void Preprocess()
@@ -104,7 +110,7 @@ public class AddonEditor : ScriptableObject
 		}
 		public void BackUp()
 		{
-			foreach(var prefab in Prefabs)
+			foreach (var prefab in Prefabs)
 			{
 				var path = AssetDatabase.GetAssetPath(prefab);
 				File.WriteAllText($"{path}.bkp", File.ReadAllText(path));
@@ -162,13 +168,19 @@ public class AddonEditor : ScriptableObject
 		}
 		public void Restore()
 		{
-			foreach(var prefab in Prefabs)
+			foreach (var prefab in Prefabs)
 			{
 				var path = AssetDatabase.GetAssetPath(prefab);
 				File.Copy($"{path}.bkp", path, true);
 			}
 		}
 #endif
+	}
+
+	[Serializable]
+	public class RConTesting
+	{
+		public GameObject Prefab;
 	}
 
 	public static string GetRecursiveName(Transform transform, string strEndName = "")
@@ -193,7 +205,7 @@ public class AddonEditor : ScriptableObject
 	{
 		Defines.OnPreAddonBuild();
 
-		var path = EditorUtility.SaveFilePanel("Export Carbon Addon", Defines.Root, $"{this.name}_{Version}", "cca");
+		var path = BuildPath;
 		var name = Name.Replace(" ", "_").ToLower();
 
 		if (string.IsNullOrEmpty(path))
@@ -270,6 +282,13 @@ public class AddonEditor : ScriptableObject
 		Defines.OnPostAddonBuild();
 	}
 
+	public void BuildAndRconTest()
+	{
+		Build();
+
+		Carbon.Rcon.Singleton.SendMap(BuildPath, AssetDatabase.GetAssetPath(Rcon.Prefab).ToLower());
+	}
+
 	public void PrepareScene()
 	{
 		var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Additive);
@@ -308,6 +327,54 @@ public class AddonEditor : ScriptableObject
 
 		Selection.SetActiveObjectWithContext(project, this);
 		SceneManager.SetActiveScene(Defines.Singleton.gameObject.scene);
+	}
+#endif
+
+#if UNITY_EDITOR
+	[CustomEditor(typeof(AddonEditor), true)]
+	public class AddonEditorEditor : Editor
+	{
+		public override void OnInspectorGUI()
+		{
+			DrawDefaultInspector();
+
+			var addon = (AddonEditor)target;
+
+			//
+			// Tools Area
+			//
+			{
+				GUILayout.Space(16);
+
+				GUILayout.Label("Tools", EditorStyles.boldLabel);
+
+				EditorGUILayout.BeginHorizontal(GUILayout.ExpandWidth(true));
+
+				if (GUILayout.Button("Export Addon"))
+				{
+					addon.Build();
+				}
+
+				if (GUILayout.Button("Open/Generate Scene"))
+				{
+					addon.PrepareScene();
+				}
+
+				EditorGUILayout.EndHorizontal();
+
+				using (CarbonUtils.GUIColorChange.New(Color.green, false))
+				{
+					if (GUILayout.Button($"Export Addon + Update on Server ({Carbon.Rcon.Singleton.Ip}:{Carbon.Rcon.Singleton.Port})"))
+					{
+						addon.BuildAndRconTest();
+					}
+					if (GUILayout.Button($"Update on Server ({Carbon.Rcon.Singleton.Ip}:{Carbon.Rcon.Singleton.Port})"))
+					{
+						Carbon.Rcon.Singleton.SendMap(addon.BuildPath, AssetDatabase.GetAssetPath(addon.Rcon.Prefab).ToLower());
+					}
+				}
+			}
+		}
 	}
 #endif
 }

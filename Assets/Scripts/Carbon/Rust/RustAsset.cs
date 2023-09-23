@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Carbon;
 using Carbon.Client;
+using UnityEditor;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -9,8 +11,13 @@ public class RustAsset : MonoBehaviour
 {
 	public static List<RustAsset> assets = new ();
 
+	[Header("Properties")]
 	public string Path;
+
+	[Header("Instance")]
 	public RustPrefab.EntityData Entity = new();
+
+	public Texture2D Texture;
 
 	[NonSerialized] public Vector3 Position;
 	[NonSerialized] public Quaternion Rotation;
@@ -42,6 +49,18 @@ public class RustAsset : MonoBehaviour
 
 		return false;
 	}
+
+#if UNITY_EDITOR
+	[ContextMenu("Preview")]
+	public void CreatePreview()
+	{
+		var editor = UnityEditor.Editor.CreateEditor(_instance);
+		Texture = editor.RenderStaticPreview(AssetDatabase.GetAssetPath(gameObject), null, 200, 200);
+		DestroyImmediate(editor);
+
+		Debug.Log("Did done it");
+	}
+#endif
 
 	public void OnEnable()
 	{

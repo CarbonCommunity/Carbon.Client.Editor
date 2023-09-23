@@ -17,7 +17,9 @@ public class Defines : MonoBehaviour
 	[Header("Debugger")]
 	public ColorSwitch InvalidSwitch;
 	public ColorSwitch BlankSwitch;
+	public GameObject RconEntityTemplate;
 
+	public Transform RconEntityContainer;
 	public Transform PreviewContainer;
 
 	public Transform GetPreviewContainer()
