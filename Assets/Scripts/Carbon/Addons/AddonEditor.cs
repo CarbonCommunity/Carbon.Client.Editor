@@ -236,6 +236,7 @@ public class AddonEditor : ScriptableObject
 					Components = asset.Components,
 					RustPrefabs = asset.RustPrefabs.Select(x => new RustPrefab
 					{
+						Entity = x.Value.Entity,
 						Path = x.Value.Path,
 						Position = BaseVector.ToProtoVector(x.Value.Position),
 						Rotation = BaseVector.ToProtoVector(x.Value.Rotation),
