@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[ExecuteAlways]
 public class Grid : MonoBehaviour
 {
 	public float Spacing;
@@ -24,5 +25,10 @@ public class Grid : MonoBehaviour
 				count = 0;
 			}
 		}
+	}
+
+	public void Update()
+	{
+		Apply();
 	}
 }
