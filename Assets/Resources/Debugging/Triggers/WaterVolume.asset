@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d306af3970f213943b357d09710d083f, type: 3}
-  m_Name: WaterCulling
+  m_Name: WaterVolume
   m_EditorClassIdentifier: 
   Tag: Water Visibility
   Enabled: 1
-  Main: {r: 1, g: 0, b: 0, a: 0.3529412}
-  Outline: {r: 0, g: 0.89161587, b: 1, a: 0.5686275}
+  Main: {r: 0, g: 1, b: 0.8085573, a: 0.19607843}
+  Outline: {r: 1, g: 0, b: 0.32008457, a: 0.29411766}

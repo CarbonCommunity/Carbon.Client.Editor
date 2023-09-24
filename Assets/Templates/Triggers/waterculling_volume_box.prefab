@@ -68,9 +68,7 @@ MonoBehaviour:
     Members:
     - Name: isDynamic
       Value: false
-  Entity:
-    Flags: 0
-  ColorSwitch: {fileID: 11400000, guid: 25c23151208b50f4fb1eb0f3a0b928b9, type: 2}
+  ColorSwitch: {fileID: 11400000, guid: 02a0ce3db32794c4d8398a4505d208ce, type: 2}
   MaskLookup:
     serializedVersion: 2
     m_Bits: 131072
