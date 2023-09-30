@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Carbon;
 using Carbon.Client;
 using UnityEditor;
@@ -126,6 +127,11 @@ public class RustAsset : MonoBehaviour
 				_instance.transform.localScale = transform.localScale;
 				_instance.SetActive(true);
 				_instance.tag = "EditorOnly";
+
+				foreach (var collider in _instance.transform.GetComponents<Collider>().Concat(_instance.transform.GetComponentsInChildren<Collider>()))
+				{
+					DestroyImmediate(collider);
+				}
 			}
 		}
 		catch { }
