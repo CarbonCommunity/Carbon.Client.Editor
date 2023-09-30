@@ -22,6 +22,11 @@ public class Defines : MonoBehaviour
 	public Transform RconEntityContainer;
 	public Transform PreviewContainer;
 
+	public Defines()
+	{
+		_instance = this;
+	}
+
 	public Transform GetPreviewContainer()
 	{
 		if (PreviewContainer == null && gameObject != null && gameObject.scene.IsValid())
@@ -37,7 +42,6 @@ public class Defines : MonoBehaviour
 
 		return PreviewContainer;
 	}
-
 	public ColorSwitch GetSwitch(ColorSwitch @switch)
 	{
 		if(@switch == null)

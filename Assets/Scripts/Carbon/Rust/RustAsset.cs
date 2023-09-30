@@ -88,6 +88,8 @@ public class RustAsset : MonoBehaviour
 			return;
 		}
 
+		_instance.SetActive(gameObject.activeInHierarchy);
+
 		if (HasChanged(out var pos, out var rot, out var scale) && _instance != null)
 		{
 			_instance.transform.SetPositionAndRotation(pos, rot);
@@ -144,7 +146,7 @@ public class RustAsset : MonoBehaviour
 			}
 		}
 		catch { }
-	} 
+	}
 	public void Fetch()
 	{
 		if (!assets.Contains(this))
