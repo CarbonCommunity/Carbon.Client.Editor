@@ -28,6 +28,8 @@ namespace Carbon
 		public static Action<Dictionary<string, GameObject>> OnAssetsLoaded;
 		public static PrefabLookup PrefabLookup;
 
+		internal List<RustAsset> _selection = new();
+		internal List<RustAsset> _selectionPrev = new();
 		internal WaitForSeconds _previewWait = new(0.5f);
 		internal float _currentTick;
 
@@ -164,8 +166,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {{fileID: 11500000, guid: fb9b096131538b44289fa56784e3fc62, type: 3}}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   Path: {prefab.Key}
 ";
 
@@ -286,6 +288,20 @@ MonoBehaviour:
 		{
 #if UNITY_EDITOR
 
+			foreach (var asset in _selection)
+			{
+				if (asset == null)
+				{
+					continue;
+				}
+
+				asset.OnDeselected();
+			}
+
+			_selectionPrev.Clear();
+			_selectionPrev.AddRange(_selection);
+			_selection.Clear();
+
 			var objects = Selection.gameObjects;
 
 			if (objects.Length > 0)
@@ -301,6 +317,13 @@ MonoBehaviour:
 
 					if(asset != null)
 					{
+						_selection.Add(asset);
+
+						if (!_selectionPrev.Contains(asset))
+						{
+							asset.OnSelected();
+						}
+
 						asset.Tick();
 					}
 					else
@@ -309,6 +332,13 @@ MonoBehaviour:
 
 						foreach(var asset2 in assets)
 						{
+							_selection.Add(asset);
+
+							if (!_selectionPrev.Contains(asset))
+							{
+								asset?.OnSelected();
+							}
+
 							asset2.Tick();
 						}
 					}

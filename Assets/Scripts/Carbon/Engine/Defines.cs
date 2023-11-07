@@ -15,6 +15,7 @@ public class Defines : MonoBehaviour
 	public bool DisableAll;
 
 	[Header("Debugger")]
+	public ColorSwitch BoundsSwitch;
 	public ColorSwitch InvalidSwitch;
 	public ColorSwitch BlankSwitch;
 	public GameObject RconEntityTemplate;
@@ -59,7 +60,7 @@ public class Defines : MonoBehaviour
 
 	public static string Root => Path.GetFullPath(Path.Combine(Application.dataPath, ".."));
 
-	public static void OnReload() 
+	public static void OnReload()
 	{
 		try
 		{
