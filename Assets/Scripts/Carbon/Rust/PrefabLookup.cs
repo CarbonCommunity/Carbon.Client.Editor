@@ -6,6 +6,8 @@ using Carbon;
 using UnityEditor;
 #endif
 using System.Collections;
+using System.IO;
+using ProtoBuf.Meta;
 
 public class PrefabLookup : System.IDisposable
 {
@@ -80,7 +82,7 @@ public class PrefabLookup : System.IDisposable
 		yield return Load(backend, bundlename);
 #endif
 
-		const string filter = ".prefab";
+		const string prefabFilter = ".prefab";
 
 #if UNITY_EDITOR
 		var bundleProgress = Progress.Start($"Bundle Load", string.Empty, parentId: progressParentId);
@@ -88,7 +90,7 @@ public class PrefabLookup : System.IDisposable
 
 		foreach (var bundle in backend.bundles)
 		{
-			var content = bundle.Value.GetAllAssetNames().Where(x => x.EndsWith(filter));
+			var content = bundle.Value.GetAllAssetNames().Where(x => x.EndsWith(prefabFilter));
 			var count = 1;
 			var totalCount = content.Count();
 
@@ -108,7 +110,7 @@ public class PrefabLookup : System.IDisposable
 				if (count % 100 == 0)
 				{
 					yield return null;
-				} 
+				}
 			}
 
 			yield return null;
