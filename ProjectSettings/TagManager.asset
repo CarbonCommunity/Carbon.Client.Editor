@@ -32,12 +32,12 @@ TagManager:
   - Terrain
   - Transparent
   - Clutter
-  - Debris
+  - Bush
   - Vehicle Large
   - Prevent Movement
   - Prevent Building
   - Tree
-  - UNUSED
+  - Physics Debris
   m_SortingLayers:
   - name: Default
     uniqueID: 0
