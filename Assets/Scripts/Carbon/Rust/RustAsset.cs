@@ -17,6 +17,7 @@ public class RustAsset : MonoBehaviour
 
 	[Header("Instance")]
 	public RustPrefab.EntityData Entity = new();
+	public RustPrefab.ModelData Model = new();
 
 	public Texture2D Texture;
 
@@ -51,6 +52,12 @@ public class RustAsset : MonoBehaviour
 		Position = transform.position;
 		Rotation = transform.rotation;
 		Scale = transform.localScale;
+
+#if UNITY_EDITOR
+
+		Model.PrefabPath = AssetDatabase.GetAssetPath(Model.PrefabReference).ToLower();
+
+#endif
 	}
 
 	public bool HasChanged(out Vector3 pos, out Quaternion rot, out Vector3 scale)

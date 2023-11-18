@@ -5,6 +5,7 @@
     "com.unity.ide.visualstudio": "2.0.18",
     "com.unity.postprocessing": "3.2.2",
     "com.unity.probuilder": "5.1.1",
+    "com.unity.shadergraph": "12.1.12",
     "com.unity.textmeshpro": "3.0.6",
     "com.unity.ugui": "1.0.0",
     "io.sentry.unity": "https://github.com/getsentry/unity.git#1.6.0",

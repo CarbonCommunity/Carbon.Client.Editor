@@ -37,6 +37,7 @@ namespace Carbon.Client.Assets
 			};
 		}
 
+		public RustBundle CachedRustBundle { get; set; }
 		public UnityEngine.AssetBundle CachedBundle { get; set; }
 
 		public bool IsUnpacked => CachedBundle != null;

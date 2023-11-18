@@ -530,8 +530,6 @@ namespace Carbon
 	{
 		public override void OnInspectorGUI()
 		{
-			base.OnInspectorGUI();
-
 			var rcon = (Rcon)target;
 
 			GUILayout.BeginHorizontal();
