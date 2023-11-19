@@ -59,7 +59,7 @@ namespace Carbon
 #endif
 
 			var editor = Project.Current?.Editor;
-			var prefabs = editor?.Assets?.Sum(x => x.Prefabs.Length);
+			var prefabs = editor?.Assets?.Sum(x => x.Prefabs.Count);
 			var rustPrefabs = editor?.Assets?.Sum(x => x.RustPrefabs.Count);
 
 			var playerCamera = FirstPersonController.Instance?.playerCamera;

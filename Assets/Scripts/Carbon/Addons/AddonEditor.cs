@@ -41,7 +41,7 @@ public class AddonEditor : ScriptableObject
 		public string Name;
 		[Tooltip("Leave empty for default (.bundle).")]
 		public string Extension;
-		public GameObject[] Prefabs;
+		public List<GameObject> Prefabs;
 
 		public Dictionary<string, List<RustComponent>> Components = new Dictionary<string, List<RustComponent>>();
 		public Dictionary<Transform, RustAsset> RustPrefabs = new Dictionary<Transform, RustAsset>();
@@ -128,6 +128,27 @@ public class AddonEditor : ScriptableObject
 		{
 			Debug.Log($"Destroying {RustPrefabs.Count} RustPrefabs");
 
+			foreach (var rustPrefab in RustPrefabs)
+			{
+				try
+				{
+					rustPrefab.Value.Cache();
+
+					Debug.Log($"Found {rustPrefab.Value.Model.PrefabPath}");
+
+					if (rustPrefab.Value.Model.PrefabReference != null && !Prefabs.Contains(rustPrefab.Value.Model.PrefabReference))
+					{
+						Prefabs.Add(rustPrefab.Value.Model.PrefabReference);
+					}
+
+					DestroyImmediate(rustPrefab.Value.gameObject, true);
+				}
+				catch(Exception ex)
+				{
+					Debug.LogError($"SOMGsakjdak ({ex.Message})\n{ex.StackTrace}");
+				}
+			}
+
 			foreach (var prefab in Prefabs)
 			{
 				Recursive(prefab.transform);
@@ -154,16 +175,6 @@ public class AddonEditor : ScriptableObject
 						}
 					}
 				}
-			}
-
-			foreach (var rustPrefab in RustPrefabs)
-			{
-				try
-				{
-					rustPrefab.Value.Cache();
-					DestroyImmediate(rustPrefab.Value.gameObject, true);
-				}
-				catch { }
 			}
 		}
 		public void Restore()

@@ -55,7 +55,10 @@ public class RustAsset : MonoBehaviour
 
 #if UNITY_EDITOR
 
-		Model.PrefabPath = AssetDatabase.GetAssetPath(Model.PrefabReference).ToLower();
+		if (Model.PrefabReference != null)
+		{
+			Model.PrefabPath = AssetDatabase.GetAssetPath(Model.PrefabReference).ToLower();
+		}
 
 #endif
 	}
@@ -86,6 +89,22 @@ public class RustAsset : MonoBehaviour
 		DestroyImmediate(editor);
 
 		Debug.Log("Did done it");
+	}
+	[ContextMenu("Draw Custom Models")]
+	public void CreateCustomModelsPreview()
+	{
+		foreach (var model in assets)
+		{
+			if (model.Model.PrefabReference == null)
+			{
+				continue;
+			}
+
+			var newModel = Instantiate(model.Model.PrefabReference).transform;
+			newModel.SetParent(model.transform, false);
+			newModel.localPosition = Vector3.zero;
+			newModel.localRotation = Quaternion.identity;
+		}
 	}
 #endif
 
