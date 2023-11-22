@@ -193,6 +193,12 @@ public class RustAsset : MonoBehaviour
 
 	public void Preview()
 	{
+		if (Model.PrefabReference != null)
+		{
+			Cleanup();
+			return;
+		}
+
 		try
 		{
 			Fetch();

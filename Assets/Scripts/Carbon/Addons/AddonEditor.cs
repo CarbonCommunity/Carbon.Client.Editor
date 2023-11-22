@@ -182,7 +182,14 @@ public class AddonEditor : ScriptableObject
 			foreach (var prefab in Prefabs)
 			{
 				var path = AssetDatabase.GetAssetPath(prefab);
-				File.Copy($"{path}.bkp", path, true);
+				try
+				{
+					File.Copy($"{path}.bkp", path, true);
+				}
+				catch(Exception ex)
+				{
+					Debug.LogError($"Borked: {ex}");
+				}
 			}
 		}
 #endif
