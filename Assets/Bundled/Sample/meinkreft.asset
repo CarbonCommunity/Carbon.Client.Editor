@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 323f47d85e51c754b93cab01585536f1, type: 3}
+  m_Name: meinkreft
+  m_EditorClassIdentifier: 
+  Name: Meinkreft
+  Author: Reul
+  Description: Huh? MINECRAFT IN RUST!?
+  Version: 1.0.0
+  Assets:
+  - Name: main
+    Extension: 
+    Prefabs:
+    - {fileID: 4439490485189803405, guid: ecaf410501cf17b49b86bf31d4e1c488, type: 3}
+  Rcon:
+    Prefab: {fileID: 4439490485189803405, guid: ecaf410501cf17b49b86bf31d4e1c488,
+      type: 3}

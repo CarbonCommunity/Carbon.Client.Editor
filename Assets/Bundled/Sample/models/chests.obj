@@ -1,0 +1,242 @@
+# Wavefront OBJ file made by Mineways version 11.04, http://mineways.com
+# World: TestWorld
+# Terrain file name: D:\Work\Repositories\raulssorban\Carbon.Servers\mineways\terrainExt.png
+# Color scheme: Standard
+# Wed Nov 22 11:32:00 2023
+
+# Selection location min to max: -266, 94, 173 to -263, 94, 173
+#   Non-empty selection location min to max: -266, 94, 173 to -263, 94, 173
+
+# Set render type: Wavefront OBJ relative indices
+# Units for the model vertex data itself: meters
+
+# 40 vertices, 29 faces (58 triangles), 0 blocks, 15 billboards/bits
+# block dimensions: X=5 by Y=2 (height) by Z=2 blocks
+# Elevation shading: no
+# Lighting: no
+# Transparent water: no
+# Map grid: no
+# File type: Export all textures to three large images
+# Texture output RGB: YES
+# Texture output A: YES
+# Texture output RGBA: YES
+# OBJ relative coordinates
+# Export separate types: no
+# Export individual blocks: YES
+#   Material per family: YES
+#   Split by block type: YES
+# Make groups objects: YES
+# Custom material: no
+# Export lesser blocks: YES
+# Fatten lesser blocks: no
+# Simplify mesh: no
+# Double all billboard faces: YES
+# Create composite overlay faces: no
+# Center model: YES
+# Use biomes: no
+# Create block faces at the borders: YES
+# Tree leaves solid: no
+# Rotate model 0.000000 degrees
+# Make Z the up direction instead of Y: no
+# Scale model by making each block 1000 mm high
+# Data operation options:
+#   Fill air bubbles: no; Seal off entrances: no; Fill in isolated tunnels in base of model: no
+#   Connect parts sharing an edge: YES; Connect corner tips: YES; Weld all shared edges: YES
+#   Delete floating objects: trees and parts smaller than 16 blocks: no
+#   Hollow out bottom of model, making the walls 1000 mm thick: no; Superhollow: no
+# Melt snow blocks: no
+#   Debug: show separate parts as colors: no
+#   Debug: show weld blocks in bright colors: no
+
+# Cleanup processing summary:
+#   Solid parts: 0
+#   Total solid parts merged: 0
+#   Number of edge passes made: 1
+#     Edges found to fix: 0
+#     Weld blocks added: 0
+#     Tip blocks added: 0
+
+# Full world path: D:\Minecraft\instances\1.20.1\.minecraft\saves\TestWorld
+# Full terrainExt.png path: D:\Work\Repositories\raulssorban\Carbon.Servers\mineways\terrainExt.png
+# Full current path: D:\Work\Repositories\raulssorban\Carbon.Servers\mineways
+
+mtllib chests.mtl
+vn -1 0 0
+vn 0 -1 0
+vn 0 0 -1
+vn 1 0 0
+vn 0 1 0
+vn 0 0 1
+vn -0.707107 0 -0.707107
+vn -0.707107 0 0.707107
+vn 0.707107 0 -0.707107
+vn 0.707107 0 0.707107
+vn -0.707107 -0.707107 0
+vn 0 -0.707107 -0.707107
+vn 0.707107 -0.707107 0
+vn 0 -0.707107 0.707107
+vn -0.707107 0.707107 0
+vn 0 0.707107 -0.707107
+vn 0.707107 0.707107 0
+vn 0 0.707107 0.707107
+vn -0.92388 0 -0.382683
+vn -0.92388 0 0.382683
+vn 0.92388 0 -0.382683
+vn 0.92388 0 0.382683
+vn -0.382683 0 -0.92388
+vn -0.382683 0 0.92388
+vn 0.382683 0 -0.92388
+vn 0.382683 0 0.92388
+vn -0.397273 0.9177 0
+vn 0.397273 -0.9177 0
+vn 0.397273 0.9177 0
+vn -0.397273 -0.9177 0
+vn 0 0.9177 -0.397273
+vn 0 -0.9177 0.397273
+vn 0 0.9177 0.397273
+vn 0 -0.9177 -0.397273
+vn -0.440932 0.897541 0
+vn 0.440932 -0.897541 0
+vn 0.440932 0.897541 0
+vn -0.440932 -0.897541 0
+vn 0 0.897541 -0.440932
+vn 0 -0.897541 0.440932
+vn 0 0.897541 0.440932
+vn 0 -0.897541 -0.440932
+# MWO_chest_latch
+vt 0.546875000 0.871093750
+vt 0.548828125 0.871093750
+vt 0.548828125 0.875000000
+vt 0.546875000 0.875000000
+vt 0.549804688 0.871093750
+vt 0.551757812 0.871093750
+vt 0.551757812 0.875000000
+vt 0.549804688 0.875000000
+vt 0.545898438 0.871093750
+vt 0.545898438 0.875000000
+vt 0.548828125 0.875976562
+vt 0.546875000 0.875976562
+vt 0.550781250 0.875000000
+vt 0.550781250 0.875976562
+# MWO_double_chest_top_right
+vt 0.176757812 0.914062500
+vt 0.191406250 0.914062500
+vt 0.191406250 0.927734375
+vt 0.176757812 0.927734375
+# MWO_double_chest_back_left
+vt 0.019531250 0.965820312
+vt 0.034179688 0.965820312
+vt 0.034179688 0.979492188
+vt 0.019531250 0.979492188
+# MWO_chest_side
+vt 0.458984375 0.983398438
+vt 0.472656250 0.983398438
+vt 0.472656250 0.997070312
+vt 0.458984375 0.997070312
+# MWO_double_chest_front_right
+vt 0.739257812 0.983398438
+vt 0.753906250 0.983398438
+vt 0.753906250 0.997070312
+vt 0.739257812 0.997070312
+# MWO_double_chest_top_left
+vt 0.160156250 0.914062500
+vt 0.174804688 0.914062500
+vt 0.174804688 0.927734375
+vt 0.160156250 0.927734375
+# MWO_double_chest_back_right
+vt 0.036132812 0.965820312
+vt 0.050781250 0.965820312
+vt 0.050781250 0.979492188
+vt 0.036132812 0.979492188
+# MWO_double_chest_front_left
+vt 0.722656250 0.983398438
+vt 0.737304688 0.983398438
+vt 0.737304688 0.997070312
+vt 0.722656250 0.997070312
+# MWO_chest_top
+vt 0.441406250 0.984375000
+vt 0.455078125 0.984375000
+vt 0.455078125 0.998046875
+vt 0.441406250 0.998046875
+# MWO_chest_front
+vt 0.476562500 0.983398438
+vt 0.490234375 0.983398438
+vt 0.490234375 0.997070312
+vt 0.476562500 0.997070312
+v -0.9375 0.4375 0
+v -1.0625 0.4375 0
+v -0.9375 0.6875 0
+v -1.0625 0.6875 0
+v -0.9375 0.4375 0.0625
+v -1.0625 0.4375 0.0625
+v -0.9375 0.6875 0.0625
+v -1.0625 0.6875 0.0625
+v -1 0 0.9375
+v -1 0 0.0625
+v -1 0.875 0.9375
+v -1 0.875 0.0625
+v -1.9375 0 0.9375
+v -1.9375 0 0.0625
+v -1.9375 0.875 0.9375
+v -1.9375 0.875 0.0625
+v -0.0625 0 0.9375
+v -0.0625 0 0.0625
+v -0.0625 0.875 0.9375
+v -0.0625 0.875 0.0625
+v -1 0 0.9375
+v -1 0 0.0625
+v -1 0.875 0.9375
+v -1 0.875 0.0625
+v 1.5625 0.4375 0
+v 1.4375 0.4375 0
+v 1.5625 0.6875 0
+v 1.4375 0.6875 0
+v 1.5625 0.4375 0.0625
+v 1.4375 0.4375 0.0625
+v 1.5625 0.6875 0.0625
+v 1.4375 0.6875 0.0625
+v 1.9375 0 0.9375
+v 1.9375 0 0.0625
+v 1.9375 0.875 0.9375
+v 1.9375 0.875 0.0625
+v 1.0625 0 0.9375
+v 1.0625 0 0.0625
+v 1.0625 0.875 0.9375
+v 1.0625 0.875 0.0625
+
+usemtl Chest
+o block_00001
+g block_00001
+f -38/-47/-40 -40/-50/-40 -39/-49/-40 -37/-48/-40
+f -34/-44/-37 -33/-43/-37 -35/-46/-37 -36/-45/-37
+f -38/-47/-39 -34/-41/-39 -36/-42/-39 -40/-50/-39
+f -37/-48/-42 -39/-49/-42 -35/-46/-42 -33/-43/-42
+f -34/-39/-38 -38/-47/-38 -37/-48/-38 -33/-40/-38
+f -39/-48/-41 -40/-38/-41 -36/-37/-41 -35/-40/-41
+f -31/-33/-41 -32/-36/-41 -28/-35/-41 -27/-34/-41
+f -30/-30/-37 -26/-29/-37 -28/-32/-37 -32/-31/-37
+f -25/-25/-42 -27/-28/-42 -28/-27/-42 -26/-26/-42
+f -26/-34/-38 -30/-33/-38 -29/-36/-38 -25/-35/-38
+f -29/-21/-40 -31/-24/-40 -27/-23/-40 -25/-22/-40
+o block_00002
+g block_00002
+f -21/-26/-39 -22/-25/-39 -24/-28/-39 -23/-27/-39
+f -23/-17/-41 -24/-20/-41 -20/-19/-41 -19/-18/-41
+f -22/-14/-37 -18/-13/-37 -20/-16/-37 -24/-15/-37
+f -17/-25/-42 -19/-28/-42 -20/-27/-42 -18/-26/-42
+f -18/-18/-38 -22/-17/-38 -21/-20/-38 -17/-19/-38
+f -21/-9/-40 -23/-12/-40 -19/-11/-40 -17/-10/-40
+o block_00003
+g block_00003
+f -14/-47/-40 -16/-50/-40 -15/-49/-40 -13/-48/-40
+f -10/-44/-37 -9/-43/-37 -11/-46/-37 -12/-45/-37
+f -14/-47/-39 -10/-41/-39 -12/-42/-39 -16/-50/-39
+f -13/-48/-42 -15/-49/-42 -11/-46/-42 -9/-43/-42
+f -10/-39/-38 -14/-47/-38 -13/-48/-38 -9/-40/-38
+f -15/-48/-41 -16/-38/-41 -12/-37/-41 -11/-40/-41
+f -5/-26/-39 -6/-25/-39 -8/-28/-39 -7/-27/-39
+f -7/-5/-41 -8/-8/-41 -4/-7/-41 -3/-6/-41
+f -6/-26/-37 -2/-25/-37 -4/-28/-37 -8/-27/-37
+f -1/-25/-42 -3/-28/-42 -4/-27/-42 -2/-26/-42
+f -2/-6/-38 -6/-5/-38 -5/-8/-38 -1/-7/-38
+f -5/-1/-40 -7/-4/-40 -3/-3/-40 -1/-2/-40

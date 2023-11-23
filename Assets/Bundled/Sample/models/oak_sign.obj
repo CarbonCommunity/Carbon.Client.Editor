@@ -1,0 +1,136 @@
+# Wavefront OBJ file made by Mineways version 11.04, http://mineways.com
+# World: TestWorld
+# Terrain file name: D:\Work\Repositories\raulssorban\Carbon.Servers\mineways\terrainExt.png
+# Color scheme: Standard
+# Wed Nov 22 11:18:43 2023
+
+# Selection location min to max: -265, 94, 173 to -265, 100, 173
+#   Non-empty selection location min to max: -265, 94, 173 to -265, 94, 173
+
+# Set render type: Wavefront OBJ relative indices
+# Units for the model vertex data itself: meters
+
+# 8 vertices, 6 faces (12 triangles), 0 blocks, 1 billboards/bits
+# block dimensions: X=2 by Y=2 (height) by Z=2 blocks
+# Elevation shading: no
+# Lighting: no
+# Transparent water: no
+# Map grid: no
+# File type: Export all textures to three large images
+# Texture output RGB: YES
+# Texture output A: YES
+# Texture output RGBA: YES
+# OBJ relative coordinates
+# Export separate types: no
+# Export individual blocks: YES
+#   Material per family: YES
+#   Split by block type: YES
+# Make groups objects: YES
+# Custom material: no
+# Export lesser blocks: YES
+# Fatten lesser blocks: no
+# Simplify mesh: no
+# Double all billboard faces: YES
+# Create composite overlay faces: no
+# Center model: YES
+# Use biomes: no
+# Create block faces at the borders: YES
+# Tree leaves solid: no
+# Rotate model 0.000000 degrees
+# Make Z the up direction instead of Y: no
+# Scale model by making each block 1000 mm high
+# Data operation options:
+#   Fill air bubbles: no; Seal off entrances: no; Fill in isolated tunnels in base of model: no
+#   Connect parts sharing an edge: YES; Connect corner tips: YES; Weld all shared edges: YES
+#   Delete floating objects: trees and parts smaller than 16 blocks: no
+#   Hollow out bottom of model, making the walls 1000 mm thick: no; Superhollow: no
+# Melt snow blocks: no
+#   Debug: show separate parts as colors: no
+#   Debug: show weld blocks in bright colors: no
+
+# Cleanup processing summary:
+#   Solid parts: 0
+#   Total solid parts merged: 0
+#   Number of edge passes made: 1
+#     Edges found to fix: 0
+#     Weld blocks added: 0
+#     Tip blocks added: 0
+
+# Full world path: D:\Minecraft\instances\1.20.1\.minecraft\saves\TestWorld
+# Full terrainExt.png path: D:\Work\Repositories\raulssorban\Carbon.Servers\mineways\terrainExt.png
+# Full current path: D:\Work\Repositories\raulssorban\Carbon.Servers\mineways
+
+mtllib oak_sign.mtl
+vn -1 0 0
+vn 0 -1 0
+vn 0 0 -1
+vn 1 0 0
+vn 0 1 0
+vn 0 0 1
+vn -0.707107 0 -0.707107
+vn -0.707107 0 0.707107
+vn 0.707107 0 -0.707107
+vn 0.707107 0 0.707107
+vn -0.707107 -0.707107 0
+vn 0 -0.707107 -0.707107
+vn 0.707107 -0.707107 0
+vn 0 -0.707107 0.707107
+vn -0.707107 0.707107 0
+vn 0 0.707107 -0.707107
+vn 0.707107 0.707107 0
+vn 0 0.707107 0.707107
+vn -0.92388 0 -0.382683
+vn -0.92388 0 0.382683
+vn 0.92388 0 -0.382683
+vn 0.92388 0 0.382683
+vn -0.382683 0 -0.92388
+vn -0.382683 0 0.92388
+vn 0.382683 0 -0.92388
+vn 0.382683 0 0.92388
+vn -0.397273 0.9177 0
+vn 0.397273 -0.9177 0
+vn 0.397273 0.9177 0
+vn -0.397273 -0.9177 0
+vn 0 0.9177 -0.397273
+vn 0 -0.9177 0.397273
+vn 0 0.9177 0.397273
+vn 0 -0.9177 -0.397273
+vn -0.440932 0.897541 0
+vn 0.440932 -0.897541 0
+vn 0.440932 0.897541 0
+vn -0.440932 -0.897541 0
+vn 0 0.897541 -0.440932
+vn 0 -0.897541 0.440932
+vn 0 0.897541 0.440932
+vn 0 -0.897541 -0.440932
+# oak_planks
+vt 0.078125000 0.983398438
+vt 0.080078125 0.983398438
+vt 0.080078125 0.995117188
+vt 0.078125000 0.995117188
+vt 0.071289062 0.990234375
+vt 0.086914062 0.990234375
+vt 0.086914062 0.992187500
+vt 0.071289062 0.992187500
+vt 0.071289062 0.983398438
+vt 0.086914062 0.983398438
+vt 0.086914062 0.995117188
+vt 0.071289062 0.995117188
+v 0.895833 0.28125 1
+v 0.979167 0.28125 1
+v 0.895833 0.78125 1
+v 0.979167 0.78125 1
+v 0.895833 0.28125 0
+v 0.979167 0.28125 0
+v 0.895833 0.78125 0
+v 0.979167 0.78125 0
+
+usemtl Oak_Wall_Sign
+o block_00001
+g block_00001
+f -5/-10/-37 -6/-9/-37 -8/-12/-37 -7/-11/-37
+f -7/-5/-41 -8/-8/-41 -4/-7/-41 -3/-6/-41
+f -2/-1/-42 -4/-4/-42 -8/-3/-42 -6/-2/-42
+f -1/-9/-40 -3/-12/-40 -4/-11/-40 -2/-10/-40
+f -2/-6/-38 -6/-5/-38 -5/-8/-38 -1/-7/-38
+f -1/-2/-39 -5/-1/-39 -7/-4/-39 -3/-3/-39

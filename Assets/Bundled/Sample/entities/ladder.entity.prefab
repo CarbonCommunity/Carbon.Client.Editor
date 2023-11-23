@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4881522413664529750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2999773705242783344}
+  - component: {fileID: 3135869937705941484}
+  m_Layer: 0
+  m_Name: ladder.entity
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2999773705242783344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4881522413664529750}
+  m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.7071079}
+  m_LocalPosition: {x: -79.49999, y: 43.573547, z: -114.122284}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3446093665712136346}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &3135869937705941484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4881522413664529750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9b096131538b44289fa56784e3fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: assets/prefabs/building/ladder.wall.wood/ladder.wooden.wall.prefab
+  Bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  Entity:
+    Flags: 0
+    EnforcePrefab: 0
+    Skin: 0
+  Model:
+    PrefabReference: {fileID: 4338610621746273875, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6,
+      type: 3}
+    PrefabPath: 
+    NetworkAnimation: 1
+    OriginalCollision: 0
+  Texture: {fileID: 0}
+--- !u!1001 &3881637219113147787
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2999773705242783344}
+    m_Modifications:
+    - target: {fileID: 1877054994034883857, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877054994034883857, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877054994034883857, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877054994034883857, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877054994034883857, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877054994034883857, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877054994034883857, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877054994034883857, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877054994034883857, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877054994034883857, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877054994034883857, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4338610621746273875, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6,
+        type: 3}
+      propertyPath: m_Name
+      value: ladder
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6, type: 3}
+--- !u!4 &3446093665712136346 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1877054994034883857, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6,
+    type: 3}
+  m_PrefabInstance: {fileID: 3881637219113147787}
+  m_PrefabAsset: {fileID: 0}
