@@ -19,8 +19,6 @@ public class RustAsset : MonoBehaviour
 	public RustPrefab.EntityData Entity = new();
 	public RustPrefab.ModelData Model = new();
 
-	public Texture2D Texture;
-
 	[NonSerialized] public Vector3 Position;
 	[NonSerialized] public Quaternion Rotation;
 	[NonSerialized] public Vector3 Scale;
@@ -81,15 +79,6 @@ public class RustAsset : MonoBehaviour
 	}
 
 #if UNITY_EDITOR
-	[ContextMenu("Preview")]
-	public void CreatePreview()
-	{
-		var editor = UnityEditor.Editor.CreateEditor(_instance);
-		Texture = editor.RenderStaticPreview(AssetDatabase.GetAssetPath(gameObject), null, 200, 200);
-		DestroyImmediate(editor);
-
-		Debug.Log("Did done it");
-	}
 	[ContextMenu("Draw Custom Models")]
 	public void CreateCustomModelsPreview()
 	{
