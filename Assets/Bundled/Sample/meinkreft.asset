@@ -12,15 +12,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323f47d85e51c754b93cab01585536f1, type: 3}
   m_Name: meinkreft
   m_EditorClassIdentifier: 
-  Name: Meinkreft
-  Author: Reul
-  Description: Huh? MINECRAFT IN RUST!?
+  Name: MEINKREFT
+  Author: Raul-Sorin Sorban
+  Description: Sample addon with custom models and Rust entity models, for testing
+    and learning purposes.
   Version: 1.0.0
-  Assets:
-  - Name: main
-    Extension: 
+  Scene:
+    Name: scene
+    Extension: carbon
     Prefabs:
     - {fileID: 4439490485189803405, guid: ecaf410501cf17b49b86bf31d4e1c488, type: 3}
-  Rcon:
-    Prefab: {fileID: 4439490485189803405, guid: ecaf410501cf17b49b86bf31d4e1c488,
-      type: 3}
+  Models:
+    Name: models
+    Extension: carbon
+    Prefabs:
+    - {fileID: 790070225294187111, guid: 5fa9148c7d9618f4aade4b53578b86a0, type: 3}
+    - {fileID: 4338610621746273875, guid: 4c5aac2699a5efb4c9cd05a6f1b02ed6, type: 3}
+    - {fileID: 3547563402213346781, guid: e1c2931f260249f4d971d338d329ca8c, type: 3}
+    - {fileID: 1231308725969221410, guid: 81a82d68e94eeac449f5ad2532e1eb8e, type: 3}
+    - {fileID: 5379648887977584359, guid: f03c21c000660c9458081b54a3b59de4, type: 3}
+    - {fileID: 4170158617314788305, guid: 7d0dfc9b9e1224b45a78f81889961fb6, type: 3}
+    - {fileID: 6213631604744256554, guid: e601d6419f0772e4d8f824b7016a8216, type: 3}
+    - {fileID: 6814036933287046074, guid: cbb7bf48e163db94a8ea2d911bef4a39, type: 3}
+    - {fileID: 326550699553565659, guid: 9b053a26b15d6c846af3c6546aeda866, type: 3}
+    - {fileID: 885127085288740169, guid: d01762ad6a1c4764e9c2ad5e3aa2ab0a, type: 3}
+    - {fileID: 4003509581687730833, guid: d5b122bbb1623ee408264bc794e80f5f, type: 3}
+    - {fileID: 1757495882010333040, guid: 69354f39ced439b49b11b22f49fc845c, type: 3}

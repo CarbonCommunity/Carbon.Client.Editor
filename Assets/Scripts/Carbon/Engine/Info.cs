@@ -59,13 +59,13 @@ namespace Carbon
 #endif
 
 			var editor = Project.Current?.Editor;
-			var prefabs = editor?.Assets?.Sum(x => x.Prefabs.Count);
-			var rustPrefabs = editor?.Assets?.Sum(x => x.RustPrefabs.Count);
+			var prefabs = editor?.Scene.Prefabs.Count + editor?.Models.Prefabs.Count;
+			var rustPrefabs = editor?.Scene.RustPrefabs.Count + editor?.Models.RustPrefabs.Count;
 
 			var playerCamera = FirstPersonController.Instance?.playerCamera;
 
 			ProjectText.text = $"\n{(editor == null ? "N/A" : $"{editor?.Name} [{editor?.name}]")}" +
-				$"\n{(editor == null ? "N/A" : $"{editor?.Assets?.Count:n0} [{prefabs:n0} prbs./{RustAsset.assets.Count:n0} rust prbs.]")}" +
+				$"\n{(editor == null ? "N/A" : $"{prefabs:n0} prbs./{rustPrefabs:n0} rust prbs.]")}" +
 				$"\n{selectionInfo} {selectionScene}" +
 				$"\n{playerCamera?.transform.position.x:0.00}, {playerCamera?.transform.position.y:0.00}, {playerCamera?.transform.position.z:0.00}";
 		}

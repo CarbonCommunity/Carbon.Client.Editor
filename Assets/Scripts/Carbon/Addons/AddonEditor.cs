@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 using Carbon.Client;
 using ProtoBuf;
 using Carbon.Client.Packets;
-using Carbon;
 
 #if UNITY_EDITOR
+using Carbon;
 using HierarchyIcons;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -18,18 +18,15 @@ using UnityEditor.SceneManagement;
 [CreateAssetMenu(fileName = "NewAddon", menuName = "Carbon/New Addon")]
 public class AddonEditor : ScriptableObject
 {
-	public string Name;
-	public string Author;
+	public string Name = "New Addon";
+	public string Author = "YourName";
 
 	[TextArea(4, 10)]
-	public string Description;
-	public string Version;
-	public List<Asset> Assets = new List<Asset>();
+	public string Description = "Here's more information about this awesome addon I've made.";
+	public string Version = "1.0.0";
+	public Asset Scene = new Asset { Name = "scene", Extension = "carbon" };
+	public Asset Models = new Asset { Name = "models", Extension = "carbon" };
 
-	[Header("Testing")]
-	public RConTesting Rcon = new();
-
-	internal readonly string _mainBundle = "main";
 	internal readonly string _defaultVariant = "dat";
 
 	public string BuildPath => Path.Combine(Defines.Root, "Addons", $"{this.name}_{Version}.cca");
@@ -60,7 +57,7 @@ public class AddonEditor : ScriptableObject
 			BackUpCleanup();
 		}
 
-		public void BuildCache()
+		public void BuildCache(AddonEditor editor)
 		{
 			Components.Clear();
 			RustPrefabs.Clear();
@@ -92,6 +89,16 @@ public class AddonEditor : ScriptableObject
 					{
 						if (rustAsset != null)
 						{
+							if (rustAsset.Model.PrefabReference != null)
+							{
+								Recursive(rustAsset.Model.PrefabReference.transform);
+							}
+
+							if (!editor.Models.Prefabs.Contains(rustAsset.Model.PrefabReference))
+							{
+								editor.Models.Prefabs.Add(rustAsset.Model.PrefabReference);
+							}
+
 							if (!RustPrefabs.ContainsKey(transform))
 							{
 								RustPrefabs.Add(transform, rustAsset);
@@ -133,13 +140,6 @@ public class AddonEditor : ScriptableObject
 				try
 				{
 					rustPrefab.Value.Cache();
-
-					Debug.Log($"Found {rustPrefab.Value.Model.PrefabPath}");
-
-					if (rustPrefab.Value.Model.PrefabReference != null && !Prefabs.Contains(rustPrefab.Value.Model.PrefabReference))
-					{
-						Prefabs.Add(rustPrefab.Value.Model.PrefabReference);
-					}
 
 					DestroyImmediate(rustPrefab.Value.gameObject, true);
 				}
@@ -233,10 +233,12 @@ public class AddonEditor : ScriptableObject
 		}
 
 		var bundles = new List<AssetBundleBuild>();
+		var folder = Defines.GetBundleDirectory(forAddon: this);
+		var assets = new List<Carbon.Client.Assets.Asset>();
 
-		foreach (var asset in Assets)
+		void PreprocessAsset(Asset asset)
 		{
-			asset.BuildCache();
+			asset.BuildCache(this);
 			asset.Preprocess();
 
 			var bundle = new AssetBundleBuild();
@@ -249,12 +251,7 @@ public class AddonEditor : ScriptableObject
 
 			bundles.Add(bundle);
 		}
-
-		var folder = Defines.GetBundleDirectory(forAddon: this);
-		var result = BuildPipeline.BuildAssetBundles(folder, bundles.ToArray(), BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
-		var assets = new List<Carbon.Client.Assets.Asset>();
-
-		foreach (var asset in Assets)
+		void PostprocessAsset(Asset asset)
 		{
 			var bundleName = asset.Name;
 			var bundleVariant = string.IsNullOrEmpty(asset.Extension) ? _defaultVariant : asset.Extension;
@@ -275,16 +272,33 @@ public class AddonEditor : ScriptableObject
 					}).ToList()
 				});
 
-				assets.Add(new Carbon.Client.Assets.Asset()
-				{
-					Name = asset.Name,
-					Data = File.ReadAllBytes(Path.Combine(folder, $"{bundleName}.{bundleVariant}")),
-					AdditionalData = memory.ToArray()
-				});
-			}
+				var bundlePath = Path.Combine(folder, $"{bundleName}.{bundleVariant}");
 
-			asset.Postprocess();
+				if (!File.Exists(bundlePath))
+				{
+					Debug.LogError($"Couldn't process asset! Not found: {bundlePath}");
+				}
+				else
+				{
+					assets.Add(new Carbon.Client.Assets.Asset()
+					{
+						Name = asset.Name,
+						Data = File.ReadAllBytes(bundlePath),
+						AdditionalData = memory.ToArray()
+					});
+
+					asset.Postprocess();
+				}
+			}
 		}
+
+		PreprocessAsset(Scene);
+		if(Models.Prefabs.Count > 0) PreprocessAsset(Models);
+		
+		var result = BuildPipeline.BuildAssetBundles(folder, bundles.ToArray(), BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
+
+		PostprocessAsset(Scene);
+		if(Models.Prefabs.Count > 0) PostprocessAsset(Models);
 
 		var addon = Carbon.Client.Assets.Addon.Create(new Carbon.Client.Assets.Addon.AddonInfo
 		{
@@ -305,7 +319,12 @@ public class AddonEditor : ScriptableObject
 	{
 		Build();
 
-		Carbon.Rcon.Singleton.SendMap(BuildPath, AssetDatabase.GetAssetPath(Rcon.Prefab).ToLower());
+		if (Scene.Prefabs.Count == 0)
+		{
+			return;
+		}
+
+		Carbon.Rcon.Singleton.SendMap(BuildPath, AssetDatabase.GetAssetPath(Scene.Prefabs[0]).ToLower());
 	}
 
 	public void PrepareScene()
@@ -321,31 +340,33 @@ public class AddonEditor : ScriptableObject
 		var icon = project.AddComponent<HierarchyIcon>();
 		icon.icon = Resources.Load<Texture2D>("addonicon2");
 
-		foreach (var asset in Assets)
+		var go = new GameObject(Scene.Name);
+		SceneManager.MoveGameObjectToScene(go, scene);
+
+		if (!firstEnabled)
 		{
-			var go = new GameObject(asset.Name);
-			SceneManager.MoveGameObjectToScene(go, scene);
+			go.SetActive(true);
+			firstEnabled = true;
+		}
+		else
+		{
+			go.SetActive(false);
+		}
 
-			if (!firstEnabled)
-			{
-				go.SetActive(true);
-				firstEnabled = true;
-			}
-			else
-			{
-				go.SetActive(false);
-			}
-
-			foreach (var prefab in asset.Prefabs)
-			{
-				var prefabInstance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
-				prefabInstance.name = prefab.name;
-				prefabInstance.transform.SetParent(go.transform, false);
-			}
+		foreach (var prefab in Scene.Prefabs)
+		{
+			var prefabInstance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+			prefabInstance.name = prefab.name;
+			prefabInstance.transform.SetParent(go.transform, false);
 		}
 
 		Selection.SetActiveObjectWithContext(project, this);
 		SceneManager.SetActiveScene(Defines.Singleton.gameObject.scene);
+	}
+
+	public void FetchModels()
+	{
+		Scene.BuildCache(this);
 	}
 #endif
 
@@ -369,27 +390,47 @@ public class AddonEditor : ScriptableObject
 
 				EditorGUILayout.BeginHorizontal(GUILayout.ExpandWidth(true));
 
-				if (GUILayout.Button("Export Addon"))
+				if (GUILayout.Button("Build"))
 				{
 					addon.Build();
 				}
 
-				if (GUILayout.Button("Open/Generate Scene"))
+				if (GUILayout.Button("Open Scene"))
 				{
 					addon.PrepareScene();
 				}
 
 				EditorGUILayout.EndHorizontal();
 
-				using (CarbonUtils.GUIColorChange.New(Color.green, false))
+				if (GUILayout.Button("Fetch Models"))
 				{
-					if (GUILayout.Button($"Export Addon + Update on Server ({Carbon.Rcon.Singleton.Ip}:{Carbon.Rcon.Singleton.Port})"))
+					addon.FetchModels();
+				}
+
+				using (CarbonUtils.GUIEnableChange.New(Rcon.Singleton.IsConnected))
+				{
+					GUILayout.BeginHorizontal();
+					GUILayout.FlexibleSpace();
+					using (CarbonUtils.GUIColorChange.New(Rcon.Singleton.IsConnected ? Color.green : Color.grey, false))
 					{
-						addon.BuildAndRconTest();
+						GUILayout.Label(Rcon.Singleton.IsConnected ? "RCON successfully connected!" : "RCON is not connected.");
 					}
-					if (GUILayout.Button($"Update on Server ({Carbon.Rcon.Singleton.Ip}:{Carbon.Rcon.Singleton.Port})"))
+					GUILayout.FlexibleSpace();
+					GUILayout.EndHorizontal();
+
+					using (CarbonUtils.GUIColorChange.New(Rcon.Singleton.IsConnected ? Color.green : Color.gray, false))
 					{
-						Carbon.Rcon.Singleton.SendMap(addon.BuildPath, AssetDatabase.GetAssetPath(addon.Rcon.Prefab).ToLower());
+						if (GUILayout.Button($"Build + Update on Server ({Carbon.Rcon.Singleton.Ip}:{Carbon.Rcon.Singleton.Port})"))
+						{
+							addon.BuildAndRconTest();
+						}
+
+						var prefab = addon.Scene.Prefabs.FirstOrDefault();
+
+						if (GUILayout.Button($"Update '{(prefab == null ? "unknown" : prefab.name)}' on Server ({Carbon.Rcon.Singleton.Ip}:{Carbon.Rcon.Singleton.Port})"))
+						{
+							Carbon.Rcon.Singleton.SendMap(addon.BuildPath, AssetDatabase.GetAssetPath(prefab).ToLower());
+						}
 					}
 				}
 			}

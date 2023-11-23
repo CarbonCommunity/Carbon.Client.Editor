@@ -218,12 +218,17 @@ MonoBehaviour:
 			{
 				yield return Instance._previewWait;
 
-				foreach(var asset in RustAsset.assets)
+				var temp = RustAsset.assets.ToArray();
+
+				foreach(var asset in temp)
 				{
 					asset.Preview();
 					yield return Instance._previewWait;
 					yield return null;
 				}
+
+				Array.Clear(temp, 0, temp.Length);
+				temp = null;
 
 				yield return null;
 			}
