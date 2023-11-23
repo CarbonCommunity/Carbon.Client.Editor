@@ -192,11 +192,6 @@ public class RustAsset : MonoBehaviour
 		{
 			Fetch();
 
-			if (Defines.IsBuildingAddons || RustAssetProcessor.Prefabs == null || RustAssetProcessor.PrefabLookup == null)
-			{
-				return;
-			}
-
 			if (RustAssetProcessor.Instance != null && !RustAssetProcessor.Instance.CreateVisuals)
 			{
 				return;
@@ -204,7 +199,7 @@ public class RustAsset : MonoBehaviour
 
 			Cleanup();
 
-			var prefab = RustAssetProcessor.PrefabLookup.backend.LoadPrefab(Path);
+			var prefab = Model.PrefabReference ?? RustAssetProcessor.PrefabLookup?.backend?.LoadPrefab(Path);
 			var previewContainer = Defines.Singleton.GetPreviewContainer();
 
 			Bounds = default;
@@ -295,12 +290,7 @@ public class RustAsset : MonoBehaviour
 				DestroyImmediate(_instance);
 				_instance = null;
 			}
-
-			foreach (Transform child in transform)
-			{
-				DestroyImmediate(child.gameObject);
-			}
-
+			
 			_center = null;
 		}
 		catch { }

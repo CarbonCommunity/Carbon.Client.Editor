@@ -294,7 +294,7 @@ public class AddonEditor : ScriptableObject
 
 		PreprocessAsset(Scene);
 		if(Models.Prefabs.Count > 0) PreprocessAsset(Models);
-		
+
 		var result = BuildPipeline.BuildAssetBundles(folder, bundles.ToArray(), BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
 
 		PostprocessAsset(Scene);
