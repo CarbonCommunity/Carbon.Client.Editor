@@ -2,6 +2,7 @@ using System;
 using Carbon.Client.Packets;
 using ProtoBuf;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Carbon.Client
 {
@@ -89,7 +90,10 @@ namespace Carbon.Client
 			public bool NetworkAnimation = true;
 
 			[ProtoMember(3)]
-			public bool OriginalCollision = false;
+			public bool EntitySolidCollision = false;
+
+			[ProtoMember(4)]
+			public bool EntityTriggerCollision = false;
 		}
 	}
 }
