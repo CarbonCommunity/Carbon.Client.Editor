@@ -58,8 +58,8 @@ MonoBehaviour:
       type: 3}
     PrefabPath: 
     NetworkAnimation: 1
-    OriginalCollision: 0
-  Texture: {fileID: 0}
+    EntitySolidCollision: 0
+    EntityTriggerCollision: 0
 --- !u!1001 &8942392851033972256
 PrefabInstance:
   m_ObjectHideFlags: 0
