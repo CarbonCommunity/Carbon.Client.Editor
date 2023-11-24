@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 157207113}
-  m_IndirectSpecularColor: {r: 10.524818, g: 13.223856, b: 16.963076, a: 1}
+  m_IndirectSpecularColor: {r: 10.524752, g: 13.223965, b: 16.963018, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2154,7 +2154,7 @@ RectTransform:
   - {fileID: 747976091}
   - {fileID: 2144003561}
   m_Father: {fileID: 1003260312}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3036,10 +3036,10 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: '
 
-    NVIDIA GeForce RTX 3070 Ti [High Fidelity]
+    NVIDIA GeForce RTX 2060 [High Fidelity]
 
-    Full Res. [0/soft
-    part./hard vege.]
+    Full Res. [0/soft part./hard
+    vege.]
 
     500 dist. [All/4 casc.]
 
@@ -3089,7 +3089,7 @@ MonoBehaviour:
   RconEntityTemplate: {fileID: 8321558320991121426, guid: 0bbdb791e1a849d49bb9d1c085bf31a5,
     type: 3}
   RconEntityContainer: {fileID: 2047357399}
-  PreviewContainer: {fileID: 1846442581}
+  PreviewContainer: {fileID: 0}
 --- !u!4 &606081491
 Transform:
   m_ObjectHideFlags: 0
@@ -3421,7 +3421,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1003260312}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &783013343
 MonoBehaviour:
@@ -3474,6 +3474,51 @@ RectTransform:
   m_AnchoredPosition: {x: -30, y: -25}
   m_SizeDelta: {x: 487.939, y: 380.3457}
   m_Pivot: {x: 1, y: 1}
+--- !u!1 &799856279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 799856280}
+  - component: {fileID: 799856281}
+  m_Layer: 0
+  m_Name: World Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &799856280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799856279}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1003260312}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &799856281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799856279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d6482648c304ea4d8d7038395ccb0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filename: C:/Users/TravisButts/Desktop/Lakeside.map
 --- !u!1 &834652860
 GameObject:
   m_ObjectHideFlags: 0
@@ -4542,6 +4587,7 @@ Transform:
   m_Children:
   - {fileID: 1161911288}
   - {fileID: 2046878639}
+  - {fileID: 799856280}
   - {fileID: 383683129}
   - {fileID: 783013342}
   m_Father: {fileID: 0}
@@ -6574,37 +6620,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65a727385e151354286a1771358b7d51, type: 3}
---- !u!1 &1846442580
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1846442581}
-  m_Layer: 0
-  m_Name: Preview Container
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1846442581
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1846442580}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1873001921
 GameObject:
   m_ObjectHideFlags: 0
@@ -7156,7 +7171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2594a77828a8949b990d96e61a8d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RustClientDirectory: D:/Software/Steam/steamapps/common/Rust
+  RustClientDirectory: C:/Program Files (x86)/Steam/steamapps/common/Rust
   AutoLoad: 0
   CreateVisuals: 1
   SelectionSync: 0
@@ -7345,6 +7360,84 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2083952638}
   m_CullTransparentMesh: 1
+--- !u!1 &2112821033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2112821036}
+  - component: {fileID: 2112821035}
+  - component: {fileID: 2112821034}
+  m_Layer: 0
+  m_Name: Land
+  m_TagString: Land
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!154 &2112821034
+TerrainCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112821033}
+  m_Material: {fileID: 0}
+  m_Enabled: 1
+  m_TerrainData: {fileID: 15600000, guid: 1e01ce077e2dbd3478627fb6f607ea50, type: 2}
+  m_EnableTreeColliders: 1
+--- !u!218 &2112821035
+Terrain:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112821033}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_TerrainData: {fileID: 15600000, guid: 1e01ce077e2dbd3478627fb6f607ea50, type: 2}
+  m_TreeDistance: 5000
+  m_TreeBillboardDistance: 50
+  m_TreeCrossFadeLength: 5
+  m_TreeMaximumFullLODCount: 50
+  m_DetailObjectDistance: 80
+  m_DetailObjectDensity: 1
+  m_HeightmapPixelError: 5
+  m_SplatMapDistance: 1000
+  m_HeightmapMaximumLOD: 0
+  m_ShadowCastingMode: 2
+  m_DrawHeightmap: 1
+  m_DrawInstanced: 0
+  m_DrawTreesAndFoliage: 1
+  m_StaticShadowCaster: 0
+  m_ReflectionProbeUsage: 1
+  m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
+  m_BakeLightProbesForTrees: 1
+  m_PreserveTreePrototypeLayers: 0
+  m_DeringLightProbesForTrees: 1
+  m_ScaleInLightmap: 0.0256
+  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
+  m_GroupingID: 0
+  m_RenderingLayerMask: 1
+  m_AllowAutoConnect: 1
+--- !u!4 &2112821036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112821033}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2129182664
 GameObject:
   m_ObjectHideFlags: 0
@@ -7416,8 +7509,15 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\nGrand Theft Auto - Vice City [gtavicecity]\n2 [3 prbs./0 rust prbs.]\nN/A
-    \n-4.50, 1.65, -4.50"
+  m_Text: '
+
+    N/A
+
+    N/A
+
+    Managers [Workspace-Day]
+
+    -4.50, 1.65, -4.50'
 --- !u!222 &2129182667
 CanvasRenderer:
   m_ObjectHideFlags: 0
