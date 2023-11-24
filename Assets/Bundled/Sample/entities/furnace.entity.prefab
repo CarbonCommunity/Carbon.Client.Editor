@@ -67,11 +67,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 882993615778736848}
     m_Modifications:
-    - target: {fileID: 41094282753533890, guid: a8c50add139216346baf0428dad6b5fd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2473107727007664093, guid: a8c50add139216346baf0428dad6b5fd,
         type: 3}
       propertyPath: m_Name
@@ -132,13 +127,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3596211650290233471, guid: a8c50add139216346baf0428dad6b5fd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1096179857207700941, guid: a8c50add139216346baf0428dad6b5fd, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8c50add139216346baf0428dad6b5fd, type: 3}
 --- !u!4 &7805382553289207819 stripped
 Transform:
