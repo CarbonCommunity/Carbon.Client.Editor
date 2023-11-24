@@ -47,8 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: assets/prefabs/deployable/tier 1 workbench/workbench1.deployed.prefab
   Bounds:
-    m_Center: {x: -0.008792162, y: 1.0239205, z: 0.047451675}
-    m_Extent: {x: 0.87724864, y: 1.0239205, z: 0.48233497}
+    m_Center: {x: 0, y: 0.52, z: 0}
+    m_Extent: {x: 0.64, y: 0.67, z: 0.57}
   Entity:
     Flags: 0
     EnforcePrefab: 0

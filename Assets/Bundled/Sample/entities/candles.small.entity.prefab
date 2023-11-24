@@ -47,8 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: assets/prefabs/misc/halloween/candles/smallcandleset.prefab
   Bounds:
-    m_Center: {x: 0, y: 0.12835892, z: -0.000000014901161}
-    m_Extent: {x: 0.13523972, y: 0.13385399, z: 0.12693757}
+    m_Center: {x: 0, y: 0.22, z: -0.000000014901161}
+    m_Extent: {x: 0.23, y: 0.22, z: 0.16}
   Entity:
     Flags: 0
     EnforcePrefab: 0
@@ -58,8 +58,8 @@ MonoBehaviour:
       type: 3}
     PrefabPath: 
     NetworkAnimation: 1
-    OriginalCollision: 0
-  Texture: {fileID: 0}
+    EntitySolidCollision: 0
+    EntityTriggerCollision: 0
 --- !u!1001 &2087278608733610721
 PrefabInstance:
   m_ObjectHideFlags: 0
