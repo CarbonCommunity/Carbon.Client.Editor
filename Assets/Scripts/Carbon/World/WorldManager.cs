@@ -79,10 +79,10 @@ namespace Carbon
             SetTerrainReferences();
         }
 
-        public static void SetTerrainReferences() => Land = GameObject.FindGameObjectWithTag("Land").GetComponent<Terrain>();
-
-        private WorldSerialization world;
-        private PrefabLookup prefabs;
+        public static void SetTerrainReferences()
+        {
+            Land = GameObject.FindGameObjectWithTag("Land").GetComponent<Terrain>();
+        }
 
         public WorldSerialization LoadWorld(string filename)
         {
@@ -101,16 +101,11 @@ namespace Carbon
         private static void SetTerrains(MapInfo mapInfo)
         {
             HeightMapRes = mapInfo.terrainRes;
-
-            SetupTerrain(mapInfo, Water);
             SetupTerrain(mapInfo, Land);
         }
 
         private static void SetupTerrain(MapInfo mapInfo, Terrain terrain)
         {
-            Debug.Log(terrain.terrainData.size);
-            Debug.Log(mapInfo.size);
-
             if (terrain.terrainData.size != mapInfo.size)
             {
                 terrain.terrainData.heightmapResolution = mapInfo.terrainRes;
@@ -171,7 +166,6 @@ namespace Carbon
             SetSplatMap(mapInfo.splatMap, LayerType.Ground);
             SetSplatMap(mapInfo.biomeMap, LayerType.Biome);
             SetAlphaMap(mapInfo.alphaMap);
-            Debug.Log("Loaded Splats");
         }
 
         public static void ClearSplatMapUndo()
@@ -286,23 +280,5 @@ namespace Carbon
                 _ => 2
             };
         }
-
-        /*
-        private void SpawnPrefabs(WorldSerialization blob)
-        {
-            foreach (var prefab in blob.world.prefabs)
-            {
-                var prefabGameObject = RustAssetProcessor.Prefabs[prefab.];
-                if (!prefabGameObject) continue;
-
-                var instanceGameObject = Instantiate(prefabGameObject, prefab.position, prefab.rotation);
-                if (!instanceGameObject) continue;
-
-                instanceGameObject.transform.localScale = prefab.scale;
-                instanceGameObject.SetActive(true);
-            }
-        }
-
-        */
     }
 }
