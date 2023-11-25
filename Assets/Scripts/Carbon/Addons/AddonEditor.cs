@@ -94,7 +94,7 @@ public class AddonEditor : ScriptableObject
 								Recursive(rustAsset.Model.PrefabReference.transform);
 							}
 
-							if (!editor.Models.Prefabs.Contains(rustAsset.Model.PrefabReference))
+							if (rustAsset.Model.PrefabReference != null && !editor.Models.Prefabs.Contains(rustAsset.Model.PrefabReference))
 							{
 								editor.Models.Prefabs.Add(rustAsset.Model.PrefabReference);
 							}
@@ -145,7 +145,7 @@ public class AddonEditor : ScriptableObject
 				}
 				catch(Exception ex)
 				{
-					Debug.LogError($"SOMGsakjdak ({ex.Message})\n{ex.StackTrace}");
+					Debug.LogError($"Clear failure for '{rustPrefab.Value.Path}' {rustPrefab.Value.Position} ({ex.Message})\n{ex.StackTrace}");
 				}
 			}
 

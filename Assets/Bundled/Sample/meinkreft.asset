@@ -16,7 +16,7 @@ MonoBehaviour:
   Author: Raul-Sorin Sorban
   Description: Sample addon with custom models and Rust entity models, for testing
     and learning purposes.
-  Version: 1.0.0
+  Version: 1.0.2
   Scene:
     Name: scene
     Extension: carbon
@@ -38,3 +38,4 @@ MonoBehaviour:
     - {fileID: 885127085288740169, guid: d01762ad6a1c4764e9c2ad5e3aa2ab0a, type: 3}
     - {fileID: 4003509581687730833, guid: d5b122bbb1623ee408264bc794e80f5f, type: 3}
     - {fileID: 1757495882010333040, guid: 69354f39ced439b49b11b22f49fc845c, type: 3}
+    - {fileID: 2473107727007664093, guid: a8c50add139216346baf0428dad6b5fd, type: 3}
