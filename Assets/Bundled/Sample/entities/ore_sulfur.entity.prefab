@@ -50,15 +50,19 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   Entity:
-    Flags: 0
     EnforcePrefab: 0
+    Flags: 0
     Skin: 0
+    Combat:
+      Health: -1
+      MaxHealth: -1
   Model:
     PrefabReference: {fileID: 4579422291837195227, guid: af545ee7d68dea3459aed523d726e50e,
       type: 3}
     PrefabPath: 
     NetworkAnimation: 1
-    EntitySolidCollision: 0
+    SyncAnimation: 0
+    EntitySolidCollision: 1
     EntityTriggerCollision: 0
 --- !u!1001 &6982671926919729897
 PrefabInstance:

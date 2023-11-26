@@ -43,6 +43,7 @@ namespace Carbon.Client
 			[Header("Entity Types")]
 #endif
 
+			[ProtoMember(4)]
 			public CombatEntity Combat;
 
 			[Flags]
