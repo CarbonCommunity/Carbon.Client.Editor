@@ -1,14 +1,5 @@
 {
   "dependencies": {
-    "com.unity.burst": {
-      "version": "1.6.6",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.mathematics": "1.2.1"
-      },
-      "url": "https://packages.unity.com"
-    },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
       "depth": 1,
@@ -32,13 +23,6 @@
       "dependencies": {
         "com.unity.test-framework": "1.1.9"
       },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.mathematics": {
-      "version": "1.2.6",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.postprocessing": {
@@ -122,13 +106,6 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
-    },
-    "io.sentry.unity": {
-      "version": "https://github.com/getsentry/unity.git#1.6.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "3403952ec61923574ca845654a6cc3dd03255fdb"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
