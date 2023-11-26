@@ -27,7 +27,7 @@ public class AddonEditor : ScriptableObject
 	public Asset Scene = new Asset { Name = "scene", Extension = "carbon" };
 	public Asset Models = new Asset { Name = "models", Extension = "carbon" };
 
-	internal readonly string _defaultVariant = "dat";
+	internal readonly string _defaultVariant = "data";
 
 	public string BuildPath => Path.Combine(Defines.Root, "Addons", $"{this.name}_{Version}.cca");
 
@@ -133,7 +133,9 @@ public class AddonEditor : ScriptableObject
 		}
 		public void Clear()
 		{
-			Debug.Log($"Destroying {RustPrefabs.Count} RustPrefabs");
+			Debug.Log($"[{Name}] Destroying {RustPrefabs.Count} RustPrefabs");
+
+			var roots = new List<GameObject>();
 
 			foreach (var rustPrefab in RustPrefabs)
 			{
@@ -141,11 +143,18 @@ public class AddonEditor : ScriptableObject
 				{
 					rustPrefab.Value.Cache();
 
+					var root = rustPrefab.Value.transform.root.gameObject;
+
+					if (!roots.Contains(root))
+					{
+						roots.Add(root);
+					}
+
 					DestroyImmediate(rustPrefab.Value.gameObject, true);
 				}
 				catch(Exception ex)
 				{
-					Debug.LogError($"Clear failure for '{rustPrefab.Value.Path}' {rustPrefab.Value.Position} ({ex.Message})\n{ex.StackTrace}");
+					Debug.LogError($"[{Name}] Clear failure for '{rustPrefab.Value.Path}' {rustPrefab.Value.Position} ({ex.Message})\n{ex.StackTrace}");
 				}
 			}
 
@@ -171,11 +180,26 @@ public class AddonEditor : ScriptableObject
 					{
 						foreach (var component in components)
 						{
+							var root = component.transform.root;
+
+							if (!roots.Contains(root.gameObject))
+							{
+								roots.Add(root.gameObject);
+							}
+
 							DestroyImmediate(component, true);
 						}
 					}
 				}
 			}
+
+			foreach (var root in roots)
+			{
+				Debug.Log($"Found {root} {AssetDatabase.GetAssetPath(root)}");
+				AssetDatabase.SaveAssetIfDirty(root);
+			}
+
+			AssetDatabase.SaveAssets();
 		}
 		public void Restore()
 		{
@@ -193,12 +217,6 @@ public class AddonEditor : ScriptableObject
 			}
 		}
 #endif
-	}
-
-	[Serializable]
-	public class RConTesting
-	{
-		public GameObject Prefab;
 	}
 
 	public static string GetRecursiveName(Transform transform, string strEndName = "")
@@ -294,6 +312,11 @@ public class AddonEditor : ScriptableObject
 
 		PreprocessAsset(Scene);
 		if(Models.Prefabs.Count > 0) PreprocessAsset(Models);
+
+		foreach (var prefab in Scene.Prefabs)
+		{
+			AssetDatabase.SaveAssetIfDirty(prefab);
+		}
 
 		var result = BuildPipeline.BuildAssetBundles(folder, bundles.ToArray(), BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
 
