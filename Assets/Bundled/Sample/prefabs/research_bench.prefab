@@ -360,7 +360,6 @@ Animation:
   m_Animation: {fileID: 7400000, guid: e76ad6e72212e8d42b07da8250021a8e, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: e76ad6e72212e8d42b07da8250021a8e, type: 2}
-  - {fileID: 7400000, guid: b06924d00c877f04d9f2ef3ffdbe20eb, type: 2}
   - {fileID: 7400000, guid: 037ba25093235b24d9ddad28c255ea6a, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
