@@ -195,7 +195,6 @@ public class AddonEditor : ScriptableObject
 
 			foreach (var root in roots)
 			{
-				Debug.Log($"Found {root} {AssetDatabase.GetAssetPath(root)}");
 				AssetDatabase.SaveAssetIfDirty(root);
 			}
 
@@ -276,18 +275,32 @@ public class AddonEditor : ScriptableObject
 
 			using (var memory = new MemoryStream())
 			{
+				var rustPrefabs = new Dictionary<string, List<RustPrefab>>();
+
+				foreach (var prefab in asset.RustPrefabs)
+				{
+					var prefabName = AssetDatabase.GetAssetPath(prefab.Key.root).ToLower();
+
+					if (!rustPrefabs.TryGetValue(prefabName, out var prefabs))
+					{
+						rustPrefabs.Add(prefabName, prefabs = new());
+					}
+
+					prefabs.Add(new RustPrefab
+					{
+						Entity = prefab.Value.Entity,
+						Model = prefab.Value.Model,
+						Path = prefab.Value.Path,
+						Position = BaseVector.ToProtoVector(prefab.Value.Position),
+						Rotation = BaseVector.ToProtoVector(prefab.Value.Rotation),
+						Scale = BaseVector.ToProtoVector(prefab.Value.Scale)
+					});
+				}
+
 				Serializer.Serialize(memory, new RustBundle
 				{
 					Components = asset.Components,
-					RustPrefabs = asset.RustPrefabs.Select(x => new RustPrefab
-					{
-						Entity = x.Value.Entity,
-						Model = x.Value.Model,
-						Path = x.Value.Path,
-						Position = BaseVector.ToProtoVector(x.Value.Position),
-						Rotation = BaseVector.ToProtoVector(x.Value.Rotation),
-						Scale = BaseVector.ToProtoVector(x.Value.Scale)
-					}).ToList()
+					RustPrefabs = rustPrefabs
 				});
 
 				var bundlePath = Path.Combine(folder, $"{bundleName}.{bundleVariant}");

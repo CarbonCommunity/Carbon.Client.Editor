@@ -1,14 +1,14 @@
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community 
+ * Copyright (c) 2022-2023 Carbon Community
  * All rights reserved.
  *
  */
 
 /*
- * 
+ *
  *  DO NOT TOUCH UP THIS FILE
- *  
+ *
  */
 
 using System.Collections.Generic;
@@ -26,25 +26,25 @@ namespace Carbon.Client.Assets
 	{
 		public const string EXTENSION = ".cca";
 
-		[ProtoMember(1)]
+		[ProtoMember(1 + Protocol.VERSION)]
 		public string Name { get; set; }
 
-		[ProtoMember(2)]
+		[ProtoMember(2 + Protocol.VERSION)]
 		public string Author { get; set; }
 
-		[ProtoMember(3)]
+		[ProtoMember(3 + Protocol.VERSION)]
 		public string Description { get; set; }
 
-		[ProtoMember(4)]
+		[ProtoMember(4 + Protocol.VERSION)]
 		public string Version { get; set; }
 
-		[ProtoMember(5)]
+		[ProtoMember(5 + Protocol.VERSION)]
 		public string Checksum { get; set; }
 
-		[ProtoMember(6)]
+		[ProtoMember(6 + Protocol.VERSION)]
 		public Dictionary<string, Asset> Assets { get; set; } = new Dictionary<string, Asset>();
 
-		[ProtoMember(7)]
+		[ProtoMember(7 + Protocol.VERSION)]
 		public long CreationTime { get; set; } = DateTime.Now.Ticks;
 
 		public bool IsDirty { get; set; }
@@ -97,11 +97,9 @@ namespace Carbon.Client.Assets
 		}
 		public byte[] Store()
 		{
-			using (var stream = new MemoryStream())
-			{
-				Serializer.Serialize(stream, this);
-				return stream.ToArray();
-			}
+			using var stream = new MemoryStream();
+			Serializer.Serialize(stream, this);
+			return stream.ToArray();
 		}
 		public void StoreToFile(string path)
 		{

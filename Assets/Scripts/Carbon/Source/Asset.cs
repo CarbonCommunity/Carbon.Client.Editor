@@ -1,14 +1,14 @@
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community 
+ * Copyright (c) 2022-2023 Carbon Community
  * All rights reserved.
  *
  */
 
 /*
- * 
+ *
  *  DO NOT TOUCH UP THIS FILE
- *  
+ *
  */
 
 using Newtonsoft.Json;
@@ -19,13 +19,13 @@ namespace Carbon.Client.Assets
 	[ProtoContract(InferTagFromName = true)]
 	public partial class Asset
 	{
-		[ProtoMember(1)]
+		[ProtoMember(1 + Protocol.VERSION)]
 		public string Name { get; set; }
 
-		[ProtoMember(2)]
+		[ProtoMember(2 + Protocol.VERSION)]
 		public byte[] Data { get; set; }
 
-		[ProtoMember(3)]
+		[ProtoMember(3 + Protocol.VERSION)]
 		public byte[] AdditionalData { get; set; }
 
 		public Manifest GetManifest()

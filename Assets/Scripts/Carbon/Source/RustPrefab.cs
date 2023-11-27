@@ -2,48 +2,47 @@ using System;
 using Carbon.Client.Packets;
 using ProtoBuf;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Carbon.Client
 {
 	[ProtoContract]
 	public partial class RustPrefab
 	{
-		[ProtoMember(1)]
+		[ProtoMember(1 + Protocol.VERSION)]
 		public string Path;
 
-		[ProtoMember(2)]
+		[ProtoMember(2 + Protocol.VERSION)]
 		public BaseVector Position;
 
-		[ProtoMember(3)]
+		[ProtoMember(3 + Protocol.VERSION)]
 		public BaseVector Rotation;
 
-		[ProtoMember(4)]
+		[ProtoMember(4 + Protocol.VERSION)]
 		public BaseVector Scale;
 
-		[ProtoMember(5)]
+		[ProtoMember(5 + Protocol.VERSION)]
 		public EntityData Entity;
 
-		[ProtoMember(6)]
+		[ProtoMember(6 + Protocol.VERSION)]
 		public ModelData Model;
 
 		[Serializable, ProtoContract]
 		public class EntityData
 		{
-			[ProtoMember(2)]
+			[ProtoMember(1 + Protocol.VERSION)]
 			public bool EnforcePrefab;
 
-			[ProtoMember(1)]
+			[ProtoMember(2 + Protocol.VERSION)]
 			public EntityFlags Flags;
 
-			[ProtoMember(3)]
+			[ProtoMember(3 + Protocol.VERSION)]
 			public ulong Skin;
 
 #if UNITY_EDITOR
 			[Header("Entity Types")]
 #endif
 
-			[ProtoMember(4)]
+			[ProtoMember(4 + Protocol.VERSION)]
 			public CombatEntity Combat;
 
 			[Flags]
@@ -80,10 +79,10 @@ namespace Carbon.Client
 			[Serializable, ProtoContract]
 			public class CombatEntity
 			{
-				[ProtoMember(1)]
+				[ProtoMember(1 + Protocol.VERSION)]
 				public float Health = -1;
 
-				[ProtoMember(2)]
+				[ProtoMember(2 + Protocol.VERSION)]
 				public float MaxHealth = -1;
 			}
 		}
@@ -100,30 +99,30 @@ namespace Carbon.Client
 			#if UNITY_EDITOR
 			[HideInInspector]
 			#endif
-			[ProtoMember(1)]
+			[ProtoMember(1 + Protocol.VERSION)]
 			public string PrefabPath;
 
 #if UNITY_EDITOR
 			[Header("Animation")]
 #endif
 
-			[ProtoMember(2)]
+			[ProtoMember(2 + Protocol.VERSION)]
 			public bool NetworkAnimation = true;
 
 #if UNITY_EDITOR
 			[Tooltip("When this is enabled, the server will occasionally send a network packet to synchronize the animation time, speed and clip, making sure playback is consistent.")]
 #endif
-			[ProtoMember(3)]
+			[ProtoMember(3 + Protocol.VERSION)]
 			public bool SyncAnimation = false;
 
 #if UNITY_EDITOR
 			[Header("Collision")]
 #endif
 
-			[ProtoMember(4)]
+			[ProtoMember(4 + Protocol.VERSION)]
 			public bool EntitySolidCollision = false;
 
-			[ProtoMember(5)]
+			[ProtoMember(5 + Protocol.VERSION)]
 			public bool EntityTriggerCollision = false;
 		}
 	}
