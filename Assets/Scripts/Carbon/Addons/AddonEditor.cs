@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Carbon.Client;
@@ -11,6 +12,7 @@ using Carbon.Client.Packets;
 #if UNITY_EDITOR
 using Carbon;
 using HierarchyIcons;
+using Newtonsoft.Json;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
@@ -41,7 +43,7 @@ public class AddonEditor : ScriptableObject
 		public List<GameObject> Prefabs;
 
 		public Dictionary<string, List<RustComponent>> Components = new Dictionary<string, List<RustComponent>>();
-		public Dictionary<Transform, RustAsset> RustPrefabs = new Dictionary<Transform, RustAsset>();
+		public Dictionary<string, List<RustAsset>> RustPrefabs = new Dictionary<string, List<RustAsset>>();
 
 #if UNITY_EDITOR
 		public void Preprocess()
@@ -99,10 +101,14 @@ public class AddonEditor : ScriptableObject
 								editor.Models.Prefabs.Add(rustAsset.Model.PrefabReference);
 							}
 
-							if (!RustPrefabs.ContainsKey(transform))
+							var path = AssetDatabase.GetAssetPath(transform.root).ToLower();
+
+							if (!RustPrefabs.TryGetValue(path, out var prefabs))
 							{
-								RustPrefabs.Add(transform, rustAsset);
+								RustPrefabs.Add(path, prefabs = new());
 							}
+
+							prefabs.Add(rustAsset);
 						}
 					}
 
@@ -113,7 +119,7 @@ public class AddonEditor : ScriptableObject
 				}
 			}
 
-			Debug.Log($"[{Name}] Found {Components.Count} components");
+			Debug.Log($"[{Name}] Found {Components.Count} components, {RustPrefabs.Count} Rust prefabs");
 		}
 		public void BackUp()
 		{
@@ -139,22 +145,41 @@ public class AddonEditor : ScriptableObject
 
 			foreach (var rustPrefab in RustPrefabs)
 			{
-				try
+				foreach (var prefab in rustPrefab.Value)
 				{
-					rustPrefab.Value.Cache();
-
-					var root = rustPrefab.Value.transform.root.gameObject;
-
-					if (!roots.Contains(root))
+					try
 					{
-						roots.Add(root);
-					}
+						prefab.Cache();
 
-					DestroyImmediate(rustPrefab.Value.gameObject, true);
-				}
-				catch(Exception ex)
-				{
-					Debug.LogError($"[{Name}] Clear failure for '{rustPrefab.Value.Path}' {rustPrefab.Value.Position} ({ex.Message})\n{ex.StackTrace}");
+						var root = prefab.transform.root.gameObject;
+
+						if (!roots.Contains(root))
+						{
+							roots.Add(root);
+						}
+
+						Debug.Log($"{GetRecursiveName(root.transform)}: \n" +
+							$"IsPartOfAnyPrefab: {PrefabUtility.IsPartOfAnyPrefab(root)}\n" +
+							$"IsPartOfImmutablePrefab: {PrefabUtility.IsPartOfImmutablePrefab(root)}\n"+
+							$"IsPartOfModelPrefab: {PrefabUtility.IsPartOfModelPrefab(root)}\n"+
+							$"IsPartOfNonAssetPrefabInstance: {PrefabUtility.IsPartOfNonAssetPrefabInstance(root)}\n"+
+							$"IsPartOfPrefabAsset: {PrefabUtility.IsPartOfPrefabAsset(root)}\n"+
+							$"IsPartOfPrefabInstance: {PrefabUtility.IsPartOfPrefabInstance(root)}\n"+
+							$"IsPartOfPrefabThatCanBeAppliedTo: {PrefabUtility.IsPartOfPrefabThatCanBeAppliedTo(root)}\n"+
+							$"IsPartOfRegularPrefab: {PrefabUtility.IsPartOfRegularPrefab(root)}\n"+
+							$"IsPartOfVariantPrefab: {PrefabUtility.IsPartOfVariantPrefab(root)}\n"+
+							$"IsPrefabAssetMissing: {PrefabUtility.IsPrefabAssetMissing(root)}\n");
+
+						if (prefab.gameObject != root)
+						{
+							prefab.gameObject.SetActive(false);
+							DestroyImmediate(prefab, true);
+						}
+					}
+					catch(Exception ex)
+					{
+						Debug.LogError($"[{Name}] Clear failure for [{prefab.gameObject.name}] '{prefab.Path}' {prefab.Position} ({ex.Message})\n{ex.StackTrace}");
+					}
 				}
 			}
 
@@ -277,24 +302,27 @@ public class AddonEditor : ScriptableObject
 			{
 				var rustPrefabs = new Dictionary<string, List<RustPrefab>>();
 
-				foreach (var prefab in asset.RustPrefabs)
+				foreach (var rustPrefab in asset.RustPrefabs)
 				{
-					var prefabName = AssetDatabase.GetAssetPath(prefab.Key.root).ToLower();
+					var prefabName = rustPrefab.Key;
 
 					if (!rustPrefabs.TryGetValue(prefabName, out var prefabs))
 					{
 						rustPrefabs.Add(prefabName, prefabs = new());
 					}
 
-					prefabs.Add(new RustPrefab
+					foreach (var prefab in rustPrefab.Value)
 					{
-						Entity = prefab.Value.Entity,
-						Model = prefab.Value.Model,
-						Path = prefab.Value.Path,
-						Position = BaseVector.ToProtoVector(prefab.Value.Position),
-						Rotation = BaseVector.ToProtoVector(prefab.Value.Rotation),
-						Scale = BaseVector.ToProtoVector(prefab.Value.Scale)
-					});
+						prefabs.Add(new RustPrefab
+						{
+							Entity = prefab.Entity,
+							Model = prefab.Model,
+							Path = prefab.Path,
+							Position = BaseVector.ToProtoVector(prefab.Position),
+							Rotation = BaseVector.ToProtoVector(prefab.Rotation),
+							Scale = BaseVector.ToProtoVector(prefab.Scale)
+						});
+					}
 				}
 
 				Serializer.Serialize(memory, new RustBundle
@@ -344,6 +372,39 @@ public class AddonEditor : ScriptableObject
 			Version = Version
 		}, assets.ToArray());
 		addon.StoreToFile(path.Replace(".cca", string.Empty));
+		File.WriteAllText(path.Replace(".cca", ".cca.manifest"),
+			$"{JsonConvert.SerializeObject(addon.GetManifest(), Formatting.Indented)}\n\n" +
+			$"{Metadata(Scene)}\n{Metadata(Models)}");
+
+		string Metadata(Asset asset)
+		{
+			var builder = new StringBuilder();
+
+			builder.AppendLine($"{asset.Name}.{asset.Extension}");
+			builder.AppendLine(string.Empty);
+			builder.AppendLine($"  Prefabs:");
+			foreach (var fabs in asset.Prefabs)
+			{
+				builder.AppendLine($"  - {GetRecursiveName(fabs.transform)}");
+			}
+			builder.AppendLine($"  Rust Prefabs:");
+			foreach (var fabs in asset.RustPrefabs)
+			{
+				builder.AppendLine($"  - {fabs.Key}");
+
+				foreach (var rustPrefabs in fabs.Value)
+				{
+					builder.AppendLine($"  {rustPrefabs.Path} {rustPrefabs.Position} {rustPrefabs.Rotation}");
+				}
+			}
+
+			var result = builder.ToString();
+
+			builder.Clear();
+			builder = null;
+
+			return result;
+		}
 
 		assets.Clear();
 		assets = null;

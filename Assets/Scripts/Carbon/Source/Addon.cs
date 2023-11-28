@@ -55,8 +55,11 @@ namespace Carbon.Client.Assets
 			return new Manifest
 			{
 				Name = Name,
+				Version = Version,
+				Author = Author,
 				Assets = Assets.Select(x => x.Value.GetManifest()).ToArray(),
-				CreationTime = CreationTime
+				CreationTime = CreationTime,
+				Checksum = GetChecksum()
 			};
 		}
 
@@ -161,6 +164,9 @@ namespace Carbon.Client.Assets
 		public class Manifest
 		{
 			public string Name { get; set; }
+			public string Version { get; set; }
+			public string Author { get; set; }
+			public string Checksum { get; set; }
 			public Asset.Manifest[] Assets { get; set; }
 			public long CreationTime { get; set; }
 			public string CreationTimeReadable => new DateTime(CreationTime).ToString();
