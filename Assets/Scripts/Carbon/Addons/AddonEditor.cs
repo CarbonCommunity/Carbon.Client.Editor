@@ -11,6 +11,7 @@ using Carbon.Client.Packets;
 
 #if UNITY_EDITOR
 using Carbon;
+using Carbon.Extensions;
 using HierarchyIcons;
 using Newtonsoft.Json;
 using UnityEditor;
@@ -64,26 +65,33 @@ public class AddonEditor : ScriptableObject
 			Components.Clear();
 			RustPrefabs.Clear();
 
+			var processedCache = new List<Transform>();
+
 			foreach (var prefab in Prefabs)
 			{
 				Recursive(prefab.transform);
 
 				void Recursive(Transform transform)
 				{
-					var component = transform.GetComponent<RustComponent>();
+					var components = transform.GetComponents<RustComponent>();
 					{
-						if (component != null)
+						foreach (var component in components)
 						{
-							transform.name = $"{transform.name}_{Guid.NewGuid():N}";
+							if(!processedCache.Contains(component.transform))
+							{
+								component.name = $"{component.name}_{Guid.NewGuid():N}";
+								processedCache.Add(component.transform);
+							}
 
 							var path = GetRecursiveName(transform).ToLower();
 
-							if (!Components.TryGetValue(path, out var components))
+							if (!Components.TryGetValue(path, out var comps))
 							{
-								Components.Add(path, components = new List<RustComponent>());
+								Components.Add(path, comps = new List<RustComponent>());
 							}
 
-							components.Add(component);
+							comps.Add(component);
+							Debug.Log($"[{path}] Found component: {component.Component.Type}");
 						}
 					}
 
@@ -118,6 +126,9 @@ public class AddonEditor : ScriptableObject
 					}
 				}
 			}
+
+			processedCache.Clear();
+			processedCache = null;
 
 			Debug.Log($"[{Name}] Found {Components.Count} components, {RustPrefabs.Count} Rust prefabs");
 		}
@@ -158,23 +169,13 @@ public class AddonEditor : ScriptableObject
 							roots.Add(root);
 						}
 
-						Debug.Log($"{GetRecursiveName(root.transform)}: \n" +
-							$"IsPartOfAnyPrefab: {PrefabUtility.IsPartOfAnyPrefab(root)}\n" +
-							$"IsPartOfImmutablePrefab: {PrefabUtility.IsPartOfImmutablePrefab(root)}\n"+
-							$"IsPartOfModelPrefab: {PrefabUtility.IsPartOfModelPrefab(root)}\n"+
-							$"IsPartOfNonAssetPrefabInstance: {PrefabUtility.IsPartOfNonAssetPrefabInstance(root)}\n"+
-							$"IsPartOfPrefabAsset: {PrefabUtility.IsPartOfPrefabAsset(root)}\n"+
-							$"IsPartOfPrefabInstance: {PrefabUtility.IsPartOfPrefabInstance(root)}\n"+
-							$"IsPartOfPrefabThatCanBeAppliedTo: {PrefabUtility.IsPartOfPrefabThatCanBeAppliedTo(root)}\n"+
-							$"IsPartOfRegularPrefab: {PrefabUtility.IsPartOfRegularPrefab(root)}\n"+
-							$"IsPartOfVariantPrefab: {PrefabUtility.IsPartOfVariantPrefab(root)}\n"+
-							$"IsPrefabAssetMissing: {PrefabUtility.IsPrefabAssetMissing(root)}\n");
-
-						if (prefab.gameObject != root)
+						if (prefab.gameObject == root)
 						{
-							prefab.gameObject.SetActive(false);
-							DestroyImmediate(prefab, true);
+							continue;
 						}
+
+						prefab.gameObject.SetActive(false);
+						DestroyImmediate(prefab, true);
 					}
 					catch(Exception ex)
 					{

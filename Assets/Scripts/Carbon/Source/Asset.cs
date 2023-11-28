@@ -16,7 +16,7 @@ using ProtoBuf;
 
 namespace Carbon.Client.Assets
 {
-	[ProtoContract(InferTagFromName = true)]
+	[ProtoContract]
 	public partial class Asset
 	{
 		[ProtoMember(1 + Protocol.VERSION)]
