@@ -538,7 +538,7 @@ namespace Carbon
 			GUILayout.EndHorizontal();
 
 			rcon.Password = EditorGUILayout.PasswordField("Password", rcon.Password);
-			rcon.SyncServer = EditorGUILayout.Toggle("Sync Server", rcon.SyncServer);
+			// rcon.SyncServer = EditorGUILayout.Toggle("Sync Server", rcon.SyncServer);
 
 			EditorGUILayout.Separator();
 

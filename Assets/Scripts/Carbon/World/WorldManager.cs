@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -108,6 +110,8 @@ namespace Carbon
         {
             if (terrain.terrainData.size != mapInfo.size)
             {
+	            var centeredPosition = mapInfo.size / -2;
+	            terrain.transform.position = new Vector3(centeredPosition.x, 0, centeredPosition.z);
                 terrain.terrainData.heightmapResolution = mapInfo.terrainRes;
                 terrain.terrainData.size = mapInfo.size;
                 terrain.terrainData.alphamapResolution = mapInfo.splatRes;
@@ -282,3 +286,4 @@ namespace Carbon
         }
     }
 }
+#endif

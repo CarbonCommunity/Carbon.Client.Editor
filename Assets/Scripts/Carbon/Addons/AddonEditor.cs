@@ -91,7 +91,6 @@ public class AddonEditor : ScriptableObject
 							}
 
 							comps.Add(component);
-							Debug.Log($"[{path}] Found component: {component.Component.Type}");
 						}
 					}
 
@@ -503,6 +502,35 @@ public class AddonEditor : ScriptableObject
 				if (GUILayout.Button("Fetch Models"))
 				{
 					addon.FetchModels();
+				}
+
+				GUILayout.Space(15);
+
+				GUILayout.Label("Rcon", EditorStyles.boldLabel);
+				GUILayout.Space(5);
+
+				if (!Rcon.Singleton.IsConnected)
+				{
+					var rcon = Rcon.Singleton;
+
+					GUILayout.BeginHorizontal();
+					rcon.Ip = EditorGUILayout.TextField("IP:Port", rcon.Ip);
+					rcon.Port = EditorGUILayout.IntField(string.Empty, rcon.Port, GUILayout.Width(100));
+					GUILayout.EndHorizontal();
+
+					rcon.Password = EditorGUILayout.PasswordField("Password", rcon.Password);
+
+					if (GUILayout.Button(rcon.IsConnected ? "Disconnect" : "Connect"))
+					{
+						if (rcon.IsConnected)
+						{
+							rcon.Disconnect();
+						}
+						else
+						{
+							rcon.Connect();
+						}
+					}
 				}
 
 				using (CarbonUtils.GUIEnableChange.New(Rcon.Singleton.IsConnected))
