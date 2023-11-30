@@ -35667,7 +35667,7 @@ PrefabInstance:
     - target: {fileID: 707679850276287656, guid: 78765c8e9f2ad0d4b835d6f7c476493d,
         type: 3}
       propertyPath: m_Name
-      value: player_spawnpoint (1)
+      value: player_spawnpoint (1)_cb059ee4779c4ec499394c16cfd1ab2c
       objectReference: {fileID: 0}
     - target: {fileID: 8544584633288547528, guid: 78765c8e9f2ad0d4b835d6f7c476493d,
         type: 3}
@@ -37626,7 +37626,7 @@ PrefabInstance:
     - target: {fileID: 5937811065658745962, guid: c5f4ae636a693c440852907c3d3205c9,
         type: 3}
       propertyPath: m_Name
-      value: watervisibility_trigger_box
+      value: watervisibility_trigger_box_356dfb379a2a4a0f8695214a4a084336
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5f4ae636a693c440852907c3d3205c9, type: 3}
@@ -38096,7 +38096,7 @@ PrefabInstance:
     - target: {fileID: 707679850276287656, guid: 78765c8e9f2ad0d4b835d6f7c476493d,
         type: 3}
       propertyPath: m_Name
-      value: player_spawnpoint
+      value: player_spawnpoint_ad627bad463b46cb8b4c8ed800ceb32d
       objectReference: {fileID: 0}
     - target: {fileID: 8544584633288547528, guid: 78765c8e9f2ad0d4b835d6f7c476493d,
         type: 3}

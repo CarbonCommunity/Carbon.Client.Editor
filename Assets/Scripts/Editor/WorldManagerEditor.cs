@@ -39,9 +39,10 @@ public class WorldManagerEditor : Editor
         EditorGUILayout.ObjectField("Script", MonoScript.FromMonoBehaviour((WorldManager)target), typeof(WorldManager), false);
         GUI.enabled = true;
 
+        worldManager.Land = (Terrain)EditorGUILayout.ObjectField("Land", worldManager.Land, typeof(Terrain), true);
         GUILayout.BeginHorizontal();
         {
-            worldManager.filename = EditorGUILayout.TextField("Rust .MAP File", worldManager.filename);
+            PlayerPrefs.SetString("mapfilename", EditorGUILayout.TextField("Rust .MAP File", worldManager.filename));
 
             using (CarbonUtils.GUIColorChange.New(Color.cyan, false))
             {
@@ -61,7 +62,7 @@ public class WorldManagerEditor : Editor
                             Debug.LogWarning($"Changing Rust map file - unloading currently loaded map.");
                         }
 
-                        worldManager.filename = folder;
+                        PlayerPrefs.SetString("mapfilename", folder);
                     }
                 }
             }
@@ -78,7 +79,7 @@ public class WorldManagerEditor : Editor
                     {
                         WorldSerialization world = worldManager.LoadWorld(worldManager.filename);
                         if (world == null || world.world == null) { Debug.LogError("Couldnt load map file."); return; }
-                        WorldManager.Load(WorldConverter.WorldToTerrain(world), worldManager.filename);
+                        WorldManager.Singleton.Load(WorldConverter.WorldToTerrain(world), worldManager.filename);
                     }
                 }
             }

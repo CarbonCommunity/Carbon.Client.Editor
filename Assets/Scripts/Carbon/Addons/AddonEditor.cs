@@ -487,12 +487,14 @@ public class AddonEditor : ScriptableObject
 
 				EditorGUILayout.BeginHorizontal(GUILayout.ExpandWidth(true));
 
-				if (GUILayout.Button("Build"))
+				var height = GUILayout.Height(25);
+
+				if (GUILayout.Button("Build", height))
 				{
 					addon.Build();
 				}
 
-				if (GUILayout.Button("Open Scene"))
+				if (GUILayout.Button("Open Scene", height))
 				{
 					addon.PrepareScene();
 				}
@@ -514,7 +516,7 @@ public class AddonEditor : ScriptableObject
 					var rcon = Rcon.Singleton;
 
 					GUILayout.BeginHorizontal();
-					rcon.Ip = EditorGUILayout.TextField("IP:Port", rcon.Ip);
+					rcon.Ip = EditorGUILayout.TextField("IP & Port", rcon.Ip);
 					rcon.Port = EditorGUILayout.IntField(string.Empty, rcon.Port, GUILayout.Width(100));
 					GUILayout.EndHorizontal();
 

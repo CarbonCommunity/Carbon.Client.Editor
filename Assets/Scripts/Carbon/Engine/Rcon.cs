@@ -533,7 +533,7 @@ namespace Carbon
 			var rcon = (Rcon)target;
 
 			GUILayout.BeginHorizontal();
-			rcon.Ip = EditorGUILayout.TextField("IP:Port", rcon.Ip);
+			rcon.Ip = EditorGUILayout.TextField("IP & Port", rcon.Ip);
 			rcon.Port = EditorGUILayout.IntField(string.Empty, rcon.Port, GUILayout.Width(100));
 			GUILayout.EndHorizontal();
 

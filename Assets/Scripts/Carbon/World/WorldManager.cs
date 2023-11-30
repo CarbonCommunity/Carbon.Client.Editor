@@ -1,11 +1,5 @@
 ﻿#if UNITY_EDITOR
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ProtoBuf;
 #if UNITY_EDITOR
@@ -18,9 +12,14 @@ namespace Carbon
     [ExecuteAlways]
     public class WorldManager : MonoBehaviour
     {
+	    internal static WorldManager _singleton;
+
+	    public static WorldManager Singleton => _singleton ?? (_singleton = FindObjectOfType<WorldManager>());
+
         #region Defines
-        public string filename = string.Empty;
-        public static Terrain Land { get; private set; }
+
+	    public string filename => PlayerPrefs.GetString("mapfilename");
+        public Terrain Land { get; set; }
         public static Terrain Water { get; private set; }
         public static Material WaterMaterial { get; private set; }
         public static float[,,] Ground { get; private set; }
@@ -69,23 +68,6 @@ namespace Carbon
         }
         #endregion
 
-        [InitializeOnLoadMethod]
-        private static void Init()
-        {
-            EditorApplication.update += OnProjectLoad;
-        }
-
-        private static void OnProjectLoad()
-        {
-            EditorApplication.update -= OnProjectLoad;
-            SetTerrainReferences();
-        }
-
-        public static void SetTerrainReferences()
-        {
-            Land = GameObject.FindGameObjectWithTag("Land").GetComponent<Terrain>();
-        }
-
         public WorldSerialization LoadWorld(string filename)
         {
             var blob = new WorldSerialization();
@@ -93,24 +75,25 @@ namespace Carbon
             return blob;
         }
 
-        public static void Load(MapInfo mapInfo, string path = "")
+        public void Load(MapInfo mapInfo, string path = "")
         {
             SetTerrains(mapInfo);
             SetSplatMaps(mapInfo);
             ClearSplatMapUndo();
         }
 
-        private static void SetTerrains(MapInfo mapInfo)
+        private void SetTerrains(MapInfo mapInfo)
         {
             HeightMapRes = mapInfo.terrainRes;
             SetupTerrain(mapInfo, Land);
         }
 
-        private static void SetupTerrain(MapInfo mapInfo, Terrain terrain)
+        private void SetupTerrain(MapInfo mapInfo, Terrain terrain)
         {
             if (terrain.terrainData.size != mapInfo.size)
             {
 	            var centeredPosition = mapInfo.size / -2;
+	            terrain.gameObject.SetActive(true);
 	            terrain.transform.position = new Vector3(centeredPosition.x, 0, centeredPosition.z);
                 terrain.terrainData.heightmapResolution = mapInfo.terrainRes;
                 terrain.terrainData.size = mapInfo.size;
@@ -121,7 +104,7 @@ namespace Carbon
             terrain.terrainData.SetHeights(0, 0, terrain.Equals(Land) ? mapInfo.land.heights : mapInfo.water.heights);
         }
 
-        public static void SetSplatMap(float[,,] array, LayerType layer, int topology = -1)
+        public void SetSplatMap(float[,,] array, LayerType layer, int topology = -1)
         {
             if (array == null)
             {
@@ -164,7 +147,7 @@ namespace Carbon
             }
         }
 
-        private static void SetSplatMaps(MapInfo mapInfo)
+        private void SetSplatMaps(MapInfo mapInfo)
         {
             SplatMapRes = mapInfo.splatRes;
             SetSplatMap(mapInfo.splatMap, LayerType.Ground);
@@ -172,14 +155,14 @@ namespace Carbon
             SetAlphaMap(mapInfo.alphaMap);
         }
 
-        public static void ClearSplatMapUndo()
+        public void ClearSplatMapUndo()
         {
             foreach (var tex in Land.terrainData.alphamapTextures)
                 Undo.ClearUndo(tex);
         }
 
-        public static void RegisterSplatMapUndo(string name) => Undo.RegisterCompleteObjectUndo(Land.terrainData.alphamapTextures, name);
-        public static void SetAlphaMap(bool[,] array)
+        public void RegisterSplatMapUndo(string name) => Undo.RegisterCompleteObjectUndo(Land.terrainData.alphamapTextures, name);
+        public void SetAlphaMap(bool[,] array)
         {
             if (array == null)
             {
@@ -219,7 +202,7 @@ namespace Carbon
             AlphaDirty = false;
         }
 
-        public static TerrainLayer[] GetTerrainLayers()
+        public TerrainLayer[] GetTerrainLayers()
         {
             if (GroundLayers == null || BiomeLayers == null || TopologyLayers == null)
                 SetTerrainLayers();
@@ -231,14 +214,14 @@ namespace Carbon
             };
         }
 
-        public static void SetTerrainLayers()
+        public void SetTerrainLayers()
         {
             GroundLayers = GetGroundLayers();
             BiomeLayers = GetBiomeLayers();
             AssetDatabase.SaveAssets();
         }
 
-        private static TerrainLayer[] GetGroundLayers()
+        private TerrainLayer[] GetGroundLayers()
         {
             TerrainLayer[] textures = new TerrainLayer[8];
             textures[0] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Ground/Dirt.terrainlayer");
@@ -261,7 +244,7 @@ namespace Carbon
             return textures;
         }
 
-        private static TerrainLayer[] GetBiomeLayers()
+        private TerrainLayer[] GetBiomeLayers()
         {
             TerrainLayer[] textures = new TerrainLayer[4];
             textures[0] = AssetDatabase.LoadAssetAtPath<TerrainLayer>("Assets/Resources/Textures/Biome/Arid.terrainlayer");
@@ -275,7 +258,7 @@ namespace Carbon
             return textures;
         }
 
-        public static int LayerCount(LayerType layer)
+        public int LayerCount(LayerType layer)
         {
             return layer switch
             {

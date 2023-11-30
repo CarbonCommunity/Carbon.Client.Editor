@@ -14,7 +14,7 @@ namespace Carbon
 	{
 		public static RustAssetProcessor Instance { get; private set; }
 
-		public string RustClientDirectory;
+		public string RustClientDirectory => PlayerPrefs.GetString("rustclientdir");
 		public bool AutoLoad;
 		public bool CreateVisuals;
 		public bool SelectionSync;

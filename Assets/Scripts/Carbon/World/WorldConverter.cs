@@ -1,11 +1,7 @@
 ﻿#if UNITY_EDITOR
 
-using System;
 using UnityEngine;
-using UnityEditor;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using static WorldSerialization;
 using ProtoBuf;
 using static Carbon.WorldManager;
 
