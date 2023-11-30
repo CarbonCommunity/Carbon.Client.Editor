@@ -19,7 +19,7 @@ namespace Carbon
         #region Defines
 
 	    public string filename => PlayerPrefs.GetString("mapfilename");
-        public Terrain Land { get; set; }
+	    public Terrain Land;
         public static Terrain Water { get; private set; }
         public static Material WaterMaterial { get; private set; }
         public static float[,,] Ground { get; private set; }
