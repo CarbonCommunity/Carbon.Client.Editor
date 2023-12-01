@@ -1,0 +1,1000 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1168931238482641772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8802021913888342090}
+  - component: {fileID: 8647649165096032214}
+  m_Layer: 0
+  m_Name: wall.frame.frontier (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8802021913888342090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168931238482641772}
+  m_LocalRotation: {x: -0, y: 0.70710665, z: -0, w: 0.70710695}
+  m_LocalPosition: {x: 1.4999996, y: 0, z: 3.0000024}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2587410466056024677}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &8647649165096032214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168931238482641772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9b096131538b44289fa56784e3fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: assets/prefabs/building core/wall.frame/wall.frame.frontier.prefab
+  Bounds:
+    m_Center: {x: -0.00000055134296, y: 1.5048023, z: -0.00030577183}
+    m_Extent: {x: 0.10970417, y: 1.5097414, z: 1.5101553}
+  Entity:
+    EnforcePrefab: 0
+    Flags: 0
+    Skin: 0
+    Combat:
+      Health: -1
+      MaxHealth: -1
+  Model:
+    PrefabReference: {fileID: 0}
+    PrefabPath: 
+    NetworkAnimation: 1
+    SyncAnimation: 0
+    EntitySolidCollision: 0
+    EntityTriggerCollision: 0
+--- !u!1 &1222887630910710409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8856154245225750959}
+  - component: {fileID: 8701779181177665075}
+  m_Layer: 0
+  m_Name: floor.frontier_variant_a (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8856154245225750959
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222887630910710409}
+  m_LocalRotation: {x: -0, y: -0.00000008940696, z: -0, w: 1}
+  m_LocalPosition: {x: 1.5000005, y: 0, z: -1.5000021}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2587410466056024677}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8701779181177665075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222887630910710409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9b096131538b44289fa56784e3fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: assets/prefabs/building core/floor/floor.frontier_variant_a.prefab
+  Bounds:
+    m_Center: {x: 0.0006827116, y: 0.056020573, z: -0.009913921}
+    m_Extent: {x: 1.51655, y: 0.08167055, z: 1.5130122}
+  Entity:
+    EnforcePrefab: 0
+    Flags: 0
+    Skin: 0
+    Combat:
+      Health: -1
+      MaxHealth: -1
+  Model:
+    PrefabReference: {fileID: 0}
+    PrefabPath: 
+    NetworkAnimation: 1
+    SyncAnimation: 0
+    EntitySolidCollision: 0
+    EntityTriggerCollision: 0
+--- !u!1 &2118792472872449022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4815149762536841}
+  - component: {fileID: 5115109410359084654}
+  - component: {fileID: 6656035225161537358}
+  m_Layer: 0
+  m_Name: _guide
+  m_TagString: EditorOnly
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4815149762536841
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118792472872449022}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.081, z: 0}
+  m_LocalScale: {x: 6, y: 0.125, z: 6}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2587410466056024677}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &5115109410359084654
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118792472872449022}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6656035225161537358
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118792472872449022}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: b939253bcd65a5e41b51a53332184711, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2433245608064813211
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5466085108595477437}
+  - component: {fileID: 5331945439055223841}
+  m_Layer: 0
+  m_Name: wall.frontier.full_a (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5466085108595477437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2433245608064813211}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.00000058114523}
+  m_LocalPosition: {x: -3, y: 0, z: -1.4999931}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2587410466056024677}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &5331945439055223841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2433245608064813211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9b096131538b44289fa56784e3fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: assets/prefabs/building core/wall/wall.frontier.full_a.prefab
+  Bounds:
+    m_Center: {x: 0.0042512715, y: 1.5015717, z: -0.00000023841858}
+    m_Extent: {x: 0.10579391, y: 1.5216885, z: 1.5049999}
+  Entity:
+    EnforcePrefab: 0
+    Flags: 0
+    Skin: 0
+    Combat:
+      Health: -1
+      MaxHealth: -1
+  Model:
+    PrefabReference: {fileID: 0}
+    PrefabPath: 
+    NetworkAnimation: 1
+    SyncAnimation: 0
+    EntitySolidCollision: 0
+    EntityTriggerCollision: 0
+--- !u!1 &2475703107903868190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5207434760555171384}
+  - component: {fileID: 5359574933807421860}
+  m_Layer: 0
+  m_Name: wall.frame.frontier (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5207434760555171384
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2475703107903868190}
+  m_LocalRotation: {x: -0, y: 0.70710665, z: -0, w: 0.70710695}
+  m_LocalPosition: {x: 1.5000018, y: 0, z: -2.9999976}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2587410466056024677}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &5359574933807421860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2475703107903868190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9b096131538b44289fa56784e3fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: assets/prefabs/building core/wall.frame/wall.frame.frontier.prefab
+  Bounds:
+    m_Center: {x: -0.00000055134296, y: 1.5048023, z: -0.00030577183}
+    m_Extent: {x: 0.10970417, y: 1.5097414, z: 1.5101553}
+  Entity:
+    EnforcePrefab: 0
+    Flags: 0
+    Skin: 0
+    Combat:
+      Health: -1
+      MaxHealth: -1
+  Model:
+    PrefabReference: {fileID: 0}
+    PrefabPath: 
+    NetworkAnimation: 1
+    SyncAnimation: 0
+    EntitySolidCollision: 0
+    EntityTriggerCollision: 0
+--- !u!1 &3278919944382560724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5160809467868412658}
+  - component: {fileID: 5024732459376356718}
+  m_Layer: 0
+  m_Name: wall.frame.frontier
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5160809467868412658
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3278919944382560724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3, y: 0, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2587410466056024677}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5024732459376356718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3278919944382560724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9b096131538b44289fa56784e3fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: assets/prefabs/building core/wall.frame/wall.frame.frontier.prefab
+  Bounds:
+    m_Center: {x: -0.00000055134296, y: 1.5048023, z: -0.00030577183}
+    m_Extent: {x: 0.10970417, y: 1.5097414, z: 1.5101553}
+  Entity:
+    EnforcePrefab: 0
+    Flags: 0
+    Skin: 0
+    Combat:
+      Health: -1
+      MaxHealth: -1
+  Model:
+    PrefabReference: {fileID: 0}
+    PrefabPath: 
+    NetworkAnimation: 1
+    SyncAnimation: 0
+    EntitySolidCollision: 0
+    EntityTriggerCollision: 0
+--- !u!1 &4062685228293860147
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5944327369987188757}
+  - component: {fileID: 5790487197408018313}
+  m_Layer: 0
+  m_Name: floor.frontier_variant_a
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5944327369987188757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062685228293860147}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.5, y: 0, z: -1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2587410466056024677}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5790487197408018313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4062685228293860147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9b096131538b44289fa56784e3fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: assets/prefabs/building core/floor/floor.frontier_variant_a.prefab
+  Bounds:
+    m_Center: {x: 0.0006827116, y: 0.056020573, z: -0.009913921}
+    m_Extent: {x: 1.51655, y: 0.08167055, z: 1.5130122}
+  Entity:
+    EnforcePrefab: 0
+    Flags: 0
+    Skin: 0
+    Combat:
+      Health: -1
+      MaxHealth: -1
+  Model:
+    PrefabReference: {fileID: 0}
+    PrefabPath: 
+    NetworkAnimation: 1
+    SyncAnimation: 0
+    EntitySolidCollision: 0
+    EntityTriggerCollision: 0
+--- !u!1 &6441073232675085107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2587410466056024677}
+  - component: {fileID: 5097144447999582136}
+  m_Layer: 0
+  m_Name: office_room_b
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2587410466056024677
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6441073232675085107}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4815149762536841}
+  - {fileID: 1994153174721928986}
+  - {fileID: 5944327369987188757}
+  - {fileID: 664139955341692308}
+  - {fileID: 8856154245225750959}
+  - {fileID: 1748615409312638905}
+  - {fileID: 3753033414414314169}
+  - {fileID: 5466085108595477437}
+  - {fileID: 5160809467868412658}
+  - {fileID: 2242111037017718665}
+  - {fileID: 5207434760555171384}
+  - {fileID: 8802021913888342090}
+  - {fileID: 4966166442707769018}
+  - {fileID: 2448518482320269417}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5097144447999582136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6441073232675085107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9efdc945cf6ff6049ac1fb2e1f8f90c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Chance: 0.5
+  XRotationSteps: 0
+  YRotationSteps: 90
+  ZRotationSteps: 0
+  Bounds:
+    m_Center: {x: 0, y: 1.5, z: 0}
+    m_Extent: {x: 3, y: 1.6, z: 3}
+--- !u!1 &6776374337005906335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3753033414414314169}
+  - component: {fileID: 3904897211117501733}
+  m_Layer: 0
+  m_Name: wall.frontier.full_c (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3753033414414314169
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6776374337005906335}
+  m_LocalRotation: {x: -0, y: -0.70710695, z: -0, w: 0.7071066}
+  m_LocalPosition: {x: -1.5000013, y: 0, z: 2.999999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2587410466056024677}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &3904897211117501733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6776374337005906335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9b096131538b44289fa56784e3fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: assets/prefabs/building core/wall/wall.frontier.full_c.prefab
+  Bounds:
+    m_Center: {x: 0.017394423, y: 1.5000647, z: -0.00001001358}
+    m_Extent: {x: 0.11893624, y: 1.5201811, z: 1.5049999}
+  Entity:
+    EnforcePrefab: 0
+    Flags: 0
+    Skin: 0
+    Combat:
+      Health: -1
+      MaxHealth: -1
+  Model:
+    PrefabReference: {fileID: 0}
+    PrefabPath: 
+    NetworkAnimation: 1
+    SyncAnimation: 0
+    EntitySolidCollision: 0
+    EntityTriggerCollision: 0
+--- !u!1 &7145118358043643570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 664139955341692308}
+  - component: {fileID: 797964619054144008}
+  m_Layer: 0
+  m_Name: floor.frontier_variant_a (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &664139955341692308
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7145118358043643570}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.00000043213362}
+  m_LocalPosition: {x: -1.5, y: 0, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2587410466056024677}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &797964619054144008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7145118358043643570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9b096131538b44289fa56784e3fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: assets/prefabs/building core/floor/floor.frontier_variant_a.prefab
+  Bounds:
+    m_Center: {x: 0.0006827116, y: 0.056020573, z: -0.009913921}
+    m_Extent: {x: 1.51655, y: 0.08167055, z: 1.5130122}
+  Entity:
+    EnforcePrefab: 0
+    Flags: 0
+    Skin: 0
+    Combat:
+      Health: -1
+      MaxHealth: -1
+  Model:
+    PrefabReference: {fileID: 0}
+    PrefabPath: 
+    NetworkAnimation: 1
+    SyncAnimation: 0
+    EntitySolidCollision: 0
+    EntityTriggerCollision: 0
+--- !u!1 &8192988011745369148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1994153174721928986}
+  - component: {fileID: 1840046924053399686}
+  m_Layer: 0
+  m_Name: dockwall_floor_1200
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1994153174721928986
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8192988011745369148}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.059, z: 0}
+  m_LocalScale: {x: 0.4165, y: 1, z: 0.4165}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2587410466056024677}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1840046924053399686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8192988011745369148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9b096131538b44289fa56784e3fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: assets/content/structures/harbor/dock_walls/dockwall_floor_1200.prefab
+  Bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 6, y: 0, z: 6}
+  Entity:
+    EnforcePrefab: 0
+    Flags: 0
+    Skin: 0
+    Combat:
+      Health: -1
+      MaxHealth: -1
+  Model:
+    PrefabReference: {fileID: 0}
+    PrefabPath: 
+    NetworkAnimation: 1
+    SyncAnimation: 0
+    EntitySolidCollision: 0
+    EntityTriggerCollision: 0
+--- !u!1 &8240361346764629151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1748615409312638905}
+  - component: {fileID: 1901041456158535717}
+  m_Layer: 0
+  m_Name: floor.frontier_variant_a (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1748615409312638905
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8240361346764629151}
+  m_LocalRotation: {x: -0, y: 0.70710677, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 1.5000005, y: 0, z: 1.4999979}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2587410466056024677}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1901041456158535717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8240361346764629151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9b096131538b44289fa56784e3fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: assets/prefabs/building core/floor/floor.frontier_variant_a.prefab
+  Bounds:
+    m_Center: {x: 0.0006827116, y: 0.056020573, z: -0.009913921}
+    m_Extent: {x: 1.51655, y: 0.08167055, z: 1.5130122}
+  Entity:
+    EnforcePrefab: 0
+    Flags: 0
+    Skin: 0
+    Combat:
+      Health: -1
+      MaxHealth: -1
+  Model:
+    PrefabReference: {fileID: 0}
+    PrefabPath: 
+    NetworkAnimation: 1
+    SyncAnimation: 0
+    EntitySolidCollision: 0
+    EntityTriggerCollision: 0
+--- !u!1 &8431412043142479023
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2242111037017718665}
+  - component: {fileID: 2105462828242053141}
+  m_Layer: 0
+  m_Name: wall.frame.frontier (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2242111037017718665
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8431412043142479023}
+  m_LocalRotation: {x: -0, y: -0.70710695, z: -0, w: 0.7071066}
+  m_LocalPosition: {x: -1.499998, y: 0, z: -2.999999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2587410466056024677}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &2105462828242053141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8431412043142479023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb9b096131538b44289fa56784e3fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: assets/prefabs/building core/wall.frame/wall.frame.frontier.prefab
+  Bounds:
+    m_Center: {x: -0.00000055134296, y: 1.5048023, z: -0.00030577183}
+    m_Extent: {x: 0.10970417, y: 1.5097414, z: 1.5101553}
+  Entity:
+    EnforcePrefab: 0
+    Flags: 0
+    Skin: 0
+    Combat:
+      Health: -1
+      MaxHealth: -1
+  Model:
+    PrefabReference: {fileID: 0}
+    PrefabPath: 
+    NetworkAnimation: 1
+    SyncAnimation: 0
+    EntitySolidCollision: 0
+    EntityTriggerCollision: 0
+--- !u!1001 &4966166441860199164
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2587410466056024677}
+    m_Modifications:
+    - target: {fileID: 1084888157825929651, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: m_Name
+      value: plantpotsset1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.002
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.099998
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436625876820886793, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: Bounds.m_Center.x
+      value: -0.04761994
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436625876820886793, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: Bounds.m_Center.y
+      value: 0.78620577
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436625876820886793, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: Bounds.m_Center.z
+      value: 0.039054334
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436625876820886793, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: Bounds.m_Extent.x
+      value: 0.71063936
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436625876820886793, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: Bounds.m_Extent.y
+      value: 0.7945671
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436625876820886793, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+        type: 3}
+      propertyPath: Bounds.m_Extent.z
+      value: 0.663485
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae, type: 3}
+--- !u!4 &2448518482320269417 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7282809360880194197, guid: 3ddab3dbc64bb924d8fb0d1b44b6a2ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 4966166441860199164}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4966166442707373114
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2587410466056024677}
+    m_Modifications:
+    - target: {fileID: 100000, guid: 9d032c7ba8b03b64b8d4d7ad2a2de690, type: 3}
+      propertyPath: m_Name
+      value: Plant09_d
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d032c7ba8b03b64b8d4d7ad2a2de690, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d032c7ba8b03b64b8d4d7ad2a2de690, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d032c7ba8b03b64b8d4d7ad2a2de690, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d032c7ba8b03b64b8d4d7ad2a2de690, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d032c7ba8b03b64b8d4d7ad2a2de690, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d032c7ba8b03b64b8d4d7ad2a2de690, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d032c7ba8b03b64b8d4d7ad2a2de690, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.00000006181724
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d032c7ba8b03b64b8d4d7ad2a2de690, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -2.7021175e-15
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d032c7ba8b03b64b8d4d7ad2a2de690, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d032c7ba8b03b64b8d4d7ad2a2de690, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d032c7ba8b03b64b8d4d7ad2a2de690, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9d032c7ba8b03b64b8d4d7ad2a2de690, type: 3}
+--- !u!4 &4966166442707769018 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 9d032c7ba8b03b64b8d4d7ad2a2de690,
+    type: 3}
+  m_PrefabInstance: {fileID: 4966166442707373114}
+  m_PrefabAsset: {fileID: 0}
