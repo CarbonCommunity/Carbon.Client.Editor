@@ -67,6 +67,8 @@ public class AddonEditor : ScriptableObject
 
 			var processedCache = new List<Transform>();
 
+			Prefabs.RemoveAll(x => x == null);
+
 			foreach (var prefab in Prefabs)
 			{
 				Recursive(prefab.transform);
