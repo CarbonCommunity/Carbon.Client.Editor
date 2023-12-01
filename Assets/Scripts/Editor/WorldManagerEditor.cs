@@ -15,6 +15,7 @@ public class WorldManagerEditor : Editor
     internal Vector2 _prefabScroll;
 
     public string PrintErrors => string.Join("\n", _errors);
+    int mapLandHeight = 500;
 
     public void Error(object error)
     {
@@ -27,6 +28,11 @@ public class WorldManagerEditor : Editor
         var manager = (WorldManager)target;
         if (!string.IsNullOrEmpty(manager.filename) && !File.Exists(manager.filename))
             Error("Invalid file");
+    }
+
+    public void OnEnable()
+    {
+        mapLandHeight = PlayerPrefs.GetInt("maplandheight", 500);
     }
 
     public override void OnInspectorGUI()
@@ -70,6 +76,20 @@ public class WorldManagerEditor : Editor
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
+        mapLandHeight = EditorGUILayout.IntSlider("Land Height (Water is 500)", mapLandHeight, 1000, 1);
+        worldManager.Land.gameObject.transform.position = new Vector3(worldManager.Land.gameObject.transform.position.x, -mapLandHeight, worldManager.Land.gameObject.transform.position.z);
+
+        using (CarbonUtils.GUIColorChange.New(Color.green, false))
+        {
+            if (GUILayout.Button("Save", GUILayout.Width(75)))
+            {
+                PlayerPrefs.SetInt("maplandheight", mapLandHeight);
+            }
+        }
+        GUILayout.EndHorizontal();
+
+        GUILayout.Space(10);
+        GUILayout.BeginHorizontal();
         {
             GUILayout.BeginVertical();
             {
@@ -79,33 +99,12 @@ public class WorldManagerEditor : Editor
                     {
                         WorldSerialization world = worldManager.LoadWorld(worldManager.filename);
                         if (world == null || world.world == null) { Debug.LogError("Couldnt load map file."); return; }
+                        PlayerPrefs.SetInt("maplandheight", mapLandHeight);
                         WorldManager.Singleton.Load(WorldConverter.WorldToTerrain(world), worldManager.filename);
                     }
                 }
             }
             GUILayout.EndVertical();
-
-            /*
-            if (RustAssetProcessor.Instance.IsLoaded)
-            {
-
-            }
-            else
-            {
-                GUILayout.BeginVertical();
-                {
-                    using (CarbonUtils.GUIColorChange.New(Color.red))
-                    {
-                        if (GUILayout.Button("Cant Load Map, Must Load Assets First"))
-                        {
-                            Debug.LogError("Asset bundle must be loaded first!");
-                        }
-                    }
-                }
-
-                GUILayout.EndVertical();
-            }
-            */
         }
         GUILayout.EndHorizontal();
 

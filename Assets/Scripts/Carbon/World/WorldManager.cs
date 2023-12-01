@@ -12,14 +12,14 @@ namespace Carbon
     [ExecuteAlways]
     public class WorldManager : MonoBehaviour
     {
-	    internal static WorldManager _singleton;
+        internal static WorldManager _singleton;
 
-	    public static WorldManager Singleton => _singleton ?? (_singleton = FindObjectOfType<WorldManager>());
+        public static WorldManager Singleton => _singleton ?? (_singleton = FindObjectOfType<WorldManager>());
 
         #region Defines
 
-	    public string filename => PlayerPrefs.GetString("mapfilename");
-	    public Terrain Land;
+        public string filename => PlayerPrefs.GetString("mapfilename");
+        public Terrain Land;
         public static Terrain Water { get; private set; }
         public static Material WaterMaterial { get; private set; }
         public static float[,,] Ground { get; private set; }
@@ -90,16 +90,20 @@ namespace Carbon
 
         private void SetupTerrain(MapInfo mapInfo, Terrain terrain)
         {
+            var centeredPosition = mapInfo.size / -2;
+
             if (terrain.terrainData.size != mapInfo.size)
             {
-	            var centeredPosition = mapInfo.size / -2;
-	            terrain.gameObject.SetActive(true);
-	            terrain.transform.position = new Vector3(centeredPosition.x, 0, centeredPosition.z);
+                terrain.gameObject.SetActive(true);
+                terrain.transform.position = new Vector3(centeredPosition.x, -PlayerPrefs.GetInt("maplandheight", 500), centeredPosition.z);
                 terrain.terrainData.heightmapResolution = mapInfo.terrainRes;
                 terrain.terrainData.size = mapInfo.size;
                 terrain.terrainData.alphamapResolution = mapInfo.splatRes;
                 terrain.terrainData.baseMapResolution = mapInfo.splatRes;
             }
+
+            if (terrain.transform.position.y != -PlayerPrefs.GetInt("maplandheight", 500))
+                terrain.transform.position = new Vector3(centeredPosition.x, -PlayerPrefs.GetInt("maplandheight", 500), centeredPosition.z);
 
             terrain.terrainData.SetHeights(0, 0, terrain.Equals(Land) ? mapInfo.land.heights : mapInfo.water.heights);
         }
