@@ -15,9 +15,9 @@ public class Grid : MonoBehaviour
 
 		foreach(Transform child in transform)
 		{
-			child.transform.position = new Vector3(Spacing * row, Height, Spacing * count);
+			child.transform.position = transform.position + new Vector3(Spacing * row, Height, Spacing * count);
 
-			count++; 
+			count++;
 
 			if(count >= PerRow)
 			{

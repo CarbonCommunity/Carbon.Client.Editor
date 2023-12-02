@@ -143,7 +143,15 @@ namespace Carbon.Client
 			foreach (var instance in InstanceObjects)
 			{
 				instance.transform.SetParent(null);
-				DestroyImmediate(instance.gameObject);
+
+				try
+				{
+					DestroyImmediate(instance.gameObject);
+				}
+				catch
+				{
+					Destroy(instance.gameObject);
+				}
 			}
 
 			InstanceObjects.Clear();

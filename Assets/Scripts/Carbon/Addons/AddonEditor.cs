@@ -11,7 +11,6 @@ using Carbon.Client.Packets;
 
 #if UNITY_EDITOR
 using Carbon;
-using Carbon.Extensions;
 using HierarchyIcons;
 using Newtonsoft.Json;
 using UnityEditor;
@@ -21,6 +20,12 @@ using UnityEditor.SceneManagement;
 [CreateAssetMenu(fileName = "NewAddon", menuName = "Carbon/New Addon")]
 public class AddonEditor : ScriptableObject
 {
+	public static Type[] UnwantedMonos = new[]
+	{
+		typeof(CustomProceduralObject),
+		typeof(CustomProceduralObjectEntry)
+	};
+
 	public string Name = "New Addon";
 	public string Author = "YourName";
 
@@ -118,6 +123,18 @@ public class AddonEditor : ScriptableObject
 							}
 
 							prefabs.Add(rustAsset);
+						}
+					}
+
+					var monoBehaviours = transform.GetComponents<MonoBehaviour>();
+					for (int i = 0; i < monoBehaviours.Length; i++)
+					{
+						var component = monoBehaviours[i];
+
+						if (UnwantedMonos.Contains(component.GetType()))
+						{
+							DestroyImmediate(component);
+							i--;
 						}
 					}
 
@@ -466,6 +483,15 @@ public class AddonEditor : ScriptableObject
 	public void FetchModels()
 	{
 		Scene.BuildCache(this);
+	}
+
+	public static void ResetEditor()
+	{
+		RustAsset.Scan(true);
+		RustAssetProcessor.PrefabLookup?.Dispose();
+		RconEntity.ClearAll();
+		EditorCoroutine.Start(RustAssetProcessor.Preview());
+		Defines.OnReload();
 	}
 #endif
 

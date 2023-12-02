@@ -87,6 +87,10 @@ public class Defines : MonoBehaviour
 		{
 			asset.Cleanup();
 		}
+
+		#if UNITY_EDITOR
+		AddonEditor.ResetEditor();
+		#endif
 	}
 	public static void OnPostAddonBuild()
 	{

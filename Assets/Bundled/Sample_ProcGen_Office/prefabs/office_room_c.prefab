@@ -307,6 +307,7 @@ Transform:
   - {fileID: 3753033414414314169}
   - {fileID: 2242111037017718665}
   - {fileID: 8802021913888342090}
+  - {fileID: 1438918099140822051}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -639,3 +640,113 @@ MonoBehaviour:
     SyncAnimation: 0
     EntitySolidCollision: 0
     EntityTriggerCollision: 0
+--- !u!1001 &8568569862007035574
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2587410466056024677}
+    m_Modifications:
+    - target: {fileID: 1084888157825929651, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: m_Name
+      value: pinata.deployed
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282809360880194197, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436625876820886793, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: Path
+      value: assets/prefabs/misc/pinata/pinata.deployed.prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436625876820886793, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: Bounds.m_Center.x
+      value: 0.0050040632
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436625876820886793, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: Bounds.m_Center.y
+      value: 0.46955562
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436625876820886793, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: Bounds.m_Center.z
+      value: -0.01827401
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436625876820886793, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: Bounds.m_Extent.x
+      value: 0.14487217
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436625876820886793, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: Bounds.m_Extent.y
+      value: 0.46955562
+      objectReference: {fileID: 0}
+    - target: {fileID: 7436625876820886793, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+        type: 3}
+      propertyPath: Bounds.m_Extent.z
+      value: 0.37231153
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 93c1f5cedcde1d3478801c0c2e7dc6da, type: 3}
+--- !u!4 &1438918099140822051 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7282809360880194197, guid: 93c1f5cedcde1d3478801c0c2e7dc6da,
+    type: 3}
+  m_PrefabInstance: {fileID: 8568569862007035574}
+  m_PrefabAsset: {fileID: 0}

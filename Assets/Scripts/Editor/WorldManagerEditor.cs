@@ -15,7 +15,7 @@ public class WorldManagerEditor : Editor
     internal Vector2 _prefabScroll;
 
     public string PrintErrors => string.Join("\n", _errors);
-    int mapLandHeight = 500;
+    private int mapLandHeight => PlayerPrefs.GetInt("maplandheight", 500);
 
     public void Error(object error)
     {
@@ -28,11 +28,6 @@ public class WorldManagerEditor : Editor
         var manager = (WorldManager)target;
         if (!string.IsNullOrEmpty(manager.filename) && !File.Exists(manager.filename))
             Error("Invalid file");
-    }
-
-    public void OnEnable()
-    {
-        mapLandHeight = PlayerPrefs.GetInt("maplandheight", 500);
     }
 
     public override void OnInspectorGUI()
@@ -76,14 +71,14 @@ public class WorldManagerEditor : Editor
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        mapLandHeight = EditorGUILayout.IntSlider("Land Height (Water is 500)", mapLandHeight, 1000, 1);
+        PlayerPrefs.SetInt("maplandheight", EditorGUILayout.IntSlider("Land Height (Water is 500)", mapLandHeight, 1000, 1));
         worldManager.Land.gameObject.transform.position = new Vector3(worldManager.Land.gameObject.transform.position.x, -mapLandHeight, worldManager.Land.gameObject.transform.position.z);
 
-        using (CarbonUtils.GUIColorChange.New(Color.green, false))
+        using (CarbonUtils.GUIColorChange.New(Color.red, false))
         {
-            if (GUILayout.Button("Save", GUILayout.Width(75)))
+            if (GUILayout.Button("Reset", GUILayout.Width(60)))
             {
-                PlayerPrefs.SetInt("maplandheight", mapLandHeight);
+                PlayerPrefs.SetInt("maplandheight", 500);
             }
         }
         GUILayout.EndHorizontal();

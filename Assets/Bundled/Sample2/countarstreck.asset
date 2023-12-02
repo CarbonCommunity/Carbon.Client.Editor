@@ -20,7 +20,7 @@ MonoBehaviour:
     Name: scene
     Extension: carbon
     Prefabs:
-    - {fileID: 5985412790240140109, guid: 17011485f28b41c46a673cec70e051e1, type: 3}
+    - {fileID: 9206290491684589357, guid: 469ffcb20ccd0bd4cae26bda63972124, type: 3}
   Models:
     Name: models
     Extension: carbon
