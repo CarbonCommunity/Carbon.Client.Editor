@@ -192,7 +192,7 @@ public class RustAsset : MonoBehaviour
 		{
 			Fetch();
 
-			if (Defines.IsBuildingAddons || RustAssetProcessor.Prefabs == null || RustAssetProcessor.PrefabLookup == null)
+			if (Defines.IsBuildingAddons || RustAssetProcessor.Prefabs == null || RustAssetProcessor.PrefabLookup == null || RustAssetProcessor.PrefabLookup.backend == null)
 			{
 				return;
 			}
@@ -202,7 +202,10 @@ public class RustAsset : MonoBehaviour
 				return;
 			}
 
-			Cleanup();
+			if (_instance != null)
+			{
+				return;
+			}
 
 			var prefab = RustAssetProcessor.PrefabLookup.backend.LoadPrefab(Path);
 			var previewContainer = Defines.Singleton.GetPreviewContainer();
@@ -222,27 +225,50 @@ public class RustAsset : MonoBehaviour
 				var skinnedRenderers = _instance.transform.GetComponents<SkinnedMeshRenderer>().Concat(_instance.transform.GetComponentsInChildren<SkinnedMeshRenderer>());
 
 				_colliders.Clear();
-				_colliders.AddRange(colliders.Select(x => new ColliderData()
+				_colliders.AddRange(colliders.Select(x => new ColliderData
 				{
-					collider = x,
-					WasEnabled = x.enabled
+					collider = x, WasEnabled = x.enabled
 				}));
+
+				var standard = Shader.Find("Standard");
+
+				void ProcessShader(Material material)
+				{
+					switch (material.shader.name)
+					{
+						case "Standard":
+						case "Rust/Standard":
+						case "Rust/Standard Cloth":
+							material.shader = standard;
+							break;
+					}
+				}
 
 				foreach (var renderer in renderers)
 				{
 					Bounds.Encapsulate(renderer.localBounds);
+
+					foreach (var material in renderer.sharedMaterials)
+					{
+						ProcessShader(material);
+					}
 				}
 
 				foreach (var renderer in skinnedRenderers)
 				{
 					Bounds.Encapsulate(renderer.localBounds);
+
+					foreach (var material in renderer.sharedMaterials)
+					{
+						ProcessShader(material);
+					}
 				}
 
 				Bounds.center = new Vector3(Bounds.center.x, Bounds.center.y, Bounds.center.z);
 
 				foreach (var renderer in renderers)
 				{
-					foreach(var material in renderer.sharedMaterials)
+					foreach (var material in renderer.sharedMaterials)
 					{
 						if (material.name.ToLower().Contains("glass"))
 						{
@@ -253,7 +279,7 @@ public class RustAsset : MonoBehaviour
 
 				foreach (var renderer in skinnedRenderers)
 				{
-					foreach(var material in renderer.sharedMaterials)
+					foreach (var material in renderer.sharedMaterials)
 					{
 						if (material.name.ToLower().Contains("glass"))
 						{
@@ -284,7 +310,10 @@ public class RustAsset : MonoBehaviour
 				// tape.Point = top.gameObject;
 			}
 		}
-		catch { }
+		catch (Exception ex)
+		{
+			Debug.LogError($"Failed preview for {Path} ({ex.Message})\n{ex.StackTrace}");
+		}
 	}
 	public void Cleanup()
 	{
