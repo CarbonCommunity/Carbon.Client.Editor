@@ -29,6 +29,7 @@ namespace Carbon
         public static int SplatMapRes { get; private set; }
         public static int HeightMapRes { get; private set; }
         public static int AlphaMapRes { get => HeightMapRes - 1; }
+        public static Vector2 MapSize { get; private set; }
         public static LayerType CurrentLayerType { get; private set; }
         private static TerrainLayer[] GroundLayers = null, BiomeLayers = null, TopologyLayers = null;
         public static bool LayerDirty { get; private set; } = false;
@@ -74,40 +75,35 @@ namespace Carbon
             blob.Load(filename);
             return blob;
         }
-
         public void Load(MapInfo mapInfo, string path = "")
         {
+	        MapSize = mapInfo.size;
             SetTerrains(mapInfo);
             SetSplatMaps(mapInfo);
             ClearSplatMapUndo();
         }
 
-        private void SetTerrains(MapInfo mapInfo)
-        {
-            HeightMapRes = mapInfo.terrainRes;
-            SetupTerrain(mapInfo, Land);
-        }
-
         private void SetupTerrain(MapInfo mapInfo, Terrain terrain)
         {
-            var centeredPosition = mapInfo.size / -2;
+            var centeredPosition = mapInfo.size / -2f;
 
-            if (terrain.terrainData.size != mapInfo.size)
-            {
-                terrain.gameObject.SetActive(true);
-                terrain.transform.position = new Vector3(centeredPosition.x, -PlayerPrefs.GetInt("maplandheight", 500), centeredPosition.z);
-                terrain.terrainData.heightmapResolution = mapInfo.terrainRes;
-                terrain.terrainData.size = mapInfo.size;
-                terrain.terrainData.alphamapResolution = mapInfo.splatRes;
-                terrain.terrainData.baseMapResolution = mapInfo.splatRes;
-            }
+            Debug.Log($"{mapInfo.size} | {centeredPosition}");
 
-            if (terrain.transform.position.y != -PlayerPrefs.GetInt("maplandheight", 500))
-                terrain.transform.position = new Vector3(centeredPosition.x, -PlayerPrefs.GetInt("maplandheight", 500), centeredPosition.z);
+            terrain.gameObject.SetActive(true);
+            terrain.transform.position = new Vector3(centeredPosition.x, -PlayerPrefs.GetInt("maplandheight", 500), centeredPosition.z);
 
+            terrain.terrainData.heightmapResolution = mapInfo.terrainRes;
+            terrain.terrainData.size = mapInfo.size;
+            terrain.terrainData.alphamapResolution = mapInfo.splatRes;
+            terrain.terrainData.baseMapResolution = mapInfo.splatRes;
             terrain.terrainData.SetHeights(0, 0, terrain.Equals(Land) ? mapInfo.land.heights : mapInfo.water.heights);
         }
 
+        private void SetTerrains(MapInfo mapInfo)
+        {
+	        HeightMapRes = mapInfo.terrainRes;
+	        SetupTerrain(mapInfo, Land);
+        }
         public void SetSplatMap(float[,,] array, LayerType layer, int topology = -1)
         {
             if (array == null)
@@ -150,7 +146,6 @@ namespace Carbon
                 LayerDirty = false;
             }
         }
-
         private void SetSplatMaps(MapInfo mapInfo)
         {
             SplatMapRes = mapInfo.splatRes;
@@ -159,13 +154,13 @@ namespace Carbon
             SetAlphaMap(mapInfo.alphaMap);
         }
 
+        public void RegisterSplatMapUndo(string name) => Undo.RegisterCompleteObjectUndo(Land.terrainData.alphamapTextures, name);
         public void ClearSplatMapUndo()
         {
-            foreach (var tex in Land.terrainData.alphamapTextures)
-                Undo.ClearUndo(tex);
+	        foreach (var tex in Land.terrainData.alphamapTextures)
+		        Undo.ClearUndo(tex);
         }
 
-        public void RegisterSplatMapUndo(string name) => Undo.RegisterCompleteObjectUndo(Land.terrainData.alphamapTextures, name);
         public void SetAlphaMap(bool[,] array)
         {
             if (array == null)
@@ -205,6 +200,12 @@ namespace Carbon
             Land.terrainData.SetHoles(0, 0, Alpha);
             AlphaDirty = false;
         }
+        public void SetTerrainLayers()
+        {
+	        GroundLayers = GetGroundLayers();
+	        BiomeLayers = GetBiomeLayers();
+	        AssetDatabase.SaveAssets();
+        }
 
         public TerrainLayer[] GetTerrainLayers()
         {
@@ -216,13 +217,6 @@ namespace Carbon
                 LayerType.Biome => BiomeLayers,
                 _ => GroundLayers
             };
-        }
-
-        public void SetTerrainLayers()
-        {
-            GroundLayers = GetGroundLayers();
-            BiomeLayers = GetBiomeLayers();
-            AssetDatabase.SaveAssets();
         }
 
         private TerrainLayer[] GetGroundLayers()

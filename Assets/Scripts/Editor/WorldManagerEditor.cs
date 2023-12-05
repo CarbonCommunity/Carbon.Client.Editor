@@ -15,7 +15,17 @@ public class WorldManagerEditor : Editor
     internal Vector2 _prefabScroll;
 
     public string PrintErrors => string.Join("\n", _errors);
-    private int mapLandHeight => PlayerPrefs.GetInt("maplandheight", 500);
+    private int mapLandHeight
+    {
+	    get
+	    {
+		    return PlayerPrefs.GetInt("maplandheight", 500);
+	    }
+	    set
+	    {
+		    PlayerPrefs.SetInt("maplandheight", value);
+	    }
+    }
 
     public void Error(object error)
     {
@@ -71,14 +81,23 @@ public class WorldManagerEditor : Editor
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        PlayerPrefs.SetInt("maplandheight", EditorGUILayout.IntSlider("Land Height (Water is 500)", mapLandHeight, 1000, 1));
-        worldManager.Land.gameObject.transform.position = new Vector3(worldManager.Land.gameObject.transform.position.x, -mapLandHeight, worldManager.Land.gameObject.transform.position.z);
+
+        var previousValue = mapLandHeight;
+        mapLandHeight = EditorGUILayout.IntSlider("Land Height (Water is 500)", mapLandHeight, 1000, 1);
+
+        if (mapLandHeight != previousValue)
+        {
+	        var position = worldManager.Land.gameObject.transform.position;
+
+	        position.y = -mapLandHeight;
+	        worldManager.Land.gameObject.transform.position = position;
+        }
 
         using (CarbonUtils.GUIColorChange.New(Color.red, false))
         {
             if (GUILayout.Button("Reset", GUILayout.Width(60)))
             {
-                PlayerPrefs.SetInt("maplandheight", 500);
+	            mapLandHeight = 500;
             }
         }
         GUILayout.EndHorizontal();
