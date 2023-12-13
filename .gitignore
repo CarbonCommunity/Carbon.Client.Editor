@@ -77,3 +77,5 @@ CC/
 Addons/
 AssetBundles/
 Licensed-3rd/
+Assets/Default/TerrainData.asset
+ProjectSettings/Packages/com.unity.probuilder/Settings.json
