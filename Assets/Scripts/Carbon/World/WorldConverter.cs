@@ -2,8 +2,9 @@
 
 using UnityEngine;
 using System.Threading.Tasks;
-using ProtoBuf;
 using static Carbon.WorldManager;
+using System;
+using System.Collections.Generic;
 
 namespace Carbon
 {
@@ -19,6 +20,20 @@ namespace Carbon
                     array[i, j] = BitUtility.Short2Float(terrainMap[i, j]);
             });
             return array;
+        }
+
+        public static byte[] FloatArrayToByteArray(float[,] array)
+        {
+            short[] shortArray = new short[array.GetLength(0) * array.GetLength(1)];
+            int arrayLength = array.GetLength(0);
+            Parallel.For(0, arrayLength, i =>
+            {
+                for (int j = 0; j < arrayLength; j++)
+                    shortArray[(i * arrayLength) + j] = BitUtility.Float2Short(array[i, j]);
+            });
+            byte[] byteArray = new byte[shortArray.Length * 2];
+            Buffer.BlockCopy(shortArray, 0, byteArray, 0, byteArray.Length);
+            return byteArray;
         }
 
         public static MapInfo ConvertMaps(MapInfo terrains, TerrainMap<byte> splatMap, TerrainMap<byte> biomeMap, TerrainMap<byte> alphaMap)
@@ -77,8 +92,8 @@ namespace Carbon
             var alphaMap = new TerrainMap<byte>(world.GetMap("alpha").data, 1);
 
             terrains.topology = topologyMap;
-            terrains.pathData = new PathData[0];
-            terrains.prefabData = new PrefabData[0];
+            terrains.pathData = new WorldSerialization.PathData[0];
+            terrains.prefabData = new WorldSerialization.PrefabData[0];
 
             terrains.terrainRes = heightMap.res;
             terrains.splatRes = splatMap.res;
@@ -92,6 +107,58 @@ namespace Carbon
             terrains.land.heights = heightTask.Result;
             terrains.water.heights = waterTask.Result;
             return terrains;
+        }
+
+        public static WorldSerialization TerrainToWorld(WorldSerialization oldWorld)
+        {
+            WorldSerialization world = new WorldSerialization();
+            world.world.size = (uint)Singleton.Land.terrainData.size.x;
+            world.world.prefabs = new List<WorldSerialization.PrefabData>();
+            world.world.paths = new List<WorldSerialization.PathData>();
+
+            var textureResolution = SplatMapRes;
+            byte[] splatBytes = new byte[textureResolution * textureResolution * 8];
+            var splatMap = new TerrainMap<byte>(splatBytes, 8);
+
+            var splatTask = Task.Run(() =>
+            {
+                Parallel.For(0, 8, i =>
+                {
+                    for (int j = 0; j < textureResolution; j++)
+                        for (int k = 0; k < textureResolution; k++)
+                            splatMap[i, j, k] = BitUtility.Float2Byte(Ground[j, k, i]);
+                });
+                splatBytes = splatMap.ToByteArray();
+            });
+
+            splatTask.Wait();
+
+            byte[] landHeightBytes = FloatArrayToByteArray(Singleton.Land.terrainData.GetHeights(0, 0, HeightMapRes, HeightMapRes));
+            foreach (WorldSerialization.MapData data in oldWorld.world.maps)
+            {
+                WorldSerialization.MapData map = new WorldSerialization.MapData();
+                map.name = data.name;
+
+                switch (data.name)
+                {
+                    case "height":
+                    case "terrain":
+                        map.data = landHeightBytes;
+                        break;
+
+                    case "splat":
+                        map.data = splatBytes;
+                        break;
+
+                    default:
+                        map.data = data.data;
+                        break;
+                }
+
+                world.world.maps.Add(map);
+            }
+
+            return world;
         }
     }
 }

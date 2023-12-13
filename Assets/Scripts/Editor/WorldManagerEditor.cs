@@ -17,14 +17,14 @@ public class WorldManagerEditor : Editor
     public string PrintErrors => string.Join("\n", _errors);
     private int mapLandHeight
     {
-	    get
-	    {
-		    return PlayerPrefs.GetInt("maplandheight", 500);
-	    }
-	    set
-	    {
-		    PlayerPrefs.SetInt("maplandheight", value);
-	    }
+        get
+        {
+            return PlayerPrefs.GetInt("maplandheight", 500);
+        }
+        set
+        {
+            PlayerPrefs.SetInt("maplandheight", value);
+        }
     }
 
     public void Error(object error)
@@ -87,17 +87,17 @@ public class WorldManagerEditor : Editor
 
         if (mapLandHeight != previousValue)
         {
-	        var position = worldManager.Land.gameObject.transform.position;
+            var position = worldManager.Land.gameObject.transform.position;
 
-	        position.y = -mapLandHeight;
-	        worldManager.Land.gameObject.transform.position = position;
+            position.y = -mapLandHeight;
+            worldManager.Land.gameObject.transform.position = position;
         }
 
         using (CarbonUtils.GUIColorChange.New(Color.red, false))
         {
             if (GUILayout.Button("Reset", GUILayout.Width(60)))
             {
-	            mapLandHeight = 500;
+                mapLandHeight = 500;
             }
         }
         GUILayout.EndHorizontal();
@@ -115,6 +115,17 @@ public class WorldManagerEditor : Editor
                         if (world == null || world.world == null) { Debug.LogError("Couldnt load map file."); return; }
                         PlayerPrefs.SetInt("maplandheight", mapLandHeight);
                         WorldManager.Singleton.Load(WorldConverter.WorldToTerrain(world), worldManager.filename);
+                    }
+                }
+                using (CarbonUtils.GUIColorChange.New(Color.magenta, true))
+                {
+                    if (GUILayout.Button("Save Map"))
+                    {
+                        if (string.IsNullOrEmpty(worldManager.filename)) { Debug.LogError("No map file loaded."); return; }
+                        WorldSerialization world = worldManager.LoadWorld(worldManager.filename);
+
+                        WorldManager.Singleton.GetSplatMap();
+                        WorldManager.Singleton.Save(WorldConverter.TerrainToWorld(world), worldManager.filename);
                     }
                 }
             }

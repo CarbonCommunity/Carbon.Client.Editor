@@ -1,11 +1,8 @@
 ﻿#if UNITY_EDITOR
-
 using System.Threading.Tasks;
-using ProtoBuf;
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 using UnityEngine;
+using static WorldSerialization;
 
 namespace Carbon
 {
@@ -26,6 +23,7 @@ namespace Carbon
         public static float[,,] Biome { get; private set; }
         public static bool[,] Alpha { get; private set; }
         public static bool AlphaDirty { get; set; } = true;
+        public static float[][,,] Topology { get; private set; } = new float[TerrainTopology.COUNT][,,];
         public static int SplatMapRes { get; private set; }
         public static int HeightMapRes { get; private set; }
         public static int AlphaMapRes { get => HeightMapRes - 1; }
@@ -61,6 +59,7 @@ namespace Carbon
             public TerrainMap<int> topology;
             public PrefabData[] prefabData;
             public PathData[] pathData;
+            public ModifierData modifierData;
         }
 
         public struct TerrainInfo
@@ -77,10 +76,17 @@ namespace Carbon
         }
         public void Load(MapInfo mapInfo, string path = "")
         {
-	        MapSize = mapInfo.size;
+            MapSize = mapInfo.size;
             SetTerrains(mapInfo);
             SetSplatMaps(mapInfo);
             ClearSplatMapUndo();
+        }
+
+        public void Save(WorldSerialization world, string path = "C:/Users/TravisButts/Desktop/LakesideV0.5.map")
+        {
+            string newPath = path.Split(".map")[0];
+            newPath += "_Carbon.map";
+            world.Save(newPath);
         }
 
         private void SetupTerrain(MapInfo mapInfo, Terrain terrain)
@@ -101,8 +107,13 @@ namespace Carbon
 
         private void SetTerrains(MapInfo mapInfo)
         {
-	        HeightMapRes = mapInfo.terrainRes;
-	        SetupTerrain(mapInfo, Land);
+            HeightMapRes = mapInfo.terrainRes;
+            SetupTerrain(mapInfo, Land);
+        }
+        public float[,,] GetSplatMap()
+        {
+            Ground = Land.terrainData.GetAlphamaps(0, 0, SplatMapRes, SplatMapRes);
+            return Ground;
         }
         public void SetSplatMap(float[,,] array, LayerType layer, int topology = -1)
         {
@@ -157,8 +168,8 @@ namespace Carbon
         public void RegisterSplatMapUndo(string name) => Undo.RegisterCompleteObjectUndo(Land.terrainData.alphamapTextures, name);
         public void ClearSplatMapUndo()
         {
-	        foreach (var tex in Land.terrainData.alphamapTextures)
-		        Undo.ClearUndo(tex);
+            foreach (var tex in Land.terrainData.alphamapTextures)
+                Undo.ClearUndo(tex);
         }
 
         public void SetAlphaMap(bool[,] array)
@@ -200,11 +211,21 @@ namespace Carbon
             Land.terrainData.SetHoles(0, 0, Alpha);
             AlphaDirty = false;
         }
+        public static bool[,] GetAlphaMap()
+        {
+            if (AlphaDirty)
+            {
+                Debug.Log(AlphaMapRes);
+                Alpha = Singleton.Land.terrainData.GetHoles(0, 0, AlphaMapRes, AlphaMapRes);
+                AlphaDirty = false;
+            }
+            return Alpha;
+        }
         public void SetTerrainLayers()
         {
-	        GroundLayers = GetGroundLayers();
-	        BiomeLayers = GetBiomeLayers();
-	        AssetDatabase.SaveAssets();
+            GroundLayers = GetGroundLayers();
+            BiomeLayers = GetBiomeLayers();
+            AssetDatabase.SaveAssets();
         }
 
         public TerrainLayer[] GetTerrainLayers()
