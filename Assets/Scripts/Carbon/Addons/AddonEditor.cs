@@ -145,6 +145,11 @@ public class AddonEditor : ScriptableObject
 				}
 			}
 
+			editor.Models.Prefabs.RemoveAll(x => editor.Scene.Prefabs.Contains(x));
+			editor.Scene.Prefabs.RemoveAll(x => editor.Models.Prefabs.Contains(x));
+			editor.Models.Prefabs = editor.Models.Prefabs.Distinct().ToList();
+			editor.Scene.Prefabs = editor.Scene.Prefabs.Distinct().ToList();
+
 			processedCache.Clear();
 			processedCache = null;
 
@@ -197,7 +202,10 @@ public class AddonEditor : ScriptableObject
 					}
 					catch(Exception ex)
 					{
-						Debug.LogError($"[{Name}] Clear failure for [{prefab.gameObject.name}] '{prefab.Path}' {prefab.Position} ({ex.Message})\n{ex.StackTrace}");
+						if (prefab != null)
+						{
+							Debug.LogError($"[{Name}] Clear failure for [{prefab.gameObject.name}] '{prefab.Path}' {prefab.Position} ({ex.Message})\n{ex.StackTrace}");
+						}
 					}
 				}
 			}
