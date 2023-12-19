@@ -206,6 +206,10 @@ public class AddonEditor : ScriptableObject
 						{
 							Debug.LogError($"[{Name}] Clear failure for [{prefab.gameObject.name}] '{prefab.Path}' {prefab.Position} ({ex.Message})\n{ex.StackTrace}");
 						}
+						else
+						{
+							Debug.LogError($"[{Name}] {ex.Message}\n{ex.StackTrace}");
+						}
 					}
 				}
 			}
