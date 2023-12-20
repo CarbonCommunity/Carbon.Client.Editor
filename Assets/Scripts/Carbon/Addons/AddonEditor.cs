@@ -145,11 +145,6 @@ public class AddonEditor : ScriptableObject
 				}
 			}
 
-			editor.Models.Prefabs.RemoveAll(x => editor.Scene.Prefabs.Contains(x));
-			editor.Scene.Prefabs.RemoveAll(x => editor.Models.Prefabs.Contains(x));
-			editor.Models.Prefabs = editor.Models.Prefabs.Distinct().ToList();
-			editor.Scene.Prefabs = editor.Scene.Prefabs.Distinct().ToList();
-
 			processedCache.Clear();
 			processedCache = null;
 
@@ -294,6 +289,8 @@ public class AddonEditor : ScriptableObject
 #if UNITY_EDITOR
 	public void Build()
 	{
+		Distinct();
+
 		Defines.OnPreAddonBuild();
 
 		var path = BuildPath;
@@ -490,6 +487,14 @@ public class AddonEditor : ScriptableObject
 
 		Selection.SetActiveObjectWithContext(project, this);
 		SceneManager.SetActiveScene(Defines.Singleton.gameObject.scene);
+	}
+
+	public void Distinct()
+	{
+		Models.Prefabs.RemoveAll(x => Scene.Prefabs.Contains(x));
+		Scene.Prefabs.RemoveAll(x => Models.Prefabs.Contains(x));
+		Models.Prefabs = Models.Prefabs.Distinct().ToList();
+		Scene.Prefabs = Scene.Prefabs.Distinct().ToList();
 	}
 
 	public void FetchModels()
