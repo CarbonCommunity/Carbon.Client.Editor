@@ -35,14 +35,14 @@ namespace Carbon
 
 		public bool IsConnected => Instance != null && Instance.IsConnected;
 
-		public void SendMap(string path, string prefab)
+		public void SendMap(string path)
 		{
 			if (!IsConnected)
 			{
 				return;
 			}
 
-			Instance.SendCommandAsync($"rebuildmap {path} {prefab}");
+			Instance.SendCommandAsync($"c.client.editor.addon_live_update {path}");
 		}
 
 		public void Update()
@@ -65,7 +65,7 @@ namespace Carbon
 
 			Instance.OnServerConnected += () =>
 			{
-				Instance.SendCommandAsync("echo Hello world!");
+				Instance.SendCommandAsync($"echo C4C Editor: Connected local Carbon editor (Unity) @ {Ip}:{Port}");
 			};
 			Instance.OnEntityUpdate += update =>
 			{

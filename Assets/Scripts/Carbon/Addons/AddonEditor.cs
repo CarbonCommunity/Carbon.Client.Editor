@@ -449,7 +449,7 @@ public class AddonEditor : ScriptableObject
 			return;
 		}
 
-		Carbon.Rcon.Singleton.SendMap(BuildPath, AssetDatabase.GetAssetPath(Scene.Prefabs[0]).ToLower());
+		Carbon.Rcon.Singleton.SendMap(BuildPath);
 	}
 
 	public void PrepareScene()
@@ -602,7 +602,7 @@ public class AddonEditor : ScriptableObject
 
 						if (GUILayout.Button($"Update '{(prefab == null ? "unknown" : prefab.name)}' on Server ({Carbon.Rcon.Singleton.Ip}:{Carbon.Rcon.Singleton.Port})"))
 						{
-							Carbon.Rcon.Singleton.SendMap(addon.BuildPath, AssetDatabase.GetAssetPath(prefab).ToLower());
+							Carbon.Rcon.Singleton.SendMap(addon.BuildPath);
 						}
 					}
 				}
