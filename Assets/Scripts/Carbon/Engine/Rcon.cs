@@ -63,9 +63,13 @@ namespace Carbon
 			Instance = new WebRcon(Ip, Port.ToString(), Password);
 			Instance.Start();
 
+			var version = Application.unityVersion;
+			var ip = Ip;
+			var port = Port;
+
 			Instance.OnServerConnected += () =>
 			{
-				Instance.SendCommandAsync($"echo C4C Editor: Connected local Carbon editor (Unity) @ {Ip}:{Port}");
+				Instance.SendCommandAsync($"echo C4C Editor: Connected local Carbon editor @ Unity Editor {version} @ RCon: {ip}:{port}");
 			};
 			Instance.OnEntityUpdate += update =>
 			{

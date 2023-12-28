@@ -312,7 +312,7 @@ public class AddonEditor : ScriptableObject
 			asset.Preprocess();
 
 			var bundle = new AssetBundleBuild();
-			var bundleName = asset.Name;
+			var bundleName = $"{asset.Name}_{this.name}";
 			var bundleVariant = string.IsNullOrEmpty(asset.Extension) ? _defaultVariant : asset.Extension;
 
 			bundle.assetBundleName = bundleName;
@@ -323,7 +323,7 @@ public class AddonEditor : ScriptableObject
 		}
 		void PostprocessAsset(Asset asset)
 		{
-			var bundleName = asset.Name;
+			var bundleName = $"{asset.Name}_{this.name}";
 			var bundleVariant = string.IsNullOrEmpty(asset.Extension) ? _defaultVariant : asset.Extension;
 
 			using (var memory = new MemoryStream())
