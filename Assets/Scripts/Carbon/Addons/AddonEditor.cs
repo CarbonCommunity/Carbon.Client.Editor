@@ -389,7 +389,7 @@ public class AddonEditor : ScriptableObject
 
 		var result = BuildPipeline.BuildAssetBundles(folder, bundles.ToArray(), BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
 
-		PostprocessAsset(Scene);
+		if(Scene.Prefabs.Count > 0) PostprocessAsset(Scene);
 		if(Models.Prefabs.Count > 0) PostprocessAsset(Models);
 
 		var addon = Carbon.Client.Assets.Addon.Create(new Carbon.Client.Assets.Addon.AddonInfo
@@ -443,11 +443,6 @@ public class AddonEditor : ScriptableObject
 	public void BuildAndRconTest()
 	{
 		Build();
-
-		if (Scene.Prefabs.Count == 0)
-		{
-			return;
-		}
 
 		Carbon.Rcon.Singleton.SendMap(BuildPath);
 	}
