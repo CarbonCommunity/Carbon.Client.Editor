@@ -600,7 +600,7 @@ public class AddonEditor : ScriptableObject
 
 						var prefab = addon.Scene.Prefabs.FirstOrDefault();
 
-						if (GUILayout.Button($"Update '{(prefab == null ? "unknown" : prefab.name)}' on Server ({Carbon.Rcon.Singleton.Ip}:{Carbon.Rcon.Singleton.Port})"))
+						if (GUILayout.Button($"Update on Server ({Carbon.Rcon.Singleton.Ip}:{Carbon.Rcon.Singleton.Port})"))
 						{
 							Carbon.Rcon.Singleton.SendMap(addon.BuildPath);
 						}

@@ -313,6 +313,7 @@ public class RustAsset : MonoBehaviour
 		catch (Exception ex)
 		{
 			Debug.LogError($"Failed preview for {Path} ({ex.Message})\n{ex.StackTrace}");
+			Cleanup();
 		}
 	}
 	public void Cleanup()

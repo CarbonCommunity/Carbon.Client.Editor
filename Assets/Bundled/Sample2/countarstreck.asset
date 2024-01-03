@@ -24,6 +24,4 @@ MonoBehaviour:
   Models:
     Name: models
     Extension: carbon
-    Prefabs:
-    - {fileID: 3988401145339850155, guid: b9c83eee37fd2144fb7bbb4e5c120abd, type: 3}
-    - {fileID: 7806398525737190854, guid: 19b4bbd8aa4e21047ae3aefdeff57913, type: 3}
+    Prefabs: []
