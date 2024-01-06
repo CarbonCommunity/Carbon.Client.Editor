@@ -9,21 +9,27 @@ namespace Carbon.Client
 	public partial class RustPrefab
 	{
 		[ProtoMember(1 + Protocol.VERSION)]
-		public string Path;
+		public string RustPath;
 
 		[ProtoMember(2 + Protocol.VERSION)]
-		public BaseVector Position;
+		public string ParentPath;
 
 		[ProtoMember(3 + Protocol.VERSION)]
-		public BaseVector Rotation;
+		public bool Parent;
 
 		[ProtoMember(4 + Protocol.VERSION)]
-		public BaseVector Scale;
+		public BaseVector Position;
 
 		[ProtoMember(5 + Protocol.VERSION)]
-		public EntityData Entity;
+		public BaseVector Rotation;
 
 		[ProtoMember(6 + Protocol.VERSION)]
+		public BaseVector Scale;
+
+		[ProtoMember(7 + Protocol.VERSION)]
+		public EntityData Entity;
+
+		[ProtoMember(8 + Protocol.VERSION)]
 		public ModelData Model;
 
 		[Serializable, ProtoContract]

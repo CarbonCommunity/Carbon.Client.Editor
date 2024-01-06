@@ -345,7 +345,7 @@ public class AddonEditor : ScriptableObject
 						{
 							Entity = prefab.Entity,
 							Model = prefab.Model,
-							Path = prefab.Path,
+							RustPath = prefab.Path,
 							Position = BaseVector.ToProtoVector(prefab.Position),
 							Rotation = BaseVector.ToProtoVector(prefab.Rotation),
 							Scale = BaseVector.ToProtoVector(prefab.Scale)

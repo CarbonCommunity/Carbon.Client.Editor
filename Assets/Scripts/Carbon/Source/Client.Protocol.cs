@@ -1,4 +1,4 @@
-﻿namespace Carbon.Client
+namespace Carbon.Client
 {
 	public class Protocol
 	{

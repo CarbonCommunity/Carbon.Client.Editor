@@ -32,6 +32,9 @@ namespace Carbon
 
 				File.WriteAllText(Path.Combine(Defines.Root, "Assets", "Scripts", "Carbon", "Source", "RustPrefab.cs"),
 					client.DownloadString("https://raw.githubusercontent.com/CarbonCommunity/Carbon.Common.Client/develop/src/Assets/RustPrefab.cs"));
+
+				File.WriteAllText(Path.Combine(Defines.Root, "Assets", "Scripts", "Carbon", "Source", "Client.Protocol.cs"),
+					client.DownloadString("https://raw.githubusercontent.com/CarbonCommunity/Carbon.Common/develop/src/Carbon/Components/Client.Protocol.cs"));
 			}
 		}
 #endif
