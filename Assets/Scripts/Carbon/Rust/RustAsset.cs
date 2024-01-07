@@ -5,6 +5,7 @@ using Carbon;
 using Carbon.Client;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [ExecuteAlways]
 public class RustAsset : MonoBehaviour
@@ -18,6 +19,8 @@ public class RustAsset : MonoBehaviour
 	[Header("Instance")]
 	public RustPrefab.EntityData Entity = new();
 	public RustPrefab.ModelData Model = new();
+	public bool Parent;
+	public string ParentPath;
 
 	[NonSerialized] public Vector3 Position;
 	[NonSerialized] public Quaternion Rotation;
@@ -234,6 +237,11 @@ public class RustAsset : MonoBehaviour
 
 				void ProcessShader(Material material)
 				{
+					if (material == null || material.shader == null)
+					{
+						return;
+					}
+					
 					switch (material.shader.name)
 					{
 						case "Standard":

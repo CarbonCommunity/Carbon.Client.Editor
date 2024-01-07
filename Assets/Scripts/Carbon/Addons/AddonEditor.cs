@@ -115,13 +115,17 @@ public class AddonEditor : ScriptableObject
 								editor.Models.Prefabs.Add(rustAsset.Model.PrefabReference);
 							}
 
-							var path = AssetDatabase.GetAssetPath(transform.root).ToLower();
+							var prefabPath = AssetDatabase.GetAssetPath(transform.root).ToLower();
+							var assetPath = GetRecursiveName(transform.parent ?? transform, true).ToLower();
 
-							if (!RustPrefabs.TryGetValue(path, out var prefabs))
+							if (!RustPrefabs.TryGetValue(prefabPath, out var prefabs))
 							{
-								RustPrefabs.Add(path, prefabs = new());
+								RustPrefabs.Add(prefabPath, prefabs = new());
 							}
 
+							rustAsset.Parent = rustAsset.Parent;
+							rustAsset.ParentPath = assetPath;
+							Debug.Log($"{rustAsset.Path} | {rustAsset.ParentPath}");
 							prefabs.Add(rustAsset);
 						}
 					}
@@ -269,8 +273,13 @@ public class AddonEditor : ScriptableObject
 #endif
 	}
 
-	public static string GetRecursiveName(Transform transform, string strEndName = "")
+	public static string GetRecursiveName(Transform transform, bool skipLast = false, string strEndName = "")
 	{
+		if (transform.parent == null && skipLast)
+		{
+			return string.Empty;
+		}
+
 		var text = transform.name;
 
 		if (!string.IsNullOrEmpty(strEndName))
@@ -278,9 +287,9 @@ public class AddonEditor : ScriptableObject
 			text = text + "/" + strEndName;
 		}
 
-		if (transform.parent != null)
+		if (transform.parent != null  && !skipLast)
 		{
-			text = GetRecursiveName(transform.parent, text);
+			text = GetRecursiveName(transform.parent, false, text);
 		}
 
 		return text;
