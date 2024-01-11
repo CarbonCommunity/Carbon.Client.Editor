@@ -123,7 +123,6 @@ public class AddonEditor : ScriptableObject
 								RustPrefabs.Add(prefabPath, prefabs = new());
 							}
 
-							rustAsset.Parent = rustAsset.Parent;
 							rustAsset.ParentPath = assetPath;
 							Debug.Log($"{rustAsset.Path} | {rustAsset.ParentPath}");
 							prefabs.Add(rustAsset);
@@ -355,6 +354,8 @@ public class AddonEditor : ScriptableObject
 							Entity = prefab.Entity,
 							Model = prefab.Model,
 							RustPath = prefab.Path,
+							Parent = prefab.Parent,
+							ParentPath = prefab.ParentPath,
 							Position = BaseVector.ToProtoVector(prefab.Position),
 							Rotation = BaseVector.ToProtoVector(prefab.Rotation),
 							Scale = BaseVector.ToProtoVector(prefab.Scale)

@@ -241,7 +241,7 @@ public class RustAsset : MonoBehaviour
 					{
 						return;
 					}
-					
+
 					switch (material.shader.name)
 					{
 						case "Standard":
@@ -278,6 +278,11 @@ public class RustAsset : MonoBehaviour
 				{
 					foreach (var material in renderer.sharedMaterials)
 					{
+						if (material == null)
+						{
+							continue;
+						}
+
 						if (material.name.ToLower().Contains("glass"))
 						{
 							material.shader = _standardShader;
@@ -289,6 +294,11 @@ public class RustAsset : MonoBehaviour
 				{
 					foreach (var material in renderer.sharedMaterials)
 					{
+						if (material == null)
+						{
+							continue;
+						}
+
 						if (material.name.ToLower().Contains("glass"))
 						{
 							material.shader = _standardShader;
