@@ -93,8 +93,6 @@ namespace Carbon
         {
             var centeredPosition = mapInfo.size / -2f;
 
-            Debug.Log($"{mapInfo.size} | {centeredPosition}");
-
             terrain.gameObject.SetActive(true);
             terrain.transform.position = new Vector3(centeredPosition.x, -PlayerPrefs.GetInt("maplandheight", 500), centeredPosition.z);
 

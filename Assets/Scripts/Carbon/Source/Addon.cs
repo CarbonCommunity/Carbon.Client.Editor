@@ -39,12 +39,15 @@ namespace Carbon.Client.Assets
 		public string Version { get; set; }
 
 		[ProtoMember(5 + Protocol.VERSION)]
-		public string Checksum { get; set; }
+		public string Thumbnail { get; set; }
 
 		[ProtoMember(6 + Protocol.VERSION)]
-		public Dictionary<string, Asset> Assets { get; set; } = new Dictionary<string, Asset>();
+		public string Checksum { get; set; }
 
 		[ProtoMember(7 + Protocol.VERSION)]
+		public Dictionary<string, Asset> Assets { get; set; } = new Dictionary<string, Asset>();
+
+		[ProtoMember(8 + Protocol.VERSION)]
 		public long CreationTime { get; set; } = DateTime.Now.Ticks;
 
 		public bool IsDirty { get; set; }
@@ -54,7 +57,14 @@ namespace Carbon.Client.Assets
 		{
 			return new Manifest
 			{
-				Name = Name,
+				Info = new AddonInfo
+				{
+					Name = Name,
+					Author = Author,
+					Description = Description,
+					Version = Version,
+					Thumbnail = Thumbnail
+				},
 				Assets = Assets.Select(x => x.Value.GetManifest()).ToArray(),
 				CreationTime = CreationTime
 			};
@@ -158,20 +168,38 @@ namespace Carbon.Client.Assets
 			}
 		}
 
+		[ProtoContract]
 		public class Manifest
 		{
-			public string Name { get; set; }
+			[ProtoMember(1)]
+			public AddonInfo Info { get; set; }
+
+			[ProtoMember(2)]
 			public Asset.Manifest[] Assets { get; set; }
+
+			[ProtoMember(3)]
 			public long CreationTime { get; set; }
+
 			public string CreationTimeReadable => new DateTime(CreationTime).ToString();
 		}
 
+		[ProtoContract]
 		public struct AddonInfo
 		{
+			[ProtoMember(1)]
 			public string Name;
+
+			[ProtoMember(2)]
 			public string Author;
+
+			[ProtoMember(3)]
 			public string Description;
+
+			[ProtoMember(4)]
 			public string Version;
+
+			[ProtoMember(5)]
+			public string Thumbnail;
 		}
 	}
 }
