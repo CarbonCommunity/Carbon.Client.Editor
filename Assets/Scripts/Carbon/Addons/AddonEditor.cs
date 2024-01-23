@@ -28,6 +28,7 @@ public class AddonEditor : ScriptableObject
 
 	public string Name = "New Addon";
 	public string Author = "YourName";
+    public string ThumbnailURL = "placeholder";
 
 	[TextArea(4, 10)]
 	public string Description = "Here's more information about this awesome addon I've made.";
@@ -407,7 +408,8 @@ public class AddonEditor : ScriptableObject
 			Name = Name,
 			Author = Author,
 			Description = Description,
-			Version = Version
+			Version = Version,
+			Thumbnail = ThumbnailURL
 		}, assets.ToArray());
 		addon.StoreToFile(path.Replace(".cca", string.Empty));
 		File.WriteAllText(path.Replace(".cca", ".cca.manifest"),
