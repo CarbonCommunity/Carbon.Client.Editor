@@ -28,7 +28,7 @@ public class AddonEditor : ScriptableObject
 
 	public string Name = "New Addon";
 	public string Author = "YourName";
-    public string ThumbnailURL = "placeholder";
+    public string ThumbnailURL = "";
 
 	[TextArea(4, 10)]
 	public string Description = "Here's more information about this awesome addon I've made.";
