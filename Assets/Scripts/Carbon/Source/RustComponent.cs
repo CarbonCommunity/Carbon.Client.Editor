@@ -16,6 +16,9 @@ namespace Carbon.Client
 		[ProtoMember(3 + Protocol.VERSION)]
 		public ComponentInfo Component = new ComponentInfo();
 
+		[ProtoMember(4 + Protocol.VERSION)]
+		public BehaviorInfo Behavior = new BehaviorInfo();
+
 		public enum PostProcessMode
 		{
 			Active,
@@ -54,6 +57,16 @@ namespace Carbon.Client
 
 			[ProtoMember(3 + Protocol.VERSION)]
 			public Member[] Members;
+		}
+
+		[Serializable, ProtoContract]
+		public class BehaviorInfo
+		{
+			[ProtoMember(1 + Protocol.VERSION)]
+			public float AutoDisableTimer = 0;
+
+			[ProtoMember(2 + Protocol.VERSION)]
+			public float AutoDestroyTimer = 0;
 		}
 	}
 }

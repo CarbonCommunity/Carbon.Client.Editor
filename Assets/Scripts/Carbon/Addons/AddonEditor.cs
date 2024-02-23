@@ -98,6 +98,7 @@ public class AddonEditor : ScriptableObject
 								Components.Add(path, comps = new List<RustComponent>());
 							}
 
+							Debug.Log($"{path} {component.Behavior.AutoDestroyTimer}");
 							comps.Add(component);
 						}
 					}
@@ -125,7 +126,6 @@ public class AddonEditor : ScriptableObject
 							}
 
 							rustAsset.ParentPath = assetPath;
-							Debug.Log($"{rustAsset.Path} | {rustAsset.ParentPath}");
 							prefabs.Add(rustAsset);
 						}
 					}
@@ -604,8 +604,6 @@ public class AddonEditor : ScriptableObject
 						{
 							addon.BuildAndRconTest();
 						}
-
-						var prefab = addon.Scene.Prefabs.FirstOrDefault();
 
 						if (GUILayout.Button($"Update on Server ({Carbon.Rcon.Singleton.Ip}:{Carbon.Rcon.Singleton.Port})"))
 						{
