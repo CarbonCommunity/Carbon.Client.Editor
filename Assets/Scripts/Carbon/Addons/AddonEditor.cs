@@ -137,8 +137,8 @@ public class AddonEditor : ScriptableObject
 
 						if (UnwantedMonos.Contains(component.GetType()))
 						{
-							DestroyImmediate(component);
-							i--;
+							// DestroyImmediate(component);
+							// i--;
 						}
 					}
 

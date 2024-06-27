@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: CountarStreck
   Author: Raul-Sorin Sorban
+  ThumbnailURL: 
   Description: Gaming is fun.
-  Version: 1.0.0
+  Version: 1.0.1
   Scene:
     Name: scene
     Extension: carbon
@@ -24,4 +25,5 @@ MonoBehaviour:
   Models:
     Name: models
     Extension: carbon
-    Prefabs: []
+    Prefabs:
+    - {fileID: 7565566393407699359, guid: 76e2528069faba342b266a411664e5e1, type: 3}

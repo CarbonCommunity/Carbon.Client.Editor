@@ -1,0 +1,518 @@
+# Wavefront OBJ file made by Mineways version 11.04, http://mineways.com
+# World: TestWorld
+# Terrain file name: D:\mineways\terrainExt.png
+# Color scheme: Standard
+# Wed Jun 26 01:50:21 2024
+
+# Selection location min to max: -265, 85, 171 to -262, 105, 175
+#   Non-empty selection location min to max: -265, 90, 171 to -262, 94, 175
+
+# Set render type: Wavefront OBJ absolute indices
+# Units for the model vertex data itself: meters
+
+# 120 vertices, 160 faces (320 triangles), 23 blocks, 6 billboards/bits
+# block dimensions: X=4 by Y=6 (height) by Z=5 blocks
+# Elevation shading: no
+# Lighting: no
+# Transparent water: no
+# Map grid: no
+# File type: Export individual textures to directory tex
+# Texture output RGB: YES
+# Texture output A: YES
+# Texture output RGBA: YES
+# Export separate types: no
+# Export individual blocks: YES
+#   Material per family: YES
+#   Split by block type: YES
+# Make groups objects: no
+# Custom material: YES
+# Export lesser blocks: YES
+# Fatten lesser blocks: no
+# Simplify mesh: no
+# Double all billboard faces: YES
+# Create composite overlay faces: no
+# Center model: YES
+# Use biomes: no
+# Create block faces at the borders: YES
+# Tree leaves solid: no
+# Rotate model 0.000000 degrees
+# Make Z the up direction instead of Y: YES
+# Scale model by making each block 1000 mm high
+# Data operation options:
+#   Fill air bubbles: no; Seal off entrances: no; Fill in isolated tunnels in base of model: no
+#   Connect parts sharing an edge: no; Connect corner tips: no; Weld all shared edges: no
+#   Delete floating objects: trees and parts smaller than 16 blocks: no
+#   Hollow out bottom of model, making the walls 1000 mm thick: no; Superhollow: no
+# Melt snow blocks: no
+#   Debug: show separate parts as colors: no
+#   Debug: show weld blocks in bright colors: no
+
+# Full world path: D:\Minecraft\instances\1.20.1\.minecraft\saves\TestWorld
+# Full terrainExt.png path: D:\mineways\terrainExt.png
+# Full current path: D:\mineways
+
+mtllib test.mtl
+
+o TestWorld__-265_85_171_to_-262_105_175
+vn -1 -0 0
+vn 0 -0 -1
+vn 0 1 0
+vn 1 -0 0
+vn 0 -0 1
+vn 0 -1 0
+vn -0.707107 0.707107 0
+vn -0.707107 -0.707107 0
+vn 0.707107 0.707107 0
+vn 0.707107 -0.707107 0
+vn -0.707107 -0 -0.707107
+vn 0 0.707107 -0.707107
+vn 0.707107 -0 -0.707107
+vn 0 -0.707107 -0.707107
+vn -0.707107 -0 0.707107
+vn 0 0.707107 0.707107
+vn 0.707107 -0 0.707107
+vn 0 -0.707107 0.707107
+vn -0.92388 0.382683 0
+vn -0.92388 -0.382683 0
+vn 0.92388 0.382683 0
+vn 0.92388 -0.382683 0
+vn -0.382683 0.92388 0
+vn -0.382683 -0.92388 0
+vn 0.382683 0.92388 0
+vn 0.382683 -0.92388 0
+vn -0.397273 -0 0.9177
+vn 0.397273 -0 -0.9177
+vn 0.397273 -0 0.9177
+vn -0.397273 -0 -0.9177
+vn 0 0.397273 0.9177
+vn 0 -0.397273 -0.9177
+vn 0 -0.397273 0.9177
+vn 0 0.397273 -0.9177
+vn -0.440932 -0 0.897541
+vn 0.440932 -0 -0.897541
+vn 0.440932 -0 0.897541
+vn -0.440932 -0 -0.897541
+vn 0 0.440932 0.897541
+vn 0 -0.440932 -0.897541
+vn 0 -0.440932 0.897541
+vn 0 0.440932 -0.897541
+vn -0.626602 0 0.779339
+vn 0.779338 -0 0.626604
+vn -0.779338 -0 -0.626604
+vn 0.626602 0 0.779339
+vn -0.779338 0 0.626604
+vn 0.779338 0 -0.626604
+vt 0.000000000 0.000000000
+vt 0.250000000 0.000000000
+vt 0.312500000 0.000000000
+vt 0.437500000 0.000000000
+vt 0.562500000 0.000000000
+vt 0.687500000 0.000000000
+vt 0.750000000 0.000000000
+vt 1.000000000 0.000000000
+vt 0.250000000 0.187500000
+vt 0.312500000 0.187500000
+vt 0.687500000 0.187500000
+vt 0.750000000 0.187500000
+vt 0.250000000 0.312500000
+vt 0.750000000 0.312500000
+vt 0.437500000 0.500000000
+vt 0.562500000 0.500000000
+vt 0.437500000 0.625000000
+vt 0.562500000 0.625000000
+vt 0.250000000 0.687500000
+vt 0.750000000 0.687500000
+vt 0.000000000 1.000000000
+vt 1.000000000 1.000000000
+v -0.901663 0.4375 9.59931
+v -0.901663 0.5625 9.59931
+v -0.901663 0.4375 9.59931
+v -0.901663 0.5625 9.59931
+v -0.99908 0.4375 9.52099
+v -0.99908 0.5625 9.52099
+v -0.99908 0.4375 9.52099
+v -0.99908 0.5625 9.52099
+v -0.510036 0.4375 9.11223
+v -0.510036 0.5625 9.11223
+v -0.901663 0.4375 9.59931
+v -0.901663 0.5625 9.59931
+v -0.607453 0.4375 9.0339
+v -0.607453 0.5625 9.0339
+v -0.99908 0.4375 9.52099
+v -0.99908 0.5625 9.52099
+v -0.25 0.3125 9
+v -0.25 0.6875 9
+v -0.25 0.3125 9.1875
+v -0.25 0.6875 9.1875
+v -0.75 0.3125 9
+v -0.75 0.6875 9
+v -0.75 0.3125 9.1875
+v -0.75 0.6875 9.1875
+v -0.0983372 -0.4375 9.59931
+v -0.0983372 -0.5625 9.59931
+v -0.0983372 -0.4375 9.59931
+v -0.0983372 -0.5625 9.59931
+v -0.000919819 -0.4375 9.52099
+v -0.000919819 -0.5625 9.52099
+v -0.000919819 -0.4375 9.52099
+v -0.000919819 -0.5625 9.52099
+v -0.489964 -0.4375 9.11223
+v -0.489964 -0.5625 9.11223
+v -0.0983372 -0.4375 9.59931
+v -0.0983372 -0.5625 9.59931
+v -0.392547 -0.4375 9.0339
+v -0.392547 -0.5625 9.0339
+v -0.000919819 -0.4375 9.52099
+v -0.000919819 -0.5625 9.52099
+v -0.75 -0.3125 9
+v -0.75 -0.6875 9
+v -0.75 -0.3125 9.1875
+v -0.75 -0.6875 9.1875
+v -0.25 -0.3125 9
+v -0.25 -0.6875 9
+v -0.25 -0.3125 9.1875
+v -0.25 -0.6875 9.1875
+v -2 2 8
+v -2 1 8
+v -2 1 9
+v -2 2 9
+v -1 1 8
+v -1 2 8
+v -1 2 9
+v -1 1 9
+v -2 -0 8
+v -2 -0 9
+v -1 -0 8
+v -1 -0 9
+v -2 -1 8
+v -2 -1 9
+v -1 -1 8
+v -1 -1 9
+v -2 -2 8
+v -2 -2 9
+v -1 -2 8
+v -1 -2 9
+v -2 -3 8
+v -2 -3 9
+v -1 -3 8
+v -1 -3 9
+v 0 1 8
+v 0 2 8
+v 0 2 9
+v 0 1 9
+v 0 -0 8
+v 0 -0 9
+v -1 -0 5
+v -1 -1 5
+v -1 -1 6
+v -1 -0 6
+v 0 -1 5
+v 0 -0 5
+v 0 -0 6
+v 0 -1 6
+v -1 -1 7
+v -1 -0 7
+v 0 -0 7
+v 0 -1 7
+v 0 -1 8
+v 0 -1 9
+v 0 -2 8
+v 0 -2 9
+v 0 -3 8
+v 0 -3 9
+v 1 1 8
+v 1 2 8
+v 1 2 9
+v 1 1 9
+v 1 -0 8
+v 1 -0 9
+v 1 -1 8
+v 1 -1 9
+v 1 -2 8
+v 1 -2 9
+v 1 -3 8
+v 1 -3 9
+v 2 1 8
+v 2 2 8
+v 2 2 9
+v 2 1 9
+v 2 -0 8
+v 2 -0 9
+v 2 -1 8
+v 2 -1 9
+v 2 -2 8
+v 2 -2 9
+v 2 -3 8
+v 2 -3 9
+usemtl lever
+g block_00001
+f 7/18/43 3/17/43 4/15/43 8/16/43
+f 12/18/44 11/17/44 9/4/44 10/5/44
+f 15/17/6 13/4/6 9/5/6 11/18/6
+f 16/17/45 14/4/45 13/5/45 15/18/45
+f 16/18/3 12/17/3 10/4/3 14/5/3
+usemtl cobblestone
+f 20/11/4 19/10/4 17/3/4 18/6/4
+f 18/19/2 17/13/2 21/14/2 22/20/2
+f 23/9/6 21/2/6 17/7/6 19/12/6
+f 24/10/1 22/3/1 21/6/1 23/11/1
+f 23/20/5 19/19/5 20/13/5 24/14/5
+f 24/12/3 20/9/3 18/2/3 22/7/3
+usemtl lever
+g block_00002
+f 31/18/46 27/17/46 28/15/46 32/16/46
+f 35/17/47 33/4/47 34/5/47 36/18/47
+f 35/18/3 39/17/3 37/4/3 33/5/3
+f 39/18/48 40/17/48 38/4/48 37/5/48
+f 36/17/6 34/4/6 38/5/6 40/18/6
+usemtl cobblestone
+f 43/10/1 41/3/1 42/6/1 44/11/1
+f 42/19/2 41/13/2 45/14/2 46/20/2
+f 43/12/3 47/9/3 45/2/3 41/7/3
+f 47/11/4 48/10/4 46/3/4 45/6/4
+f 47/20/5 43/19/5 44/13/5 48/14/5
+f 44/9/6 42/2/6 46/7/6 48/12/6
+usemtl grass_block_side
+g block_00003
+f 50/8/1 51/22/1 52/21/1 49/1/1
+usemtl dirt
+f 50/1/2 49/8/2 54/22/2 53/21/2
+usemtl grass_block_side
+f 54/1/3 49/8/3 52/22/3 55/21/3
+f 53/1/4 54/8/4 55/22/4 56/21/4
+usemtl grass_block_top
+f 51/8/5 56/22/5 55/21/5 52/1/5
+usemtl grass_block_side
+f 53/8/6 56/22/6 51/21/6 50/1/6
+g block_00004
+f 57/8/1 58/22/1 51/21/1 50/1/1
+usemtl dirt
+f 57/22/2 50/21/2 53/1/2 59/8/2
+usemtl grass_block_side
+f 53/1/3 50/8/3 51/22/3 56/21/3
+f 59/1/4 53/8/4 56/22/4 60/21/4
+usemtl grass_block_top
+f 58/21/5 60/1/5 56/8/5 51/22/5
+usemtl grass_block_side
+f 59/8/6 60/22/6 58/21/6 57/1/6
+g block_00005
+f 61/8/1 62/22/1 58/21/1 57/1/1
+usemtl dirt
+f 61/22/2 57/21/2 59/1/2 63/8/2
+usemtl grass_block_side
+f 59/1/3 57/8/3 58/22/3 60/21/3
+f 63/1/4 59/8/4 60/22/4 64/21/4
+usemtl grass_block_top
+f 62/21/5 64/1/5 60/8/5 58/22/5
+usemtl grass_block_side
+f 63/8/6 64/22/6 62/21/6 61/1/6
+g block_00006
+f 65/8/1 66/22/1 62/21/1 61/1/1
+usemtl dirt
+f 65/21/2 61/1/2 63/8/2 67/22/2
+usemtl grass_block_side
+f 63/1/3 61/8/3 62/22/3 64/21/3
+f 67/1/4 63/8/4 64/22/4 68/21/4
+usemtl grass_block_top
+f 66/1/5 68/8/5 64/22/5 62/21/5
+usemtl grass_block_side
+f 67/8/6 68/22/6 66/21/6 65/1/6
+g block_00007
+f 69/8/1 70/22/1 66/21/1 65/1/1
+usemtl dirt
+f 69/21/2 65/1/2 67/8/2 71/22/2
+usemtl grass_block_side
+f 67/1/3 65/8/3 66/22/3 68/21/3
+f 71/1/4 67/8/4 68/22/4 72/21/4
+usemtl grass_block_top
+f 70/1/5 72/8/5 68/22/5 66/21/5
+usemtl grass_block_side
+f 71/8/6 72/22/6 70/21/6 69/1/6
+g block_00008
+f 53/8/1 56/22/1 55/21/1 54/1/1
+usemtl dirt
+f 53/21/2 54/1/2 74/8/2 73/22/2
+usemtl grass_block_side
+f 74/1/3 54/8/3 55/22/3 75/21/3
+f 73/1/4 74/8/4 75/22/4 76/21/4
+usemtl grass_block_top
+f 56/1/5 76/8/5 75/22/5 55/21/5
+usemtl grass_block_side
+f 73/8/6 76/22/6 56/21/6 53/1/6
+g block_00009
+f 59/8/1 60/22/1 56/21/1 53/1/1
+usemtl dirt
+f 59/8/2 53/22/2 73/21/2 77/1/2
+usemtl grass_block_side
+f 73/1/3 53/8/3 56/22/3 76/21/3
+f 77/1/4 73/8/4 76/22/4 78/21/4
+usemtl grass_block_top
+f 60/22/5 78/21/5 76/1/5 56/8/5
+usemtl grass_block_side
+f 77/8/6 78/22/6 60/21/6 59/1/6
+usemtl dirt
+g block_00010
+f 80/8/1 81/22/1 82/21/1 79/1/1
+f 80/21/2 79/1/2 84/8/2 83/22/2
+f 84/1/3 79/8/3 82/22/3 85/21/3
+f 83/1/4 84/8/4 85/22/4 86/21/4
+f 81/1/5 86/8/5 85/22/5 82/21/5
+f 83/8/6 86/22/6 81/21/6 80/1/6
+g block_00011
+f 81/8/1 87/22/1 88/21/1 82/1/1
+f 81/21/2 82/1/2 85/8/2 86/22/2
+f 85/1/3 82/8/3 88/22/3 89/21/3
+f 86/1/4 85/8/4 89/22/4 90/21/4
+f 87/1/5 90/8/5 89/22/5 88/21/5
+f 86/8/6 90/22/6 87/21/6 81/1/6
+g block_00012
+f 87/8/1 63/22/1 59/21/1 88/1/1
+f 87/21/2 88/1/2 89/8/2 90/22/2
+f 89/1/3 88/8/3 59/22/3 77/21/3
+f 90/1/4 89/8/4 77/22/4 91/21/4
+f 63/1/5 91/8/5 77/22/5 59/21/5
+f 90/8/6 91/22/6 63/21/6 87/1/6
+usemtl grass_block_side
+g block_00013
+f 63/8/1 64/22/1 60/21/1 59/1/1
+usemtl dirt
+f 63/21/2 59/1/2 77/8/2 91/22/2
+usemtl grass_block_side
+f 77/1/3 59/8/3 60/22/3 78/21/3
+f 91/1/4 77/8/4 78/22/4 92/21/4
+usemtl grass_block_top
+f 64/1/5 92/8/5 78/22/5 60/21/5
+usemtl grass_block_side
+f 91/8/6 92/22/6 64/21/6 63/1/6
+g block_00014
+f 67/8/1 68/22/1 64/21/1 63/1/1
+usemtl dirt
+f 67/8/2 63/22/2 91/21/2 93/1/2
+usemtl grass_block_side
+f 91/1/3 63/8/3 64/22/3 92/21/3
+f 93/1/4 91/8/4 92/22/4 94/21/4
+usemtl grass_block_top
+f 68/22/5 94/21/5 92/1/5 64/8/5
+usemtl grass_block_side
+f 93/8/6 94/22/6 68/21/6 67/1/6
+g block_00015
+f 71/8/1 72/22/1 68/21/1 67/1/1
+usemtl dirt
+f 71/1/2 67/8/2 93/22/2 95/21/2
+usemtl grass_block_side
+f 93/1/3 67/8/3 68/22/3 94/21/3
+f 95/1/4 93/8/4 94/22/4 96/21/4
+usemtl grass_block_top
+f 72/8/5 96/22/5 94/21/5 68/1/5
+usemtl grass_block_side
+f 95/8/6 96/22/6 72/21/6 71/1/6
+g block_00016
+f 73/8/1 76/22/1 75/21/1 74/1/1
+usemtl dirt
+f 73/21/2 74/1/2 98/8/2 97/22/2
+usemtl grass_block_side
+f 98/1/3 74/8/3 75/22/3 99/21/3
+f 97/1/4 98/8/4 99/22/4 100/21/4
+usemtl grass_block_top
+f 76/1/5 100/8/5 99/22/5 75/21/5
+usemtl grass_block_side
+f 97/8/6 100/22/6 76/21/6 73/1/6
+g block_00017
+f 77/8/1 78/22/1 76/21/1 73/1/1
+usemtl dirt
+f 77/8/2 73/22/2 97/21/2 101/1/2
+usemtl grass_block_side
+f 97/1/3 73/8/3 76/22/3 100/21/3
+f 101/1/4 97/8/4 100/22/4 102/21/4
+usemtl grass_block_top
+f 78/22/5 102/21/5 100/1/5 76/8/5
+usemtl grass_block_side
+f 101/8/6 102/22/6 78/21/6 77/1/6
+g block_00018
+f 91/8/1 92/22/1 78/21/1 77/1/1
+usemtl dirt
+f 91/21/2 77/1/2 101/8/2 103/22/2
+usemtl grass_block_side
+f 101/1/3 77/8/3 78/22/3 102/21/3
+f 103/1/4 101/8/4 102/22/4 104/21/4
+usemtl grass_block_top
+f 92/1/5 104/8/5 102/22/5 78/21/5
+usemtl grass_block_side
+f 103/8/6 104/22/6 92/21/6 91/1/6
+g block_00019
+f 93/8/1 94/22/1 92/21/1 91/1/1
+usemtl dirt
+f 93/8/2 91/22/2 103/21/2 105/1/2
+usemtl grass_block_side
+f 103/1/3 91/8/3 92/22/3 104/21/3
+f 105/1/4 103/8/4 104/22/4 106/21/4
+usemtl grass_block_top
+f 94/22/5 106/21/5 104/1/5 92/8/5
+usemtl grass_block_side
+f 105/8/6 106/22/6 94/21/6 93/1/6
+g block_00020
+f 95/8/1 96/22/1 94/21/1 93/1/1
+usemtl dirt
+f 95/22/2 93/21/2 105/1/2 107/8/2
+usemtl grass_block_side
+f 105/1/3 93/8/3 94/22/3 106/21/3
+f 107/1/4 105/8/4 106/22/4 108/21/4
+usemtl grass_block_top
+f 96/21/5 108/1/5 106/8/5 94/22/5
+usemtl grass_block_side
+f 107/8/6 108/22/6 96/21/6 95/1/6
+g block_00021
+f 97/8/1 100/22/1 99/21/1 98/1/1
+usemtl dirt
+f 97/8/2 98/22/2 110/21/2 109/1/2
+usemtl grass_block_side
+f 110/1/3 98/8/3 99/22/3 111/21/3
+f 109/1/4 110/8/4 111/22/4 112/21/4
+usemtl grass_block_top
+f 100/22/5 112/21/5 111/1/5 99/8/5
+usemtl grass_block_side
+f 109/8/6 112/22/6 100/21/6 97/1/6
+g block_00022
+f 101/8/1 102/22/1 100/21/1 97/1/1
+usemtl dirt
+f 101/8/2 97/22/2 109/21/2 113/1/2
+usemtl grass_block_side
+f 109/1/3 97/8/3 100/22/3 112/21/3
+f 113/1/4 109/8/4 112/22/4 114/21/4
+usemtl grass_block_top
+f 102/22/5 114/21/5 112/1/5 100/8/5
+usemtl grass_block_side
+f 113/8/6 114/22/6 102/21/6 101/1/6
+g block_00023
+f 103/8/1 104/22/1 102/21/1 101/1/1
+usemtl dirt
+f 103/8/2 101/22/2 113/21/2 115/1/2
+usemtl grass_block_side
+f 113/1/3 101/8/3 102/22/3 114/21/3
+f 115/1/4 113/8/4 114/22/4 116/21/4
+usemtl grass_block_top
+f 104/22/5 116/21/5 114/1/5 102/8/5
+usemtl grass_block_side
+f 115/8/6 116/22/6 104/21/6 103/1/6
+g block_00024
+f 105/8/1 106/22/1 104/21/1 103/1/1
+usemtl dirt
+f 105/22/2 103/21/2 115/1/2 117/8/2
+usemtl grass_block_side
+f 115/1/3 103/8/3 104/22/3 116/21/3
+f 117/1/4 115/8/4 116/22/4 118/21/4
+usemtl grass_block_top
+f 106/21/5 118/1/5 116/8/5 104/22/5
+usemtl grass_block_side
+f 117/8/6 118/22/6 106/21/6 105/1/6
+g block_00025
+f 107/8/1 108/22/1 106/21/1 105/1/1
+usemtl dirt
+f 107/21/2 105/1/2 117/8/2 119/22/2
+usemtl grass_block_side
+f 117/1/3 105/8/3 106/22/3 118/21/3
+f 119/1/4 117/8/4 118/22/4 120/21/4
+usemtl grass_block_top
+f 108/1/5 120/8/5 118/22/5 106/21/5
+usemtl grass_block_side
+f 119/8/6 120/22/6 108/21/6 107/1/6

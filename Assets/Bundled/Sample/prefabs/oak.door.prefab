@@ -44,8 +44,8 @@ Animation:
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: 4d4d4a8c0e65c0e4c90d85795dc46b65, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: c119cf85b04fe4643b9ef457fcf52888, type: 2}
   - {fileID: 7400000, guid: 4d4d4a8c0e65c0e4c90d85795dc46b65, type: 2}
+  - {fileID: 7400000, guid: c119cf85b04fe4643b9ef457fcf52888, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -223,7 +223,7 @@ Transform:
   - {fileID: 6677533757642156317}
   m_Father: {fileID: 5137355972851164226}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &6332216374940726183
 GameObject:
   m_ObjectHideFlags: 0
