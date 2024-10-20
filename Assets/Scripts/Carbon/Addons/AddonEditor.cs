@@ -6,8 +6,6 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Carbon.Client;
-using ProtoBuf;
-using Carbon.Client.Packets;
 
 #if UNITY_EDITOR
 using Carbon;
@@ -49,8 +47,8 @@ public class AddonEditor : ScriptableObject
 		public string Extension;
 		public List<GameObject> Prefabs;
 
-		public Dictionary<string, List<RustComponent>> Components = new Dictionary<string, List<RustComponent>>();
 		public Dictionary<string, List<RustAsset>> RustPrefabs = new Dictionary<string, List<RustAsset>>();
+		public Dictionary<string, List<RustComponent>> Components = new Dictionary<string, List<RustComponent>>();
 
 #if UNITY_EDITOR
 		public void Preprocess()
@@ -107,14 +105,14 @@ public class AddonEditor : ScriptableObject
 					{
 						if (rustAsset != null)
 						{
-							if (rustAsset.Model.PrefabReference != null)
+							if (rustAsset.Model.prefabReference != null)
 							{
-								Recursive(rustAsset.Model.PrefabReference.transform);
+								Recursive(rustAsset.Model.prefabReference.transform);
 							}
 
-							if (rustAsset.Model.PrefabReference != null && !editor.Models.Prefabs.Contains(rustAsset.Model.PrefabReference))
+							if (rustAsset.Model.prefabReference != null && !editor.Models.Prefabs.Contains(rustAsset.Model.prefabReference))
 							{
-								editor.Models.Prefabs.Add(rustAsset.Model.PrefabReference);
+								editor.Models.Prefabs.Add(rustAsset.Model.prefabReference);
 							}
 
 							var prefabPath = AssetDatabase.GetAssetPath(transform.root).ToLower();
@@ -131,9 +129,15 @@ public class AddonEditor : ScriptableObject
 					}
 
 					var monoBehaviours = transform.GetComponents<MonoBehaviour>();
+
 					for (int i = 0; i < monoBehaviours.Length; i++)
 					{
 						var component = monoBehaviours[i];
+
+						if (component == null)
+						{
+							continue;
+						}
 
 						if (UnwantedMonos.Contains(component.GetType()))
 						{
@@ -335,58 +339,55 @@ public class AddonEditor : ScriptableObject
 			var bundleName = $"{asset.Name}_{this.name}";
 			var bundleVariant = string.IsNullOrEmpty(asset.Extension) ? _defaultVariant : asset.Extension;
 
-			using (var memory = new MemoryStream())
+			var rustPrefabs = new Dictionary<string, List<RustPrefab>>();
+
+			foreach (var rustPrefab in asset.RustPrefabs)
 			{
-				var rustPrefabs = new Dictionary<string, List<RustPrefab>>();
+				var prefabName = rustPrefab.Key;
 
-				foreach (var rustPrefab in asset.RustPrefabs)
+				if (!rustPrefabs.TryGetValue(prefabName, out var prefabs))
 				{
-					var prefabName = rustPrefab.Key;
-
-					if (!rustPrefabs.TryGetValue(prefabName, out var prefabs))
-					{
-						rustPrefabs.Add(prefabName, prefabs = new());
-					}
-
-					foreach (var prefab in rustPrefab.Value)
-					{
-						prefabs.Add(new RustPrefab
-						{
-							Entity = prefab.Entity,
-							Model = prefab.Model,
-							RustPath = prefab.Path,
-							Parent = prefab.Parent,
-							ParentPath = prefab.ParentPath,
-							Position = BaseVector.ToProtoVector(prefab.Position),
-							Rotation = BaseVector.ToProtoVector(prefab.Rotation),
-							Scale = BaseVector.ToProtoVector(prefab.Scale)
-						});
-					}
+					rustPrefabs.Add(prefabName, prefabs = new());
 				}
 
-				Serializer.Serialize(memory, new RustBundle
+				foreach (var prefab in rustPrefab.Value)
 				{
-					Components = asset.Components,
-					RustPrefabs = rustPrefabs
+					prefabs.Add(new RustPrefab
+					{
+						entity = prefab.Entity,
+						model = prefab.Model,
+						rustPath = prefab.Path,
+						parent = prefab.Parent,
+						parentPath = prefab.ParentPath,
+						position = prefab.Position,
+						rotation = prefab.Rotation.eulerAngles,
+						scale = prefab.Scale
+					});
+				}
+			}
+
+			var data = new RustBundle
+			{
+				rustPrefabs = rustPrefabs,
+				components = asset.Components
+			}.Serialize();
+
+			var bundlePath = Path.Combine(folder, $"{bundleName}.{bundleVariant}");
+
+			if (!File.Exists(bundlePath))
+			{
+				Debug.LogError($"Couldn't process asset! Not found: {bundlePath}");
+			}
+			else
+			{
+				assets.Add(new Carbon.Client.Assets.Asset()
+				{
+					name = asset.Name,
+					data = File.ReadAllBytes(bundlePath),
+					additionalData = data
 				});
 
-				var bundlePath = Path.Combine(folder, $"{bundleName}.{bundleVariant}");
-
-				if (!File.Exists(bundlePath))
-				{
-					Debug.LogError($"Couldn't process asset! Not found: {bundlePath}");
-				}
-				else
-				{
-					assets.Add(new Carbon.Client.Assets.Asset()
-					{
-						Name = asset.Name,
-						Data = File.ReadAllBytes(bundlePath),
-						AdditionalData = memory.ToArray()
-					});
-
-					asset.Postprocess();
-				}
+				asset.Postprocess();
 			}
 		}
 
@@ -405,11 +406,11 @@ public class AddonEditor : ScriptableObject
 
 		var addon = Carbon.Client.Assets.Addon.Create(new Carbon.Client.Assets.Addon.AddonInfo
 		{
-			Name = Name,
-			Author = Author,
-			Description = Description,
-			Version = Version,
-			Thumbnail = ThumbnailURL
+			name = Name,
+			author = Author,
+			description = Description,
+			version = Version,
+			thumbnail = ThumbnailURL
 		}, assets.ToArray());
 		addon.StoreToFile(path.Replace(".cca", string.Empty));
 		File.WriteAllText(path.Replace(".cca", ".cca.manifest"),

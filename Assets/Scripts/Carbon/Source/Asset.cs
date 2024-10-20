@@ -1,6 +1,6 @@
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community
+ * Copyright (c) 2022-2024 Carbon Community
  * All rights reserved.
  *
  */
@@ -12,42 +12,35 @@
  */
 
 using Newtonsoft.Json;
-using ProtoBuf;
 
 namespace Carbon.Client.Assets
 {
-	[ProtoContract]
 	public partial class Asset
 	{
-		[ProtoMember(1 + Protocol.VERSION)]
-		public string Name { get; set; }
-
-		[ProtoMember(2 + Protocol.VERSION)]
-		public byte[] Data { get; set; }
-
-		[ProtoMember(3 + Protocol.VERSION)]
-		public byte[] AdditionalData { get; set; }
+		public string name;
+		public byte[] data;
+		public byte[] additionalData;
 
 		public Manifest GetManifest()
 		{
 			return new Manifest
 			{
-				Name = Name,
-				BufferLength = Data.Length,
+				name = name,
+				bufferLength = data.Length,
 			};
 		}
 
-		public RustBundle CachedRustBundle { get; set; }
-		public UnityEngine.AssetBundle CachedBundle { get; set; }
+		public RustBundle cachedRustBundle;
+		public UnityEngine.AssetBundle cachedBundle;
 
-		public bool IsUnpacked => CachedBundle != null;
+		public bool isUnpacked => cachedBundle != null;
 
 		public static Asset CreateFrom(string name, byte[] data)
 		{
 			return new Asset
 			{
-				Name = name,
-				Data = data
+				name = name,
+				data = data
 			};
 		}
 		public static Asset CreateFromFile(string path)
@@ -62,33 +55,27 @@ namespace Carbon.Client.Assets
 
 		public void ClearData()
 		{
-			if (Data != null)
+			if (data != null)
 			{
-				System.Array.Clear(Data, 0, Data.Length);
-				Data = null;
+				System.Array.Clear(data, 0, data.Length);
+				data = null;
 			}
 		}
 
 		public void Dispose()
 		{
-			if (!IsUnpacked)
+			if (!isUnpacked)
 			{
 				return;
 			}
 
-			CachedBundle.Unload(true);
-
-			ClearData();
+			cachedBundle.Unload(true);
 		}
 
-		[ProtoContract]
 		public class Manifest
 		{
-			[ProtoMember(1)]
-			public string Name { get; set; }
-
-			[ProtoMember(2)]
-			public int BufferLength { get; set; }
+			public string name;
+			public int bufferLength;
 		}
 	}
 }

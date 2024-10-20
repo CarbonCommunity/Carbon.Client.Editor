@@ -1,22 +1,13 @@
-using System;
-using ProtoBuf;
+﻿using System;
 using UnityEngine;
 
 namespace Carbon.Client
 {
-	[ProtoContract]
 	public partial class RustComponent : MonoBehaviour
 	{
-		[ProtoMember(1 + Protocol.VERSION)]
 		public PostProcessMode Server = PostProcessMode.Active;
-
-		[ProtoMember(2 + Protocol.VERSION)]
 		public PostProcessMode Client = PostProcessMode.Active;
-
-		[ProtoMember(3 + Protocol.VERSION)]
 		public ComponentInfo Component = new ComponentInfo();
-
-		[ProtoMember(4 + Protocol.VERSION)]
 		public BehaviorInfo Behavior = new BehaviorInfo();
 
 		public enum PostProcessMode
@@ -26,46 +17,32 @@ namespace Carbon.Client
 			Destroyed
 		}
 
-		[Serializable, ProtoContract]
+		[Serializable]
 		public class Member
 		{
-			[ProtoMember(1 + Protocol.VERSION)]
 			public string Name;
-
-			[ProtoMember(2 + Protocol.VERSION)]
 			public string Value;
 		}
 
-		[Serializable, ProtoContract]
+		[Serializable]
 		public class Platform
 		{
-			[ProtoMember(1 + Protocol.VERSION)]
 			public bool Server;
-
-			[ProtoMember(2 + Protocol.VERSION)]
 			public bool Client;
 		}
 
-		[Serializable, ProtoContract]
+		[Serializable]
 		public class ComponentInfo
 		{
-			[ProtoMember(1 + Protocol.VERSION)]
-			public Platform CreateOn = new Platform();
-
-			[ProtoMember(2 + Protocol.VERSION)]
+			public Platform CreateOn = new();
 			public string Type;
-
-			[ProtoMember(3 + Protocol.VERSION)]
 			public Member[] Members;
 		}
 
-		[Serializable, ProtoContract]
+		[Serializable]
 		public class BehaviorInfo
 		{
-			[ProtoMember(1 + Protocol.VERSION)]
 			public float AutoDisableTimer = 0;
-
-			[ProtoMember(2 + Protocol.VERSION)]
 			public float AutoDestroyTimer = 0;
 		}
 	}

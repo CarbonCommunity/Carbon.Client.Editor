@@ -56,9 +56,9 @@ public class RustAsset : MonoBehaviour
 
 #if UNITY_EDITOR
 
-		if (Model.PrefabReference != null)
+		if (Model.prefabReference != null)
 		{
-			Model.PrefabPath = AssetDatabase.GetAssetPath(Model.PrefabReference).ToLower();
+			Model.PrefabPath = AssetDatabase.GetAssetPath(Model.prefabReference).ToLower();
 		}
 
 #endif
@@ -87,12 +87,12 @@ public class RustAsset : MonoBehaviour
 	{
 		foreach (var model in assets)
 		{
-			if (model.Model.PrefabReference == null)
+			if (model.Model.prefabReference == null)
 			{
 				continue;
 			}
 
-			var newModel = Instantiate(model.Model.PrefabReference).transform;
+			var newModel = Instantiate(model.Model.prefabReference).transform;
 			newModel.SetParent(model.transform, false);
 			newModel.localPosition = Vector3.zero;
 			newModel.localRotation = Quaternion.identity;
@@ -173,7 +173,7 @@ public class RustAsset : MonoBehaviour
 		{
 			return;
 		}
-
+		
 		_instance.SetActive(gameObject.activeInHierarchy);
 
 		if (HasChanged(out var pos, out var rot, out var scale))
@@ -185,7 +185,7 @@ public class RustAsset : MonoBehaviour
 
 	public void Preview()
 	{
-		if (Model.PrefabReference != null)
+		if (Model.prefabReference != null)
 		{
 			Cleanup();
 			return;

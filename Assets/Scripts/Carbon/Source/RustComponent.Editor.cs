@@ -1,5 +1,4 @@
-﻿using ProtoBuf;
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
 using UnityEditor;
 #endif
 using UnityEngine;
@@ -8,7 +7,7 @@ namespace Carbon.Client
 {
 	public partial class RustComponent
 	{
-		[ProtoIgnore, Header("Debugger")]
+		[Header("Debugger")]
 		public ColorSwitch ColorSwitch;
 
 		[Header("Tools")]

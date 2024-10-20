@@ -1,55 +1,28 @@
 using System;
-using Carbon.Client.Packets;
-using ProtoBuf;
 using UnityEngine;
 
 namespace Carbon.Client
 {
-	[ProtoContract]
+	[Serializable]
 	public partial class RustPrefab
 	{
-		[ProtoMember(1 + Protocol.VERSION)]
-		public string RustPath;
+		public string rustPath;
+		public string parentPath;
+		public bool parent;
+		public Vector3 position;
+		public Vector3 rotation;
+		public Vector3 scale;
+		public EntityData entity;
+		public ModelData model;
 
-		[ProtoMember(2 + Protocol.VERSION)]
-		public string ParentPath;
-
-		[ProtoMember(3 + Protocol.VERSION)]
-		public bool Parent;
-
-		[ProtoMember(4 + Protocol.VERSION)]
-		public BaseVector Position;
-
-		[ProtoMember(5 + Protocol.VERSION)]
-		public BaseVector Rotation;
-
-		[ProtoMember(6 + Protocol.VERSION)]
-		public BaseVector Scale;
-
-		[ProtoMember(7 + Protocol.VERSION)]
-		public EntityData Entity;
-
-		[ProtoMember(8 + Protocol.VERSION)]
-		public ModelData Model;
-
-		[Serializable, ProtoContract]
+		[Serializable]
 		public class EntityData
 		{
-			[ProtoMember(1 + Protocol.VERSION)]
-			public bool EnforcePrefab;
-
-			[ProtoMember(2 + Protocol.VERSION)]
-			public EntityFlags Flags;
-
-			[ProtoMember(3 + Protocol.VERSION)]
-			public ulong Skin;
-
-#if UNITY_EDITOR
-			[Header("Entity Types")]
-#endif
-
-			[ProtoMember(4 + Protocol.VERSION)]
-			public CombatEntity Combat;
+			public bool enforcePrefab;
+			public EntityFlags flags;
+			public ulong skin;
+			public float health = -1;
+			public float maxHealth = -1;
 
 			[Flags]
 			public enum EntityFlags
@@ -81,55 +54,21 @@ namespace Carbon.Client
 				Protected = 16777216,
 				Transferring = 33554432
 			}
-
-			[Serializable, ProtoContract]
-			public class CombatEntity
-			{
-				[ProtoMember(1 + Protocol.VERSION)]
-				public float Health = -1;
-
-				[ProtoMember(2 + Protocol.VERSION)]
-				public float MaxHealth = -1;
-			}
 		}
 
-		[Serializable, ProtoContract]
+		[Serializable]
 		public class ModelData
 		{
 			#region Editor
 
-			public GameObject PrefabReference;
+			public GameObject prefabReference;
 
 			#endregion
 
-			#if UNITY_EDITOR
+#if UNITY_EDITOR
 			[HideInInspector]
-			#endif
-			[ProtoMember(1 + Protocol.VERSION)]
+#endif
 			public string PrefabPath;
-
-#if UNITY_EDITOR
-			[Header("Animation")]
-#endif
-
-			[ProtoMember(2 + Protocol.VERSION)]
-			public bool NetworkAnimation = true;
-
-#if UNITY_EDITOR
-			[Tooltip("When this is enabled, the server will occasionally send a network packet to synchronize the animation time, speed and clip, making sure playback is consistent.")]
-#endif
-			[ProtoMember(3 + Protocol.VERSION)]
-			public bool SyncAnimation = false;
-
-#if UNITY_EDITOR
-			[Header("Collision")]
-#endif
-
-			[ProtoMember(4 + Protocol.VERSION)]
-			public bool EntitySolidCollision = false;
-
-			[ProtoMember(5 + Protocol.VERSION)]
-			public bool EntityTriggerCollision = false;
 		}
 	}
 }

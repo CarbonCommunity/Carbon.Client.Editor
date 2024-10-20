@@ -1,6 +1,6 @@
 /*
  *
- * Copyright (c) 2022-2023 Carbon Community
+ * Copyright (c) 2022-2024 Carbon Community
  * All rights reserved.
  *
  */
@@ -22,39 +22,23 @@ using System.Linq;
 
 namespace Carbon.Client.Assets
 {
-	[ProtoContract]
 	public partial class Addon : IStore<Addon, Asset>, IDisposable
 	{
 		public const string EXTENSION = ".cca";
 
-		[ProtoMember(1 + Protocol.VERSION)]
-		public string Name { get; set; }
+		public string name;
+		public string author;
+		public string description;
+		public string version;
+		public string thumbnail;
+		public string checksum;
+		public Dictionary<string, Asset> assets = new Dictionary<string, Asset>();
+		public long creationTime = DateTime.Now.Ticks;
 
-		[ProtoMember(2 + Protocol.VERSION)]
-		public string Author { get; set; }
+		public string url;
 
-		[ProtoMember(3 + Protocol.VERSION)]
-		public string Description { get; set; }
-
-		[ProtoMember(4 + Protocol.VERSION)]
-		public string Version { get; set; }
-
-		[ProtoMember(5 + Protocol.VERSION)]
-		public string Thumbnail { get; set; }
-
-		[ProtoMember(6 + Protocol.VERSION)]
-		public string Checksum { get; set; }
-
-		[ProtoMember(7 + Protocol.VERSION)]
-		public Dictionary<string, Asset> Assets { get; set; } = new Dictionary<string, Asset>();
-
-		[ProtoMember(8 + Protocol.VERSION)]
-		public long CreationTime { get; set; } = DateTime.Now.Ticks;
-
-		public string Url { get; set; }
-
-		public bool IsDirty { get; set; }
-		public byte[] Buffer { get; set; }
+		public bool isDirty;
+		public byte[] buffer;
 
 		public Manifest GetManifest()
 		{
@@ -62,90 +46,122 @@ namespace Carbon.Client.Assets
 
 			return new Manifest
 			{
-				Info = new AddonInfo
+				info = new AddonInfo
 				{
-					Name = Name,
-					Author = Author,
-					Description = Description,
-					Version = Version,
-					Thumbnail = Thumbnail
+					name = name,
+					author = author,
+					description = description,
+					version = version,
+					thumbnail = thumbnail
 				},
-				Assets = Assets.Select(x => x.Value.GetManifest()).ToArray(),
-				CreationTime = CreationTime,
-				Url = Url,
-				Checksum = GetChecksum()
+				assets = assets.Select(x => x.Value.GetManifest()).ToArray(),
+				creationTime = creationTime,
+				url = url,
+				checksum = checksum
 			};
-		}
-
-		public static byte[] Compress(byte[] buffer)
-		{
-			using MemoryStream memoryStream = new MemoryStream();
-			using GZipStream gzipStream = new GZipStream(memoryStream, CompressionMode.Compress);
-			gzipStream.Write(buffer, 0, buffer.Length);
-			gzipStream.Close();
-			return memoryStream.ToArray();
-		}
-
-		public static byte[] Decompress(byte[] buffer)
-		{
-			using MemoryStream memoryStream = new MemoryStream(buffer);
-			using GZipStream gzipStream = new GZipStream(memoryStream, CompressionMode.Decompress);
-			using MemoryStream decompressedStream = new MemoryStream();
-			gzipStream.CopyTo(decompressedStream);
-			return decompressedStream.ToArray();
 		}
 
 		public static Addon Create(AddonInfo info, params Asset[] assets)
 		{
 			var addon = new Addon
 			{
-				Name = info.Name,
-				Author = info.Author,
-				Description = info.Description,
-				Version = info.Version,
+				name = info.name,
+				author = info.author,
+				description = info.description,
+				version = info.version,
+				thumbnail = info.thumbnail
 			};
 
 			foreach (var asset in assets)
 			{
-				addon.Assets.Add(asset.Name, asset);
+				addon.assets.Add(asset.name, asset);
 			}
 
 			addon.MarkDirty();
-			addon.Checksum = addon.GetChecksum();
-
 			return addon;
 		}
-		public static Addon ImportFromBuffer(byte[] buffer)
-		{
-			buffer = Decompress(buffer);
-
-			var addon = Serializer.Deserialize<Addon>(new ReadOnlySpan<byte>(buffer, 0, buffer.Length));
-			addon.MarkDirty();
-			return addon;
-		}
-
 		public static Addon ImportFromFile(string path)
 		{
 			var data = File.ReadAllBytes(path);
-			data = Decompress(data);
+			var result = Deserialize(data);
 
-			var result = ImportFromBuffer(data);
 			Array.Clear(data, 0, data.Length);
 			data = null;
 			return result;
 		}
-
-		public byte[] Store()
+		public static Addon Deserialize(byte[] buffer)
 		{
-			using var stream = new MemoryStream();
-			Serializer.Serialize(stream, this);
-			return Compress(stream.ToArray());
+			var addon = new Addon();
+
+			using var memoryStream = new MemoryStream(buffer);
+			using var gzipStream = new GZipStream(memoryStream, CompressionMode.Decompress);
+			using var reader = new BinaryReader(gzipStream);
+
+			var protocol = reader.ReadUInt32();
+
+			if(protocol != Protocol.VERSION)
+			{
+				throw new Exception($"Invalid protocol: {protocol} [expected {Protocol.VERSION}]");
+			}
+
+			addon.name = reader.ReadString();
+			addon.author = reader.ReadString();
+			addon.description = reader.ReadString();
+			addon.version = reader.ReadString();
+			addon.thumbnail = reader.ReadString();
+			addon.creationTime = reader.ReadInt64();
+
+			var assetCount = reader.ReadInt32();
+			for (int i = 0; i < assetCount; i++)
+			{
+				var asset = new Asset();
+				addon.assets.Add(reader.ReadString(), asset);
+				asset.name = reader.ReadString();
+				asset.data = reader.ReadBytes(reader.ReadInt32());
+				asset.additionalData = reader.ReadBytes(reader.ReadInt32());
+			}
+
+			addon.MarkDirty();
+			return addon;
+		}
+
+		public byte[] Serialize()
+		{
+			using var memoryStream = new MemoryStream();
+			using (var gzipStream = new GZipStream(memoryStream, CompressionMode.Compress))
+			{
+				using var writer = new BinaryWriter(gzipStream);
+
+				writer.Write(Protocol.VERSION);
+				writer.Write(name);
+				writer.Write(author);
+				writer.Write(description);
+				writer.Write(version);
+				writer.Write(thumbnail);
+				writer.Write(creationTime);
+
+				var assetValues = assets.Values;
+
+				writer.Write(assets.Count);
+
+				foreach (var asset in assets)
+				{
+					writer.Write(asset.Key);
+					writer.Write(asset.Value.name);
+					writer.Write(asset.Value.data.Length);
+					writer.Write(asset.Value.data);
+					writer.Write(asset.Value.additionalData.Length);
+					writer.Write(asset.Value.additionalData);
+				}
+			}
+
+			return memoryStream.ToArray();
 		}
 		public void StoreToFile(string path)
 		{
 			path += EXTENSION;
 
-			File.WriteAllBytes(path, Store());
+			File.WriteAllBytes(path, Serialize());
 		}
 
 		public override string ToString()
@@ -154,90 +170,70 @@ namespace Carbon.Client.Assets
 		}
 		public string ToName()
 		{
-			return $"{Name} v{Version} by {Author}";
+			return $"{name} v{version} by {author}";
 		}
 
 		public void MarkDirty()
 		{
-			if (IsDirty)
+			if (isDirty)
 			{
 				return;
 			}
 
-			if (Buffer != null)
+			if (buffer != null)
 			{
-				Array.Clear(Buffer, 0, Buffer.Length);
-				Buffer = null;
+				Array.Clear(buffer, 0, buffer.Length);
+				buffer = null;
 			}
 
-			Buffer = Store();
+			buffer = Serialize();
+			UpdateChecksum();
 
-			IsDirty = true;
+			isDirty = true;
 		}
 		public void Dispose()
 		{
-			foreach (var asset in Assets)
+			foreach (var asset in assets)
 			{
 				asset.Value.Dispose();
 			}
 
-			if (Buffer != null)
+			if (buffer != null)
 			{
-				Array.Clear(Buffer, 0, Buffer.Length);
-				Buffer = null;
-			}
-		}
-		public string GetChecksum()
-		{
-			using (var md5 = MD5.Create())
-			{
-				var bytes = md5.ComputeHash(Buffer);
-				var result = Convert.ToBase64String(bytes);
-				Array.Clear(bytes, 0, bytes.Length);
-				return result;
+				Array.Clear(buffer, 0, buffer.Length);
+				buffer = null;
 			}
 		}
 
-		[ProtoContract]
-		public class Manifest
+		internal void UpdateChecksum()
 		{
-			[ProtoMember(1)]
-			public AddonInfo Info { get; set; }
-
-			[ProtoMember(2)]
-			public Asset.Manifest[] Assets { get; set; }
-
-			[ProtoMember(3)]
-			public long CreationTime { get; set; }
-
-			[ProtoMember(4)]
-			public string Url { get; set; }
-
-			[ProtoMember(5)]
-			public string Checksum { get; set; }
-
-			public string CreationTimeReadable => new DateTime(CreationTime).ToString();
+			using var md5 = MD5.Create();
+			var bytes = md5.ComputeHash(buffer);
+			var result = Convert.ToBase64String(bytes);
+			Array.Clear(bytes, 0, bytes.Length);
+			checksum = result;
 		}
 
-		[ProtoContract]
+		public partial class Manifest
+		{
+			public AddonInfo info;
+			public Asset.Manifest[] assets;
+			public long creationTime;
+			public string url;
+			public string checksum;
+
+			public string CreationTimeReadable => new DateTime(creationTime).ToString();
+		}
+
 		public struct AddonInfo
 		{
-			[ProtoMember(1)]
-			public string Name;
+			public string name;
+			public string author;
+			public string description;
+			public string version;
+			public string thumbnail;
 
-			[ProtoMember(2)]
-			public string Author;
-
-			[ProtoMember(3)]
-			public string Description;
-
-			[ProtoMember(4)]
-			public string Version;
-
-			[ProtoMember(5)]
-			public string Thumbnail;
-
-			public string CacheName => $"{Name.Replace(" ", "_").Replace(".", "_")}".ToLower();
+			public readonly string CacheName => $"{name.Replace(" ", "_").Replace(".", "_").Replace(":", "_")}".ToLower();
 		}
 	}
 }
